@@ -5,7 +5,7 @@ const Home: NextPage = () => {
   return (
     <>
       <h2>Cotejo App v2</h2>
-      <Button colorScheme='green'>Chakra UI installed</Button>
+      <Button colorScheme='red'>Chakra UI installed</Button>
     </>
   );
 }
