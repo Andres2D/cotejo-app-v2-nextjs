@@ -1,4 +1,4 @@
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import theme from '../styles/theme.conf';
