@@ -4,6 +4,7 @@ import {
   Input,
   IconButton
 } from '@chakra-ui/react';
+import { signIn } from "next-auth/react";
 import GoogleIcon from '../../assets/svg/google.svg';
 import type { NextPage } from 'next';
 import styles from './login-form.module.css';
@@ -43,6 +44,7 @@ const LoginForm: NextPage = () => {
           aria-label='Call Segun'
           size='lg'
           icon={<GoogleIcon boxSize={8} />}
+          onClick={() => signIn()}
         />
       </div>
     </FormControl>
