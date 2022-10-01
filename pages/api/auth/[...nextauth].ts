@@ -17,6 +17,7 @@ export default NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) { 
+      // token account account.id_token
       return true;
     },
     async redirect({ url, baseUrl }) {
