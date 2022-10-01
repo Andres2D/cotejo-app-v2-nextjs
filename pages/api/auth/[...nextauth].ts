@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GoogleProvider from "next-auth/providers/google";
+import { googleAuth } from '../../../server/auth';
 
 export default NextAuth({
   providers: [
@@ -16,12 +17,21 @@ export default NextAuth({
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) { 
-      // token account account.id_token
+    async signIn({account}) { 
+      if(!account.id_token) {
+        return false
+      }
+
+      const token = await googleAuth(account.id_token);
+
+      if(!token) {
+        return false;
+      }
+      // localStorage.setItem('token', token);
       return true;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect() {
       return  Promise.resolve('/menu');
-    }
+    },
   }
 });
