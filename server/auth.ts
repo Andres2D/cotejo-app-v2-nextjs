@@ -1,17 +1,16 @@
 
 import { Player } from '../database/models';
 import googleVerification from '../helpers/google-auth';
-import generateJWT from '../helpers/jwt';
 import mongoConnection from '../database/database-configuration';
 
-export const googleAuth = async(token: string): Promise<string | null> => {
+export const googleAuth = async(token: string): Promise<boolean | null> => {
   try {
     // let isNewUser = false;
     let player;
     const googlePayload = await googleVerification(token);
     
     if(!googlePayload) {
-      return null;
+      return false;
     }
     
     const { email, name, picture } = googlePayload;
@@ -33,14 +32,13 @@ export const googleAuth = async(token: string): Promise<string | null> => {
       });
     }
 
-    await player?.save();
-    if(!player || !player._id) {
-      return null;
+    const playerSign = await player?.save();
+    if(!playerSign) {
+      return false;
     }
-    const newToken = await generateJWT(player._id.toString());
-    return newToken;
+    return true;
 
   }catch(err) {
-    return null;
+    return false;
   }
 };

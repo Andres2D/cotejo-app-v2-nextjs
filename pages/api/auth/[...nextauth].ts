@@ -7,13 +7,6 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT || '',
       clientSecret: process.env.GOOGLE_SECRET || '',
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code"
-        }
-      }
     })
   ],
   callbacks: {
@@ -22,12 +15,12 @@ export default NextAuth({
         return false
       }
 
-      const token = await googleAuth(account.id_token);
+      const userSigned = await googleAuth(account.id_token);
 
-      if(!token) {
+      if(!userSigned) {
         return false;
       }
-      // localStorage.setItem('token', token);
+      
       return true;
     },
     async redirect() {

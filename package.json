@@ -16,7 +16,6 @@
     "framer-motion": "^7.4.0",
     "google-auth-library": "^8.5.2",
     "install": "^0.13.0",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.3",
     "next": "12.3.1",
     "next-auth": "^4.12.2",
