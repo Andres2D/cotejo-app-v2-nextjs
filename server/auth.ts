@@ -5,7 +5,6 @@ import mongoConnection from '../database/database-configuration';
 
 export const googleAuth = async(token: string): Promise<boolean | null> => {
   try {
-    // let isNewUser = false;
     let player;
     const googlePayload = await googleVerification(token);
     
@@ -17,9 +16,9 @@ export const googleAuth = async(token: string): Promise<boolean | null> => {
     await mongoConnection();
     const playerDB = await Player.findOne();
 
-    if(!playerDB) {
-      // isNewUser = true;
-
+    if(playerDB) {
+      return true;
+    }else {
       player = new Player({
         email,
         password: '@@@',
