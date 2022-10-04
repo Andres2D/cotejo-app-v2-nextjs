@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
-import { useSession } from "next-auth/react";
+import { getSession, useSession, signOut } from "next-auth/react";
+import { Button } from '@chakra-ui/react';
 import Image from 'next/image';
 
 const Menu: NextPage = () => {
 
   const { data: session } = useSession();
-
-  console.log(session);
 
   if(!session) {
     <p>Loading</p>
@@ -21,8 +20,31 @@ const Menu: NextPage = () => {
         width={200}
         height={200}
       />
+      <Button
+        colorScheme='red'
+        onClick={() => signOut()}  
+      >
+        Logout
+      </Button>
     </>
   );
 }
+
+export const getServerSideProps = async(context: any) => {
+  const session = await getSession({ req: context.req});
+
+  if(!session) {
+    return {
+      redirect: {
+        destination: '/auth',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: { session }
+  }
+};
 
 export default Menu;
