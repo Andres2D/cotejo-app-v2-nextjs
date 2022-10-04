@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
+import { getSession } from 'next-auth/react';
 import styles from './index.module.css';
 import LoginForm from '../../components/auth/login-form';
 
@@ -16,5 +17,22 @@ const Login: NextPage = () => {
     </div>
   );
 }
+
+export const getServerSideProps = async(context: any) => {
+  const session = await getSession({ req: context.req });
+
+  if(session) {
+    return {
+      redirect: {
+        destination: '/menu',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: { session }
+  }
+};
 
 export default Login;
