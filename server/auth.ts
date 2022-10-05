@@ -18,18 +18,18 @@ export const googleAuth = async(token: string): Promise<boolean | null> => {
 
     if(playerDB) {
       return true;
-    }else {
-      player = new Player({
-        email,
-        password: '@@@',
-        nickname: name,
-        image: picture,
-        name,
-        number: 99,
-        status: 'new',
-        google: true
-      });
     }
+    
+    player = new Player({
+      email,
+      password: '@@@',
+      nickname: name,
+      image: picture,
+      name,
+      number: 99,
+      status: 'new',
+      google: true
+    });
 
     const playerSign = await player?.save();
     if(!playerSign) {
