@@ -1,0 +1,19 @@
+.container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+  width: 50%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  width: 325px;
+  padding-bottom: 2rem;
+}
+
+.btnOptionMenu {
+  width: 100%;
+}
