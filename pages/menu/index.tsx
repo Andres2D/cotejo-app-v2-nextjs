@@ -13,19 +13,6 @@ const Menu: NextPage = () => {
 
   return (
     <>
-      <h1>Hello, {session?.user?.name}</h1>
-      <Image 
-        src={session?.user?.image || '/images/user-image-fallback.png'}
-        alt='User Image'
-        width={200}
-        height={200}
-      />
-      <Button
-        colorScheme='red'
-        onClick={() => signOut()}  
-      >
-        Logout
-      </Button>
     </>
   );
 }
