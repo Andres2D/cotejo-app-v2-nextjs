@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.playerCard {
+  height: 500px;
+  width: 400px;
+}
