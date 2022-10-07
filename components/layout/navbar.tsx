@@ -14,12 +14,14 @@ import {
 import { useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react";
+import { useRouter } from 'next/router';
 import styles from './navbar.module.css';
 
 const Navbar: NextPage = () => {
 
   const { data: session } = useSession();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   const btnRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   if(!session) {
@@ -61,7 +63,8 @@ const Navbar: NextPage = () => {
             <Button 
               className={styles.option} 
               colorScheme='blue' 
-              variant='outline'>
+              variant='outline'
+              onClick={() => router.push('/profile')}>
               Profile
             </Button>
             <Button 
