@@ -68,6 +68,13 @@ const Navbar: NextPage = () => {
               Profile
             </Button>
             <Button 
+              className={styles.option} 
+              colorScheme='green' 
+              variant='outline'
+              onClick={() => router.push('/menu')}>
+              Menu
+            </Button>
+            <Button 
               className={styles.option}
               colorScheme='red' 
               variant='outline'
