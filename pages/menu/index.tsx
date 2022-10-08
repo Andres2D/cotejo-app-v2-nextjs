@@ -2,12 +2,14 @@
 import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from './menu.module.css';
 
 const Menu: NextPage = () => {
 
   const { data: session } = useSession();
+  const router = useRouter();
 
   if(!session) {
     <p>Loading</p>
@@ -26,6 +28,7 @@ const Menu: NextPage = () => {
           className={styles.btnOptionMenu}
           size='lg'
           colorScheme='brand'
+          onClick={() => router.push('/profile')}
         >
           Profile
         </Button>
