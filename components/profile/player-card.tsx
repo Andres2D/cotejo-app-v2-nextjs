@@ -5,15 +5,18 @@ import Image from 'next/image';
 
 interface Props {
   className: string;
+  image: string;
+  name: string;
+  overall: number;
 }
 
-const PlayerCard: NextPage<Props> = (props: Props) => {
+const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) => {
 
   return (
-    <div className={`${styles.card} ${props.className}`}>
+    <div className={`${styles.card} ${className}`}>
       <div className={styles.cardHeader}>
         <div className={styles.overall}>
-          <h1 className={styles.title}>90</h1>
+          <h1 className={styles.title}>{overall}</h1>
           <p className={styles.position}>CM</p>
           <Divider
             borderColor={'darks.50'}
@@ -34,13 +37,13 @@ const PlayerCard: NextPage<Props> = (props: Props) => {
         </div>
         <Avatar
           className={styles.avatar} 
-          name='Dan Abrahmov' 
-          src='https://bit.ly/dan-abramov' 
+          name={name}
+          src={image} 
           size='2xl'
         />
       </div>
       <div className={styles.cardBody}>
-        <h2 className={styles.title}>Andres Alcaraz</h2>
+        <h2 className={styles.title}>{name}</h2>
         <Divider
           borderColor={'darks.50'}
           border='1px'
