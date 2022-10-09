@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   );
 }
 
-export const getServerSideProps = async(context: any) => {
+export const getStaticProps = async(context: any) => {
   const session = await getSession({ req: context.req });
 
   return {
