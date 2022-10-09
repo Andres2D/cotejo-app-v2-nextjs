@@ -1,3 +1,8 @@
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -13,4 +18,9 @@
 .playerStats {
   height: 500px;
   width: 400px;
+}
+
+.save {
+  margin: 40px auto;
+  width: 20%;
 }

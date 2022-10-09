@@ -1,15 +1,18 @@
 import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { mockStats } from '../../mock/stats.mock';
 import styles from './player-rate.module.css';
+import { Stats } from '../../interfaces/Stats';
 
 interface Props {
   className?: string;
+  stats: Stats[];
 }
 
-const PlayerRate: NextPage<Props> = (props: Props) => {
+const PlayerRate: NextPage<Props> = ({stats, className}: Props) => {
 
-  const stats = mockStats.map(({label, value}) => {
+  const filterStats = stats.filter(a => a.label !== 'Player' && a.label !== 'Overall' )
+
+  const statsMap = filterStats.map(({label, value}) => {
     return (
       <div className={styles.stat} key={label}>
         <h1 className={styles.title}>{label}</h1>
@@ -24,8 +27,8 @@ const PlayerRate: NextPage<Props> = (props: Props) => {
   });
 
   return (
-    <div className={`${styles.stats} ${props.className}`}>
-      {stats}
+    <div className={`${styles.stats} ${className}`}>
+      {statsMap}
     </div>
   );
 }
