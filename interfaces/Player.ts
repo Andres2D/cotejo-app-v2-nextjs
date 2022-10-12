@@ -7,4 +7,6 @@ export interface Player {
   status: string;
   image: string;
   google: boolean;
+  nationality: string;
+  position: string;
 }

@@ -30,6 +30,14 @@ const PlayerSchema = new Schema({
     google: {
         type: Boolean,
         default: false
+    },
+    nationality: {
+      type: String,
+      default: 'World'
+    },
+    position: {
+      type: String,
+      default: 'CM'
     }
 });
 
