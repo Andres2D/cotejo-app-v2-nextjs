@@ -29,7 +29,9 @@ export const googleAuth = async(token: string): Promise<boolean | null> => {
       name,
       number: 99,
       status: 'new',
-      google: true
+      google: true,
+      nationality: 'World',
+      position: 'CM'
     });
 
     const playerSign = await player?.save();
