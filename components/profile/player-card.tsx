@@ -1,23 +1,26 @@
 import type { NextPage } from 'next';
 import { Avatar, Divider } from '@chakra-ui/react';
-import styles from './player-card.module.css';
 import Image from 'next/image';
+import styles from './player-card.module.css';
+import { Player } from '../../interfaces/Player';
+import { Rating } from '../../interfaces/Rating';
 
 interface Props {
   className: string;
-  image: string;
-  name: string;
+  profile: Player;
   overall: number;
+  flag: string;
+  stats: Rating;
 }
 
-const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, overall, flag, stats}: Props) => {
 
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles.cardHeader}>
         <div className={styles.overall}>
           <h1 className={styles.title}>{overall}</h1>
-          <p className={styles.position}>CM</p>
+          <p className={styles.position}>{profile.position}</p>
           <Divider
             borderColor={'darks.50'}
             border='1px'
@@ -26,8 +29,8 @@ const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) =
           <Image
             width={70}
             height={50}
-            src='/images/colombia-flag.png'
-            alt='Dan Abramov'
+            src={flag}
+            alt={profile.nationality}
           />
           <Divider
             borderColor={'darks.50'}
@@ -37,13 +40,13 @@ const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) =
         </div>
         <Avatar
           className={styles.avatar} 
-          name={name}
-          src={image} 
+          name={profile.name}
+          src={profile.image} 
           size='2xl'
         />
       </div>
       <div className={styles.cardBody}>
-        <h2 className={styles.title}>{name}</h2>
+        <h2 className={styles.title}>{profile.name}</h2>
         <Divider
           borderColor={'darks.50'}
           border='1px'
@@ -53,15 +56,15 @@ const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) =
         <div className={styles.rating}>
           <div className={styles.score}>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.peace}</h2>
               <h2>PAC</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.shooting}</h2>
               <h2>SHO</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.passing}</h2>
               <h2>PAS</h2>
             </div>
           </div>
@@ -74,16 +77,16 @@ const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) =
           />
           <div className={styles.score}>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>PAC</h2>
+              <h2>{stats.dribbling}</h2>
+              <h2>DRB</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>SHO</h2>
+              <h2>{stats.defense}</h2>
+              <h2>DEF</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>PAS</h2>
+              <h2>{stats.physical}</h2>
+              <h2>PHY</h2>
             </div>
           </div>
         </div>

@@ -9,4 +9,5 @@ export interface Player {
   google: boolean;
   nationality: string;
   position: string;
+  _id?: string;
 }
