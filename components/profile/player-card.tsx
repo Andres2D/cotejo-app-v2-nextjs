@@ -3,15 +3,17 @@ import { Avatar, Divider } from '@chakra-ui/react';
 import Image from 'next/image';
 import styles from './player-card.module.css';
 import { Player } from '../../interfaces/Player';
+import { Rating } from '../../interfaces/Rating';
 
 interface Props {
   className: string;
   profile: Player;
   overall: number;
   flag: string;
+  stats: Rating;
 }
 
-const PlayerCard: NextPage<Props> = ({profile, className, overall, flag}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, overall, flag, stats}: Props) => {
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -28,7 +30,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, overall, flag}: Props)
             width={70}
             height={50}
             src={flag}
-            alt='Dan Abramov'
+            alt={profile.nationality}
           />
           <Divider
             borderColor={'darks.50'}
@@ -54,15 +56,15 @@ const PlayerCard: NextPage<Props> = ({profile, className, overall, flag}: Props)
         <div className={styles.rating}>
           <div className={styles.score}>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.peace}</h2>
               <h2>PAC</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.shooting}</h2>
               <h2>SHO</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
+              <h2>{stats.passing}</h2>
               <h2>PAS</h2>
             </div>
           </div>
@@ -75,16 +77,16 @@ const PlayerCard: NextPage<Props> = ({profile, className, overall, flag}: Props)
           />
           <div className={styles.score}>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>PAC</h2>
+              <h2>{stats.dribbling}</h2>
+              <h2>DRB</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>SHO</h2>
+              <h2>{stats.defense}</h2>
+              <h2>DEF</h2>
             </div>
             <div className={styles.rate}>
-              <h2>50</h2>
-              <h2>PAS</h2>
+              <h2>{stats.physical}</h2>
+              <h2>PHY</h2>
             </div>
           </div>
         </div>
