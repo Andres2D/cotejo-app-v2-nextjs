@@ -8,6 +8,7 @@ import {  getProfile, getPlayerStats } from '../../server/player';
 import { statsMap } from '../../helpers/stats';
 import { Stats } from '../../interfaces/Stats';
 import { Player } from '../../interfaces/Player';
+import { getCountryFlag } from '../../helpers/country';
 
 interface Props {
   image?: string;
@@ -20,6 +21,7 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
 
   let parsedStats: Stats[];
   let parsedProfile: Player;
+  let flag: string;
   let overall = 0;
   
   if(!image || !name || !stats || !profile) {
@@ -29,6 +31,7 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
   parsedStats = JSON.parse(stats);
   parsedProfile = JSON.parse(profile);
   overall = parsedStats.filter(a => a.label === 'Overall')[0].value;
+  flag = getCountryFlag(parsedProfile.nationality);
   
   return (
     <section className={styles.section}>
@@ -36,7 +39,8 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
         <PlayerCard 
           className={styles.playerCard} 
           profile={parsedProfile}
-          overall={overall} 
+          overall={overall}
+          flag={flag} 
         />
         <PlayerRate 
           className={styles.playerStats} 

@@ -8,9 +8,10 @@ interface Props {
   className: string;
   profile: Player;
   overall: number;
+  flag: string;
 }
 
-const PlayerCard: NextPage<Props> = ({profile, className, overall}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, overall, flag}: Props) => {
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -26,7 +27,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, overall}: Props) => {
           <Image
             width={70}
             height={50}
-            src='/images/colombia-flag.png'
+            src={flag}
             alt='Dan Abramov'
           />
           <Divider
