@@ -1,11 +1,12 @@
 import { Rating, Player } from '../database/models';
 import mongoConnection from '../database/database-configuration';
 import { Rating as IRating} from '../interfaces/Rating';
+import { Player as IPlayer} from '../interfaces/Player';
 
-const getPlayerStats = async(playerMail: string) => {
+export const getPlayerStats = async(playerMail: string) => {
   try {
     await mongoConnection();
-    const playerDB = await Player.findOne({ email: playerMail});
+    const playerDB = await getProfile(playerMail);
 
     if(!playerDB) {
       return null;
@@ -47,4 +48,48 @@ const getPlayerStats = async(playerMail: string) => {
   }
 }
 
-export default getPlayerStats;
+export const getProfile = async(playerMail: string) => {
+  try {
+
+    await mongoConnection();
+    const playerDB = await Player.findOne({ email: playerMail});
+
+    if(!playerDB) {
+      return null;
+    }
+
+    const {
+      _id,
+      email,
+      password,
+      nickname,
+      name,
+      number,
+      status,
+      image,
+      google,
+      position,
+      nationality
+    } = playerDB;
+
+    const player: IPlayer = {
+      _id,
+      email,
+      password,
+      nickname,
+      name,
+      number,
+      status,
+      image,
+      google,
+      position,
+      nationality
+    };
+
+    return player;
+
+  }catch(err) {
+    console.log(err);
+    return null;
+  }
+}

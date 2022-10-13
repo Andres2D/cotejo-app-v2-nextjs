@@ -4,26 +4,30 @@ import styles from './index.module.css';
 import PlayerCard from '../../components/profile/player-card';
 import PlayerRate from '../../components/profile/player-rate';
 import { getSession } from 'next-auth/react';
-import getPlayerStats from '../../server/player';
+import {  getProfile, getPlayerStats } from '../../server/player';
 import { statsMap } from '../../helpers/stats';
 import { Stats } from '../../interfaces/Stats';
+import { Player } from '../../interfaces/Player';
 
 interface Props {
   image?: string;
   name?: string;
   stats?: string;
+  profile?: string;
 }
 
-const Profile: NextPage = ({image, name, stats}: Props) => {
+const Profile: NextPage = ({image, name, stats, profile}: Props) => {
 
   let parsedStats: Stats[];
+  let parsedProfile: Player;
   let overall = 0;
   
-  if(!image || !name || !stats) {
+  if(!image || !name || !stats || !profile) {
     return <p>Loading...</p>
   }
 
   parsedStats = JSON.parse(stats);
+  parsedProfile = JSON.parse(profile);
   overall = parsedStats.filter(a => a.label === 'Overall')[0].value;
   
   return (
@@ -31,8 +35,7 @@ const Profile: NextPage = ({image, name, stats}: Props) => {
       <div className={styles.container}>
         <PlayerCard 
           className={styles.playerCard} 
-          image={image}
-          name={name}
+          profile={parsedProfile}
           overall={overall} 
         />
         <PlayerRate 
@@ -54,8 +57,9 @@ const Profile: NextPage = ({image, name, stats}: Props) => {
 export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req });
   const { image, name, email } = session?.user;
+  const profile = await getProfile(email);
   const stats = await getPlayerStats(email);
-
+  
   let formattedStats;
   if(stats) {
     formattedStats = statsMap(stats);
@@ -65,7 +69,8 @@ export const getServerSideProps = async(context: any) => {
     props: {
       image, 
       name,
-      stats: JSON.stringify(formattedStats)
+      stats: JSON.stringify(formattedStats),
+      profile: JSON.stringify(profile)
     }
   }
 };

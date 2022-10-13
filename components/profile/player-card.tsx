@@ -1,23 +1,23 @@
 import type { NextPage } from 'next';
 import { Avatar, Divider } from '@chakra-ui/react';
-import styles from './player-card.module.css';
 import Image from 'next/image';
+import styles from './player-card.module.css';
+import { Player } from '../../interfaces/Player';
 
 interface Props {
   className: string;
-  image: string;
-  name: string;
+  profile: Player;
   overall: number;
 }
 
-const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, overall}: Props) => {
 
   return (
     <div className={`${styles.card} ${className}`}>
       <div className={styles.cardHeader}>
         <div className={styles.overall}>
           <h1 className={styles.title}>{overall}</h1>
-          <p className={styles.position}>CM</p>
+          <p className={styles.position}>{profile.position}</p>
           <Divider
             borderColor={'darks.50'}
             border='1px'
@@ -37,13 +37,13 @@ const PlayerCard: NextPage<Props> = ({image, name, className, overall}: Props) =
         </div>
         <Avatar
           className={styles.avatar} 
-          name={name}
-          src={image} 
+          name={profile.name}
+          src={profile.image} 
           size='2xl'
         />
       </div>
       <div className={styles.cardBody}>
-        <h2 className={styles.title}>{name}</h2>
+        <h2 className={styles.title}>{profile.name}</h2>
         <Divider
           borderColor={'darks.50'}
           border='1px'
