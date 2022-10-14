@@ -86,6 +86,14 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
     physical,
     shooting
   } = parsedStats;
+
+  const updateProfile =(field: string, value: string) => {
+    if(field === 'nationality') {
+      setProfileState(curr => {return {...curr, [field]: value, flag: getCountryFlag(value)}});
+    } else {
+      setProfileState(curr => {return {...curr, [field]: value}});
+    }
+  }
   
   return (
     <section className={styles.section}>
@@ -93,6 +101,7 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
         <PlayerCard 
           className={styles.playerCard} 
           profile={profileState}
+          onUpdate={updateProfile}
         />
         <PlayerRate 
           className={styles.playerStats} 

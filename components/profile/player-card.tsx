@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import type { NextPage } from 'next';
 import { 
   Avatar, 
@@ -22,11 +22,15 @@ import countriesFlag from '../../constants/countries-flags';
 interface Props {
   className: string;
   profile: IProfile;
+  onUpdate: (field: string, value: string) => void;
 }
 
-const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, onUpdate}: Props) => {
 
   const positionRef = useRef<HTMLSelectElement>();
+  const flagRef = useRef<HTMLInputElement>();
+  const nameRef = useRef<HTMLInputElement>();
+  const [flagsList, setFlagsList] = useState(countriesFlag);
 
   const { 
     overall,
@@ -44,15 +48,29 @@ const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
   } = profile;
 
   const updatePosition = () => {
-    console.log(positionRef.current?.value);
+    if(!positionRef.current?.value) {
+      return;
+    }
+    onUpdate('position', positionRef.current?.value);
   }
 
   const updateFlag = (country: string) => {
-    console.log(country);
+    if(!country) {
+      return;
+    }
+    onUpdate('nationality', country);
+  };
+
+  const updateName = () => {
+    if(!nameRef.current?.value) {
+      return;
+    }
+    onUpdate('name', nameRef.current?.value);
   };
 
   const positions = playerPositions.map(pos => <option key={pos} value={pos}>{pos}</option>);
-  const flags = countriesFlag.map(country => (
+
+  const flags = flagsList.map(country => (
     <Image
       width={70}
       key={country.name}
@@ -64,6 +82,16 @@ const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
       onClick={() => updateFlag(country.name)}
     />
   ));
+
+  const searchFlag = () => {
+    if(!flagRef?.current?.value) {
+      setFlagsList([...countriesFlag]);
+      return;
+    }
+
+    setFlagsList([...countriesFlag]
+      .filter(fl => fl.name.toLowerCase().includes(flagRef?.current?.value?.toLowerCase() || '')));
+  }
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -80,6 +108,7 @@ const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
               <PopoverHeader>Position</PopoverHeader>
               <PopoverBody>
                 <Select 
+                  defaultValue={position}
                   placeholder='Select option'
                   ref={positionRef}
                   onChange={updatePosition}
@@ -111,7 +140,11 @@ const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
               <PopoverCloseButton />
               <PopoverHeader>Country</PopoverHeader>
               <PopoverBody>
-                <Input placeholder='Basic usage' />
+                <Input 
+                  placeholder='Basic usage' 
+                  ref={flagRef}
+                  onChange={searchFlag}
+                />
                 <div className={styles.flags}>
                   {flags}
                 </div>
@@ -132,7 +165,24 @@ const PlayerCard: NextPage<Props> = ({profile, className}: Props) => {
         />
       </div>
       <div className={styles.cardBody}>
-        <h2 className={styles.title}>{name}</h2>
+        <Popover>
+          <PopoverTrigger>
+            <h2 className={styles.title}>{name}</h2>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>Name</PopoverHeader>
+            <PopoverBody>
+              <Input 
+                placeholder='Basic usage'
+                defaultValue={profile.name}
+                ref={nameRef}
+                onChange={updateName}
+              />
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
         <Divider
           borderColor={'darks.50'}
           border='1px'
