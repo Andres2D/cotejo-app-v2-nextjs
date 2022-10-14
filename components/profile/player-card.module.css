@@ -26,6 +26,7 @@
 .position {
   font-size: 30px;
   margin-top: -20px;
+  cursor: pointer;
 }
 
 .divider {
@@ -61,4 +62,19 @@
   justify-content: space-around;
   font-size: 35px;
   width: 100%;
+}
+
+.flag {
+  cursor: pointer;
+}
+
+.flags {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  height: 200px;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
