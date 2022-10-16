@@ -15,17 +15,18 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import styles from './player-card.module.css';
-import { IProfile } from '../../interfaces/Player';
+import { IProfile, IStats } from '../../interfaces/Player';
 import { playerPositions } from '../../constants/player-positions';
 import countriesFlag from '../../constants/countries-flags';
 
 interface Props {
   className: string;
   profile: IProfile;
+  stats: IStats;
   onUpdate: (field: string, value: string) => void;
 }
 
-const PlayerCard: NextPage<Props> = ({profile, className, onUpdate}: Props) => {
+const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Props) => {
 
   const positionRef = useRef<HTMLSelectElement>();
   const flagRef = useRef<HTMLInputElement>();
@@ -36,16 +37,19 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate}: Props) => {
     overall,
     flag,
     image,
+    name,
+    position,
+    nationality
+  } = profile;
+  
+  const {
     peace,
     shooting,
     defense,
     dribbling,
-    name,
     passing,
     physical,
-    position,
-    nationality
-  } = profile;
+  } = stats;
 
   const updatePosition = () => {
     if(!positionRef.current?.value) {
