@@ -1,13 +1,5 @@
-import { Rating } from "../interfaces/Rating";
-import { Stats } from '../interfaces/Stats';
 
-export const statsMap = (stats: Rating): Stats[] => {
-  const mappedStats = Object.entries(stats).map(stat => {
-    return {
-      label: `${stat[0].charAt(0).toUpperCase()}${stat[0].slice(1)}`,
-      value: stat[1]
-    }
-  });
-
-  return mappedStats;
+export const calculateAVG = (values: number[]) => {
+  const sum = values.reduce((a,b) => a+b, 0);
+  return Math.floor(sum / values.length);
 };

@@ -1,22 +1,37 @@
-import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@chakra-ui/react';
+import { 
+  Slider, 
+  SliderFilledTrack, 
+  SliderThumb, 
+  SliderTrack 
+} from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import styles from './player-rate.module.css';
-import { Stats } from '../../interfaces/Stats';
+import { IStats } from '../../interfaces/Player';
+import { useState } from 'react';
 
 interface Props {
   className?: string;
-  stats: Stats[];
+  stats: IStats;
+  onUpdate: (stat: string, value: number) => void;
 }
 
-const PlayerRate: NextPage<Props> = ({stats, className}: Props) => {
+const PlayerRate: NextPage<Props> = ({stats, className, onUpdate}: Props) => {
 
-  const filterStats = stats.filter(a => a.label !== 'Player' && a.label !== 'Overall' )
+  const updateStats = (label: string, value: number) => {
+    onUpdate(label, value);
+  }
 
-  const statsMap = filterStats.map(({label, value}) => {
+  const statsRates = Object.entries(stats).map(([label, value]) => {
+    const title = `${label[0].toUpperCase()}${label.slice(1, label.length)}`;
     return (
       <div className={styles.stat} key={label}>
-        <h1 className={styles.title}>{label}</h1>
-        <Slider aria-label='slider-ex-2' colorScheme='brand' defaultValue={value}>
+        <h1 className={styles.title}>{title}</h1>
+        <Slider 
+          aria-label='slider-ex-2' 
+          colorScheme='brand' 
+          value={value}
+          onChange={(val) => updateStats(label, val)}
+        >
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
@@ -28,7 +43,7 @@ const PlayerRate: NextPage<Props> = ({stats, className}: Props) => {
 
   return (
     <div className={`${styles.stats} ${className}`}>
-      {statsMap}
+      {statsRates}
     </div>
   );
 }
