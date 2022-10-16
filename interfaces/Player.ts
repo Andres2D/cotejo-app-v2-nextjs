@@ -17,12 +17,15 @@ export interface IProfile {
   position: string;
   flag: string;
   name: string;
+  image?: string;
+  nationality: string;
+}
+
+export interface IStats {
   peace: number;
   shooting: number;
   passing: number;
   dribbling: number;
   defense: number;
   physical: number;
-  image?: string;
-  nationality: string;
 }
