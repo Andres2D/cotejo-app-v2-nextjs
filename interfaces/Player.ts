@@ -29,3 +29,10 @@ export interface IStats {
   defense: number;
   physical: number;
 }
+
+export interface UpdateProfileRequest {
+  email: string;
+  name: string;
+  nationality: string;
+  position: string;
+}
