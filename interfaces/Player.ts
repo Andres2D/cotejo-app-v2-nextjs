@@ -30,9 +30,10 @@ export interface IStats {
   physical: number;
 }
 
-export interface UpdateProfileRequest {
+export interface UpdateProfileRequest extends IStats {
   email: string;
   name: string;
   nationality: string;
   position: string;
+  overall: number;
 }

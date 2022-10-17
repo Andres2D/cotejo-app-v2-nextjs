@@ -97,9 +97,16 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
   const updatePlayerProfile = async() => {
     const request: UpdateProfileRequest = {
       email,
+      overall: profileState.overall, 
       name: profileState.name,
       nationality: profileState.nationality,
       position: profileState.position,
+      defense: statsState.defense,
+      dribbling: statsState.dribbling,
+      passing: statsState.passing,
+      peace: statsState.peace,
+      physical: statsState.physical,
+      shooting: statsState.shooting
     }
 
     const response = await fetch('api/player', {
@@ -110,9 +117,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
       }
     });
 
-    console.log(request);
     const data = await response.json();
-    console.log(data);
 
   };
   
