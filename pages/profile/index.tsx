@@ -1,12 +1,22 @@
 import type { NextPage} from 'next';
-import { useEffect, useState } from 'react';
+import { 
+  useEffect, 
+  useState 
+} from 'react';
 import { getSession } from 'next-auth/react';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import styles from './index.module.css';
 import PlayerCard from '../../components/profile/player-card';
 import PlayerRate from '../../components/profile/player-rate';
-import { getProfile, getPlayerStats } from '../../server/player';
-import { IStats, IProfile } from '../../interfaces/Player';
+import { 
+  getProfile, 
+  getPlayerStats 
+} from '../../server/player';
+import { 
+  IStats, 
+  IProfile, 
+  UpdateProfileRequest 
+} from '../../interfaces/Player';
 import { getCountryFlag } from '../../helpers/country';
 import { calculateAVG } from '../../helpers/stats';
 
@@ -14,6 +24,7 @@ interface Props {
   image?: string;
   name?: string;
   stats?: string;
+  email?: string;
   profile?: string;
 }
 
@@ -35,13 +46,15 @@ const initialStats: IStats = {
   physical: 0,
 }
 
-const Profile: NextPage = ({image, name, stats, profile}: Props) => {
+const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
 
   let parsedStats = JSON.parse(stats || '');
   let parsedProfile = JSON.parse(profile || '');
 
   const [profileState, setProfileState] = useState(initialState);
   const [statsState, setStatsState] = useState(initialStats);
+
+  const toast = useToast()
 
   useEffect(() => {
     setProfileState({
@@ -63,7 +76,7 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
     })
   }, []);
   
-  if(!image || !name || !stats || !profile) {
+  if(!image || !name || !stats || !profile || !email) {
     return <p>Loading...</p>
   }
 
@@ -81,6 +94,49 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
       updateProfile('overall', `${calculateAVG(Object.values(newVal))}`);
       return newVal;
     });
+  };
+
+  const updatePlayerProfile = async() => {
+    const request: UpdateProfileRequest = {
+      email,
+      overall: profileState.overall, 
+      name: profileState.name,
+      nationality: profileState.nationality,
+      position: profileState.position,
+      defense: statsState.defense,
+      dribbling: statsState.dribbling,
+      passing: statsState.passing,
+      peace: statsState.peace,
+      physical: statsState.physical,
+      shooting: statsState.shooting
+    }
+
+    const response = await fetch('api/player', {
+      method: 'PUT',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if(!response.ok) {
+      toast({
+        title: 'Error.',
+        description: "Profile could not be updated. Try again later.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+
+    await response.json();
+    toast({
+      title: 'Profile updated.',
+      description: "Profile has been updated.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
   };
   
   return (
@@ -102,6 +158,7 @@ const Profile: NextPage = ({image, name, stats, profile}: Props) => {
         className={styles.save}
         size='lg'
         colorScheme='brand'
+        onClick={updatePlayerProfile}
       >
         Save
       </Button>
@@ -119,6 +176,7 @@ export const getServerSideProps = async(context: any) => {
     props: {
       image, 
       name,
+      email,
       stats: JSON.stringify(stats),
       profile: JSON.stringify(profile)
     }
