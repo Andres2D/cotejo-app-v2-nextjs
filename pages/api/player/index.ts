@@ -4,6 +4,7 @@ import {
 } from '../../../database/models';
 import mongoConnection from '../../../database/database-configuration';
 
+// TODO: type req and res
 const handler = async(req: any, res: any) => {
   try {
     if(req.method === 'PUT') {

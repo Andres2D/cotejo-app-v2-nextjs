@@ -4,7 +4,7 @@ import {
   useState 
 } from 'react';
 import { getSession } from 'next-auth/react';
-import { Button } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import styles from './index.module.css';
 import PlayerCard from '../../components/profile/player-card';
 import PlayerRate from '../../components/profile/player-rate';
@@ -53,6 +53,8 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
 
   const [profileState, setProfileState] = useState(initialState);
   const [statsState, setStatsState] = useState(initialStats);
+
+  const toast = useToast()
 
   useEffect(() => {
     setProfileState({
@@ -116,9 +118,25 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
         'Content-Type': 'application/json'
       }
     });
+    
+    if(!response.ok) {
+      toast({
+        title: 'Error.',
+        description: "Profile could not be updated. Try again later.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
 
-    const data = await response.json();
-
+    await response.json();
+    toast({
+      title: 'Profile updated.',
+      description: "Profile has been updated.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    })
   };
   
   return (
