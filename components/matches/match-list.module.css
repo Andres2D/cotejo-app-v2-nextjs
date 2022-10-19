@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 50px auto;
+  width: 90%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 230px;
+}
+
+.containerVS {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+.button {
+  margin: 20px auto;
+}

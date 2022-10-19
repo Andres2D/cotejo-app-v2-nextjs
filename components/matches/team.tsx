@@ -1,0 +1,35 @@
+import { Tag } from '@chakra-ui/react'
+import type { NextPage } from 'next';
+import Image from 'next/image';
+import styles from './team.module.css';
+
+interface Props {
+  name: string;
+  image: string;
+  width: number;
+  height: number;
+}
+
+const Team: NextPage<Props> = ({name, image, width, height}: Props) => {
+  return (
+    <div className={styles.team}>
+      <Image
+        src={image}
+        alt='Team logo'
+        width={width}
+        height={height}
+        className={styles.logoShadow}
+      ></Image>
+      <Tag 
+        size='lg' 
+        variant='solid' 
+        colorScheme='clean'
+        className={styles.tag}
+      >
+        {name}
+      </Tag>
+    </div>
+  );
+}
+
+export default Team;

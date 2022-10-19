@@ -1,0 +1,10 @@
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tag {
+  color: #333 !important;
+  margin-top: 20px;
+}
