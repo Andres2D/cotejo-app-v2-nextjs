@@ -1,11 +1,12 @@
 
-import { Button } from '@chakra-ui/react';
+import { Button, IconButton } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons'
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from './matchs.module.css';
+import Team from '../../components/match/team';
 
 const Menu: NextPage = () => {
 
@@ -18,25 +19,19 @@ const Menu: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <div>
-        <Image
-          src={'/images/liverpool-fc-logo.png'}
-          alt='Local team logo'
-          width={150}
-          height={180}
-          className={styles.logoShadow}
-        ></Image>
-        <div className={styles.nameTeam}>
-          <h2>Liverpool</h2>
-        </div>
-      </div>
+      <Team
+        name={'Liverpool'}
+        image={'/images/liverpool-fc-logo.png'}
+        width={150}
+        height={180}
+      />
 
       <div className={styles.containerVS}>
         <Image
           src={'/images/vs-icon.png'}
           alt='Icon versus'
-          width={56}
-          height={49}
+          width={100}
+          height={80}
           className={styles.logoShadow}
         ></Image>
          <div>
@@ -45,25 +40,29 @@ const Menu: NextPage = () => {
         </div>
       </div>
 
-      <div>
-        <Image
-          src={'/images/chelsea-fc-logo.png'}
-          alt='Visiting team logo'
-          width={150}
-          height={180}
-          className={styles.logoShadow}
-        ></Image>
-        <div className={styles.nameTeam}>
-          <h2>Chelsea</h2>
-        </div>
-      </div>
+      <Team
+        name={'Liverpool'}
+        image={'/images/liverpool-fc-logo.png'}
+        width={150}
+        height={180}
+      />
 
       <div className={styles.options}>
         <div className={styles.option}>
-        <SettingsIcon w={7} h={7} color="gray.600" />
+          <IconButton
+            colorScheme='blackAlpha'
+            size='lg'
+            aria-label='Edit match'
+            icon={<SettingsIcon />}
+          />
         </div>
         <div className={styles.option}>
-        <DeleteIcon w={7} h={7} color="red.600" />
+        <IconButton
+            colorScheme='red'
+            size='lg'
+            aria-label='Deleted match'
+            icon={<DeleteIcon />}
+          />
         </div>
       </div>
 
@@ -84,14 +83,14 @@ const Menu: NextPage = () => {
 export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req});
 
-  if(!session) {
-    return {
-      redirect: {
-        destination: '/auth',
-        permanent: false
-      }
-    }
-  }
+  // if(!session) {
+  //   return {
+  //     redirect: {
+  //       destination: '/auth',
+  //       permanent: false
+  //     }
+  //   }
+  // }
 
   return {
     props: { session }
