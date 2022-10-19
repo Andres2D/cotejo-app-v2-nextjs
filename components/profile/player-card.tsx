@@ -133,7 +133,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
                 <Image
                     width={70}
                     height={50}
-                    src={flag}
+                    src={flag || countriesFlag[0].flag}
                     alt={nationality}
                     className={styles.flag}
                   />
