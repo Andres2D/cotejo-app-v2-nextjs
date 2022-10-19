@@ -21,6 +21,9 @@ const theme = extendTheme({
     darks: {
       50: '#333',
       500: '#333'
+    },
+    clean: {
+      500: '#EDF2F7'
     }
   },
   components: {

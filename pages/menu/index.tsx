@@ -38,6 +38,7 @@ const Menu: NextPage = () => {
           className={styles.btnOptionMenu}
           size='lg'
           colorScheme='brand'
+          onClick={() => router.push('/matches')}
         >
           Matchs
         </Button>
