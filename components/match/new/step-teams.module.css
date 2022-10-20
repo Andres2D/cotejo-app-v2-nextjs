@@ -1,0 +1,10 @@
+.team {
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.shieldTeam {
+  display: flex;
+  justify-content: center;
+}
