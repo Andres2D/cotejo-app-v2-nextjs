@@ -45,14 +45,14 @@ const MatchList: NextPage<Props> = ({matches}) => {
         <div className={styles.options}>
           <IconButton
             colorScheme='blackAlpha'
-            size='lg'
+            size='md'
             mb={2}
             aria-label='Edit match'
             icon={<SettingsIcon />}
           />
           <IconButton
             colorScheme='red'
-            size='lg'
+            size='md'
             aria-label='Deleted match'
             icon={<DeleteIcon />}
           />

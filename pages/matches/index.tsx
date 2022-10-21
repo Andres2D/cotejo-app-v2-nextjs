@@ -15,7 +15,7 @@ const Matches: NextPage<Props> = ({matches}) => {
   const matchesList: FullMatch[] = JSON.parse(matches);
 
   return (
-    <div className={styles.matches}>
+    <section className={styles.matches}>
       <MatchList
         matches={matchesList}
       />
@@ -25,7 +25,7 @@ const Matches: NextPage<Props> = ({matches}) => {
       >
         New Match
       </Button>
-    </div>
+    </section>
   );
 }
 

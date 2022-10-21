@@ -1,6 +1,9 @@
 .section {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin: 10px auto;
+  max-width: 1050px;
 }
 
 .container {
