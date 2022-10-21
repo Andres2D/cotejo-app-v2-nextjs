@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin: 50px auto;
+  margin: 20px auto;
   width: 90%;
   flex-direction: row;
   flex-wrap: nowrap;

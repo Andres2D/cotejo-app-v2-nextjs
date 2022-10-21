@@ -2,12 +2,23 @@ import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import MatchList from '../../components/matches/match-list';
+import { getMatches } from '../../server/matches';
 import styles from './matches.module.css';
+import { FullMatch, IMatch } from '../../interfaces/Match';
 
-const Matches: NextPage = () => {
+interface Props {
+  matches: string;
+}
+
+const Matches: NextPage<Props> = ({matches}) => {
+
+  const matchesList: FullMatch[] = JSON.parse(matches);
+
   return (
     <div className={styles.matches}>
-      <MatchList />
+      <MatchList
+        matches={matchesList}
+      />
       <Button 
         size='lg'
         colorScheme='brand'
@@ -20,6 +31,7 @@ const Matches: NextPage = () => {
 
 export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req});
+  let matches: IMatch[] = [];
 
   if(!session) {
     return {
@@ -30,8 +42,12 @@ export const getServerSideProps = async(context: any) => {
     }
   }
 
+  matches = await getMatches() || [];
+
   return {
-    props: { session }
+    props: {
+      matches: JSON.stringify(matches) 
+    }
   }
 };
 
