@@ -1,8 +1,11 @@
-export interface Player {
+interface base {
   email: string;
-  password: string;
-  nickname: string;
   name: string;
+  password: string;
+}
+
+export interface Player extends base {
+  nickname: string;
   number: number;
   status: string;
   image: string;
@@ -37,3 +40,5 @@ export interface UpdateProfileRequest extends IStats {
   position: string;
   overall: number;
 }
+
+export interface RegisterPlayerRequest extends base {}

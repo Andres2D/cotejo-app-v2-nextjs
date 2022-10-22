@@ -1,24 +1,32 @@
 import type { NextPage } from 'next';
-import NextLink from "next/link";
-import { Link } from '@chakra-ui/react'
-import Image from 'next/image';
 import { getSession } from 'next-auth/react';
+import Image from 'next/image';
+import NextLink from 'next/link';
+import { Link } from '@chakra-ui/react';
+import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.css';
-import LoginForm from '../../components/auth/login-form';
+import { RegisterPlayerRequest } from '../../interfaces/Player';
 
-const Login: NextPage = () => {
+const SignUp: NextPage = () => {
+
+  const registerPlayer = (request: RegisterPlayerRequest) => {
+    console.log(request);
+  };
+
   return (
-    <div className={styles.login}>
+    <div className={styles.signUp}>
       <Image
         src={'/images/app-logo-regular.png'}
         alt='Cotejo app logo'
         width={400}
         height={294}
       ></Image>
-      <LoginForm />
-      <NextLink href='/sign-up'>
-        <Link className={styles.signUpLink}>
-          {`Don't have an account?, Sign up`}
+      <SignUpForm
+        onSignUp={registerPlayer}
+      />
+      <NextLink href='/auth'>
+        <Link className={styles.loginLink}>
+          {`Already have an account?, Login`}
         </Link>
       </NextLink>
     </div>
@@ -42,4 +50,4 @@ export const getServerSideProps = async(context: any) => {
   }
 };
 
-export default Login;
+export default SignUp;
