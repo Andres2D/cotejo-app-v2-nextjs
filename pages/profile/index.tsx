@@ -54,7 +54,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
   const [profileState, setProfileState] = useState(initialState);
   const [statsState, setStatsState] = useState(initialStats);
 
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
     setProfileState({
