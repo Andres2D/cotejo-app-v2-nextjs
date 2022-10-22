@@ -2,15 +2,43 @@ import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { Link } from '@chakra-ui/react';
+import { Link, useToast } from '@chakra-ui/react';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.css';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 
 const SignUp: NextPage = () => {
 
-  const registerPlayer = (request: RegisterPlayerRequest) => {
-    console.log(request);
+  const toast = useToast();
+
+  const registerPlayer = async(request: RegisterPlayerRequest) => {
+    const response = await fetch('api/player', {
+      method: 'POST',
+      body: JSON.stringify(request),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if(!response.ok) {
+      toast({
+        title: 'Error.',
+        description: "Profile could not be created. Try again later.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    await response.json();
+    toast({
+      title: 'Profile created.',
+      description: "Profile has been created.",
+      status: 'success',
+      duration: 9000,
+      isClosable: true,
+    });
   };
 
   return (
