@@ -174,7 +174,7 @@ export const getServerSideProps = async(context: any) => {
   
   return {
     props: {
-      image, 
+      image,
       name,
       email,
       stats: JSON.stringify(stats),
