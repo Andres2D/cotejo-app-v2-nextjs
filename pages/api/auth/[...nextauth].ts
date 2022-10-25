@@ -11,6 +11,7 @@ export default NextAuth({
       clientSecret: process.env.GOOGLE_SECRET || '',
     }),
     CredentialsProvider({
+      id: 'credential_user',
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email', placeholder: 'jhon@mail.com' },

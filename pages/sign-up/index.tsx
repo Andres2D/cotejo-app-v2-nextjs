@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { getSession } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { Link, useToast } from '@chakra-ui/react';
@@ -39,6 +39,8 @@ const SignUp: NextPage = () => {
       duration: 9000,
       isClosable: true,
     });
+    
+    signIn('credential_user', {email: request.email, password: request.password});
   };
 
   return (
