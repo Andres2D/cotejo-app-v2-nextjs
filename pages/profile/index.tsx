@@ -3,6 +3,7 @@ import {
   useEffect, 
   useState 
 } from 'react';
+import { getFlagSvg } from 'empty-skull';
 import { getSession } from 'next-auth/react';
 import { Button, useToast } from '@chakra-ui/react';
 import styles from './index.module.css';
@@ -17,7 +18,6 @@ import {
   IProfile, 
   UpdateProfileRequest 
 } from '../../interfaces/Player';
-import { getCountryFlag } from '../../helpers/country';
 import { calculateAVG } from '../../helpers/stats';
 
 interface Props {
@@ -60,7 +60,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
     setProfileState({
       overall: parsedStats.overall,
       position: parsedProfile.position,
-      flag: getCountryFlag(parsedProfile.nationality),
+      flag: getFlagSvg(parsedProfile.nationality, true).flag,
       name: parsedProfile.name,
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
@@ -82,7 +82,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
 
   const updateProfile = (field: string, value: string) => {
     if(field === 'nationality') {
-      setProfileState(curr => {return {...curr, [field]: value, flag: getCountryFlag(value)}});
+      setProfileState(curr => {return {...curr, [field]: value, flag: getFlagSvg(value, true).flag}});
     } else {
       setProfileState(curr => {return {...curr, [field]: value}});
     }

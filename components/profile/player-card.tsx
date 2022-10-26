@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import type { NextPage } from 'next';
+import { getFlagSvg, getAllFlags } from 'empty-skull';
 import { 
   Avatar, 
   Divider,
@@ -17,7 +18,6 @@ import Image from 'next/image';
 import styles from './player-card.module.css';
 import { IProfile, IStats } from '../../interfaces/Player';
 import { playerPositions } from '../../constants/player-positions';
-import countriesFlag from '../../constants/countries-flags';
 
 interface Props {
   className: string;
@@ -31,7 +31,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
   const positionRef = useRef<HTMLSelectElement>();
   const flagRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
-  const [flagsList, setFlagsList] = useState(countriesFlag);
+  const [flagsList, setFlagsList] = useState(getAllFlags());
 
   const { 
     overall,
@@ -74,7 +74,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
 
   const positions = playerPositions.map(pos => <option key={pos} value={pos}>{pos}</option>);
 
-  const flags = flagsList.map(country => (
+  const flags = flagsList.map((country: any) => (
     <Image
       width={70}
       key={country.name}
@@ -89,12 +89,12 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
 
   const searchFlag = () => {
     if(!flagRef?.current?.value) {
-      setFlagsList([...countriesFlag]);
+      setFlagsList(getAllFlags);
       return;
     }
 
-    setFlagsList([...countriesFlag]
-      .filter(fl => fl.name.toLowerCase().includes(flagRef?.current?.value?.toLowerCase() || '')));
+    const flags = getFlagSvg(flagRef?.current?.value);
+    setFlagsList(flags);
   }
 
   return (
@@ -133,7 +133,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
                 <Image
                     width={70}
                     height={50}
-                    src={flag || countriesFlag[0].flag}
+                    src={flag || getAllFlags()[0].flag}
                     alt={nationality}
                     className={styles.flag}
                   />

@@ -77,7 +77,7 @@ const LoginForm: NextPage = () => {
           aria-label='Call Segun'
           size='lg'
           icon={<GoogleIcon boxSize={8} />}
-          onClick={() => signIn()}
+          onClick={() => signIn('google_user')}
         />
       </div>
     </FormControl>
