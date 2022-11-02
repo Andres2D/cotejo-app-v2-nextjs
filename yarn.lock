@@ -2114,10 +2114,10 @@
   "resolved" "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz"
   "version" "9.2.2"
 
-"empty-skull@^2.0.0":
-  "integrity" "sha512-CPs+kJ33Uktaggu+P5wJzbS1F5tqzt2swQjMZ41S8E38+XNj5SrfPY+n4ZcTmlatRJrGkV7bDoU9NBr1I6kedg=="
-  "resolved" "https://registry.npmjs.org/empty-skull/-/empty-skull-2.0.0.tgz"
-  "version" "2.0.0"
+"empty-skull@^2.1.1":
+  "integrity" "sha512-uA5CT49e1C0YZ7pmZyKvOynCIyxqRMew1mv2S/mxVPAM+qpHOOaxMMYToehJxDn1OwawifkaO/idSWgDiAAJsg=="
+  "resolved" "https://registry.npmjs.org/empty-skull/-/empty-skull-2.1.1.tgz"
+  "version" "2.1.1"
   dependencies:
     "watch" "^1.0.2"
 
