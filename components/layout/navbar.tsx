@@ -64,21 +64,40 @@ const Navbar: NextPage = () => {
               className={styles.option} 
               colorScheme='blue' 
               variant='outline'
-              onClick={() => router.push('/profile')}>
+              onClick={() => {
+                onClose();
+                router.push('/profile');
+              }}>
               Profile
             </Button>
             <Button 
               className={styles.option} 
               colorScheme='green' 
               variant='outline'
-              onClick={() => router.push('/menu')}>
+              onClick={() => {
+                onClose();
+                router.push('/menu');
+              }}>
               Menu
+            </Button>
+            <Button 
+              className={styles.option} 
+              colorScheme='green' 
+              variant='outline'
+              onClick={() => {
+                onClose();
+                router.push('/matches');
+              }}>
+              Matches
             </Button>
             <Button 
               className={styles.option}
               colorScheme='red' 
               variant='outline'
-              onClick={() => signOut()}>
+              onClick={() => {
+                onClose();
+                signOut();
+              }}>
               Log out
             </Button>
           </DrawerBody>
