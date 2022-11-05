@@ -1,7 +1,7 @@
 
-import { TabPanel, TabPanels } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
+import CreateTeams from './teams/create-teams';
 import Steps from './header/steps';
 
 const NewMatch: NextPage = () => {
@@ -15,7 +15,7 @@ const NewMatch: NextPage = () => {
   return (
     <>
       <Steps
-        teams={<p>One</p>}
+        teams={<CreateTeams />}
         players={<p>Two</p>}
         schedule={<p>Three</p>}
       />
