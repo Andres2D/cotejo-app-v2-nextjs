@@ -1,7 +1,10 @@
 .team {
+  margin-top: 50px;
   align-items: center;
   text-align: center;
   font-weight: bold;
+  justify-content: space-between;
+  width: 450px;
 }
 
 .shieldTeam {

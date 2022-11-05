@@ -1,0 +1,13 @@
+.tabs {
+  margin-top: 50px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  border-top: 5px solid transparent;
+}
+
+.subtitle {
+  font-size: 20px;
+}
