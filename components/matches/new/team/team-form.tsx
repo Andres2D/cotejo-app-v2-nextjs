@@ -1,12 +1,25 @@
 import { Image, Input, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
+import { useDispatch } from 'react-redux';
+import { MutableRefObject, useRef } from 'react';
+import { createMatchActions } from '../../../../store/create-match.slice';
 import styles from './team-form.module.css';
 
 interface Props {
-  title?: string;
+  type?: 'home' | 'away';
 }
 
-const TeamForm: NextPage<Props> = ({title = 'Home'}: Props) => {
+const TeamForm: NextPage<Props> = ({type = 'home'}: Props) => {
+
+  const teamName = useRef() as MutableRefObject<HTMLInputElement>;
+  const dispatch = useDispatch();
+
+  const updateField = () => {
+    console.log(`${type}_team_name`);
+    console.log(teamName.current.value);
+    dispatch(createMatchActions.updateInput({input: `${type}_team_name`, value: teamName.current.value}))
+  }
+
   return (
     <div className={styles.team}>
       <Text 
@@ -15,7 +28,7 @@ const TeamForm: NextPage<Props> = ({title = 'Home'}: Props) => {
         fontSize="6xl" 
         fontWeight="extrabold"
       >
-        {title}
+        {`${type.charAt(0).toUpperCase()}${type.slice(1, type.length)}`}
       </Text>
       <div className={styles.shieldTeam}>
         <Image
@@ -31,6 +44,8 @@ const TeamForm: NextPage<Props> = ({title = 'Home'}: Props) => {
         colorScheme='white' 
         variant='filled' 
         mt='5'
+        onChange={updateField}
+        ref={teamName}
       />
     </div>
   );

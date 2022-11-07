@@ -5,8 +5,8 @@ import styles from './create-teams.module.css';
 const CreateTeams: NextPage = () => {
   return (
     <div className={styles.form}>
-      <TeamForm title='Home' />
-      <TeamForm title='Away' />
+      <TeamForm type='home' />
+      <TeamForm type='away' />
     </div>
   );
 }
