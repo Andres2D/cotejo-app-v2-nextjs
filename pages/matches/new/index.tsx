@@ -1,12 +1,15 @@
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
+import { Provider } from 'react-redux';
 import NewMatch from '../../../components/matches/new/new-match';
-import styles from './new.module.css';
+import store from '../../../store';
 
 const CreateMatch: NextPage = () => {
 
   return (
-    <NewMatch />
+    <Provider store={store}>
+      <NewMatch />
+    </Provider>
   );
 }
 
