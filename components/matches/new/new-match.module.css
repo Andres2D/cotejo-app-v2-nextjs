@@ -1,0 +1,9 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+}
+
+.nextBtn {
+  width: 150px;
+  margin: 20px auto;
+}

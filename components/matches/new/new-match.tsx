@@ -2,7 +2,9 @@
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
 import CreateTeams from './teams/create-teams';
+import { Button } from '@chakra-ui/react';
 import Steps from './header/steps';
+import styles from './new-match.module.css';
 
 const NewMatch: NextPage = () => {
 
@@ -13,13 +15,20 @@ const NewMatch: NextPage = () => {
   }
 
   return (
-    <>
+    <div className={styles.steps}>
       <Steps
         teams={<CreateTeams />}
         players={<p>Two</p>}
         schedule={<p>Three</p>}
       />
-    </>
+      <Button 
+        className={styles.nextBtn}
+        size='lg'
+        colorScheme='brand'
+      >
+        Next
+      </Button>
+    </div>
   );
 }
 

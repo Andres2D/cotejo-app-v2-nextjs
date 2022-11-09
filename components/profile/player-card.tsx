@@ -94,7 +94,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
     }
 
     const flags = getFlagSvg(flagRef?.current?.value);
-    setFlagsList(flags);
+    setFlagsList(Array.isArray(flags) ? flags : [flags]);
   }
 
   return (

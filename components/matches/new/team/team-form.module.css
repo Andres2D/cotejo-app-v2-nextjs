@@ -1,6 +1,7 @@
 .team {
   margin-top: 50px;
   align-items: center;
+  color: #333;
   text-align: center;
   font-weight: bold;
   justify-content: space-between;
@@ -11,3 +12,21 @@
   display: flex;
   justify-content: center;
 }
+
+.shield, 
+.selectedShield {
+  cursor: pointer;
+}
+
+.shields {
+  margin: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: space-between;
+  gap: 15px;
+  height: 200px;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+
