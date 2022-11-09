@@ -1,6 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import MatchList from '../../components/matches/match-list';
 import { getMatches } from '../../server/matches';
 import styles from './matches.module.css';
@@ -13,6 +14,7 @@ interface Props {
 const Matches: NextPage<Props> = ({matches}) => {
 
   const matchesList: FullMatch[] = JSON.parse(matches);
+  const router = useRouter();
 
   return (
     <section className={styles.matches}>
@@ -22,6 +24,7 @@ const Matches: NextPage<Props> = ({matches}) => {
       <Button 
         size='lg'
         colorScheme='brand'
+        onClick={() => router.push('/matches/new')}
       >
         New Match
       </Button>
