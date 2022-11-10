@@ -42,3 +42,8 @@ export interface UpdateProfileRequest extends IStats {
 }
 
 export interface RegisterPlayerRequest extends base {}
+
+export interface PlayerFixture {
+  label: string;
+  value: number;
+}
