@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import {
-  Input, InputGroup, InputLeftElement,
+  Input, InputGroup, InputLeftElement, Text
 } from '@chakra-ui/react';
 import styles from './place-date.module.css';
 import { CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
@@ -9,7 +9,7 @@ const PlaceDate: NextPage = () => {
   return (
     <div className={styles.form}>
       <div>
-        <h3 className={styles.titleInput}>Place</h3>
+        <Text className={styles.titleInput}>Place</Text>
         <InputGroup>
           <InputLeftElement
             className={styles.iconInput}
@@ -27,7 +27,7 @@ const PlaceDate: NextPage = () => {
         </InputGroup>
       </div>
       <div>
-        <h3 className={styles.titleInput}>Date</h3>
+        <Text className={styles.titleInput}>Date</Text>
         <InputGroup>
           <InputLeftElement
             className={styles.iconInput}
