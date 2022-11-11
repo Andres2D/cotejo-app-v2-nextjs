@@ -35,25 +35,22 @@ const Steps: NextPage<Props> = ({teams, players, schedule}) => {
         <Tab 
           _selected={selectedTab}
           className={styles.tab}
-          fontSize='2rem'
         >
-          <h2>Teams</h2>
+          <p className={styles.title}>Teams</p>
           <p className={styles.subtitle}>Create the teams</p> 
         </Tab>
         <Tab 
           _selected={selectedTab}
           className={styles.tab}
-          fontSize='2rem'
         >
-          <h2>Players</h2>
+          <p className={styles.title}>Players</p>
           <p className={styles.subtitle}>Add the players</p> 
         </Tab>
         <Tab 
           _selected={selectedTab}
           className={styles.tab}
-          fontSize='2rem'
         >
-          <h2>Schedule</h2>
+          <p className={styles.title}>Schedule</p>
           <p className={styles.subtitle}>The time & place</p> 
         </Tab>
       </TabList>
