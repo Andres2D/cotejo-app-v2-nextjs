@@ -1,0 +1,11 @@
+.players {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 20px;
+  width: 50%;
+}
+
+.player {
+  margin: 5px;
+}

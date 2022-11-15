@@ -6,6 +6,7 @@ import Steps from './header/steps';
 import styles from './new-match.module.css';
 import PlaceDate from './place-date/place-date';
 import CreateTeams from './teams/create-teams';
+import PlayersForm from './players/players-form';
 
 const NewMatch: NextPage = () => {
 
@@ -19,8 +20,8 @@ const NewMatch: NextPage = () => {
     <div className={styles.steps}>
       <Steps
         teams={<CreateTeams />}
-        players={<p>Two</p>}
         schedule={<PlaceDate />}
+        players={<PlayersForm />}
       />
       <div className={styles.actions}>
         <Button 
