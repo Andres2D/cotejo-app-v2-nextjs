@@ -15,6 +15,14 @@ export interface Player extends base {
   _id?: string;
 }
 
+export interface IPlayerList {
+  _id: string;
+  name: string;
+  nationality: string;
+  position: string;
+  image: string;
+}
+
 export interface IProfile {
   overall: number;
   position: string;

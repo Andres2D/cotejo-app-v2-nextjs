@@ -7,17 +7,27 @@ import {
   Avatar,
   TagCloseButton,
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import { playersFixture } from '../../../../constants/player-positions';
 import { getRandomColorSchema } from '../../../../helpers/styles';
 import styles from './players-form.module.css';
+import { RootState } from '../../../../interfaces/State';
+import { createMatchActions } from '../../../../store/create-match.slice';
 
 const PlayersForm: NextPage = () => {
+
+  const formState = useSelector((state: RootState) => state.createMatch);
+  const dispatch = useDispatch();
 
   const playersSelector = playersFixture.map(p => 
     <option key={p.value} value={p.value}>{p.label}</option>
   );
 
-  const playersAdded = Array.from({length: 10}).map((player, idx) => {
+  const removePlayer = (idPlayer: string) => {
+    dispatch(createMatchActions.removePlayer(idPlayer));
+  }
+
+  const playersAdded = [...formState.away_players, ...formState.home_players].map((player, idx) => {
     const color = getRandomColorSchema();
     return (
         <Tag 
@@ -28,14 +38,14 @@ const PlayersForm: NextPage = () => {
           className={styles.player}
         >
           <Avatar
-            src='https://bit.ly/sage-adebayo'
+            src={player.image}
             size='xs'
-            name='Segun Adebayo'
+            name={player.name}
             ml={-1}
             mr={2}
           />
-          <TagLabel>Segun</TagLabel>
-          <TagCloseButton />
+          <TagLabel>{player.name}</TagLabel>
+          <TagCloseButton onClick={() => removePlayer(player._id)} />
         </Tag>
     )
   });
@@ -44,7 +54,7 @@ const PlayersForm: NextPage = () => {
     <section>
       <Select 
         className={styles.selector}
-        placeholder='5 vs 5'
+        placeholder='Select an option'
         width={'100px'} 
         bgColor='white'
         color='#333'
