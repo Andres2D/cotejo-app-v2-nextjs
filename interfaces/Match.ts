@@ -25,5 +25,5 @@ export interface ICreateMatchState {
   home_players: IPlayerList[];
   away_players: IPlayerList[];
   players_number: number;
-  // current_step: number;
+  current_step: number;
 };

@@ -7,7 +7,7 @@ interface IPayload {
 }
 
 interface INumberPayload {
-  input: 'players_number',
+  input: 'players_number' | 'current_step',
   value: number
 }
 
@@ -41,8 +41,8 @@ const initialState: ICreateMatchState = {
       image: 'http://www.wycliffe.ca/wp-content/uploads/2021/03/member-fallback-user-image.png'
     },
   ],
-  home_players: []
-  // current_step: 0
+  home_players: [],
+  current_step: 0
 };
 
 const updateInput: CaseReducer<ICreateMatchState, PayloadAction<IPayload>> = 
