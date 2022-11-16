@@ -3,7 +3,12 @@ import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
 
 interface IPayload {
   input: 'home_team_name' | 'home_team_shield' | 'away_team_name' | 'away_team_shield',
-  value: string;
+  value: string
+}
+
+interface INumberPayload {
+  input: 'players_number',
+  value: number
 }
 
 
@@ -12,6 +17,7 @@ const initialState: ICreateMatchState = {
   home_team_shield: '',
   away_team_name: '',
   away_team_shield: '',
+  players_number: 16,
   away_players: [
     {
       _id: '63460e19837a188ab3792176',
@@ -45,6 +51,12 @@ const updateInput: CaseReducer<ICreateMatchState, PayloadAction<IPayload>> =
   state[input] = value;
 }
 
+const updateInputNumber: CaseReducer<ICreateMatchState, PayloadAction<INumberPayload>> = 
+  (state: ICreateMatchState, action: PayloadAction<INumberPayload>) => {
+  const { input, value } = action.payload;
+  state[input] = value;
+}
+
 const removePlayer: CaseReducer<ICreateMatchState, PayloadAction<string>> =
 (state: ICreateMatchState, action: PayloadAction<string>) => {
   state.home_players = state.home_players.filter(p => p._id !== action.payload);
@@ -56,6 +68,7 @@ const createMatchSlice = createSlice({
   initialState,
   reducers: {
     updateInput,
+    updateInputNumber,
     removePlayer
   }
 });

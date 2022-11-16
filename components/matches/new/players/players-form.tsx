@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import type { NextPage } from 'next';
 import { 
   Select,
@@ -20,33 +21,48 @@ const PlayersForm: NextPage = () => {
   const dispatch = useDispatch();
 
   const playersSelector = playersFixture.map(p => 
-    <option key={p.value} value={p.value}>{p.label}</option>
+    <option 
+      key={p.value} 
+      value={p.value} 
+      selected={p.value === formState.players_number}
+    >
+      {p.label}
+    </option>
   );
 
   const removePlayer = (idPlayer: string) => {
     dispatch(createMatchActions.removePlayer(idPlayer));
-  }
+  };
+
+  const updatePlayersNumber = (event: ChangeEvent<HTMLSelectElement>) => {
+    if(!event.target.value) {
+      return;
+    }
+
+    const value = Number(event.target.value);
+    dispatch(createMatchActions.updateInputNumber({input: 'players_number', value}));
+  };
 
   const playersAdded = [...formState.away_players, ...formState.home_players].map((player, idx) => {
     const color = getRandomColorSchema();
     return (
-        <Tag 
-          size='lg' 
-          colorScheme={color} 
-          borderRadius='full'
-          key={idx}
-          className={styles.player}
-        >
-          <Avatar
-            src={player.image}
-            size='xs'
-            name={player.name}
-            ml={-1}
-            mr={2}
-          />
-          <TagLabel>{player.name}</TagLabel>
-          <TagCloseButton onClick={() => removePlayer(player._id)} />
-        </Tag>
+      <Tag 
+        size='lg' 
+        colorScheme={color} 
+        borderRadius='full'
+        key={idx}
+        className={styles.player}
+      >
+        <Avatar
+          src={player.image}
+          size='xs'
+          name={player.name}
+          ml={-1}
+          mr={2}
+        />
+        <TagLabel>{player.name}</TagLabel>
+        <TagCloseButton onClick={() => removePlayer(player._id)} />
+      </Tag>
     )
   });
 
@@ -54,11 +70,11 @@ const PlayersForm: NextPage = () => {
     <section>
       <Select 
         className={styles.selector}
-        placeholder='Select an option'
-        width={'100px'} 
+        width={'120px'} 
         bgColor='white'
         color='#333'
         size='md'
+        onChange={updatePlayersNumber}
       >
         {playersSelector}
       </Select>

@@ -22,7 +22,8 @@ export interface ICreateMatchState {
   away_team_name: string;
   home_team_shield: string;
   away_team_shield: string;
-  home_players: IPlayerList[],
-  away_players: IPlayerList[]
+  home_players: IPlayerList[];
+  away_players: IPlayerList[];
+  players_number: number;
   // current_step: number;
 };
