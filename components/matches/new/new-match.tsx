@@ -34,21 +34,25 @@ const NewMatch: NextPage = () => {
         players={<PlayersForm />}
       />
       <div className={styles.actions}>
-        <Button 
-          className={`${styles.nextBtn} ${styles.bntBack}`}
-          size='lg'
-          onClick={() => nextStepHandler('back')}
-        >
-          Back
-        </Button>
-        <Button 
-          className={styles.nextBtn}
-          size='lg'
-          colorScheme='brand'
-          onClick={() => nextStepHandler('next')}
-        >
-          Next
-        </Button>
+        {form.current_step !== 0 &&
+          <Button 
+            className={`${styles.nextBtn} ${styles.bntBack}`}
+            size='lg'
+            onClick={() => nextStepHandler('back')}
+          >
+            Back
+          </Button>
+        }
+        {form.current_step !== 2 &&
+          <Button 
+            className={styles.nextBtn}
+            size='lg'
+            colorScheme='brand'
+            onClick={() => nextStepHandler('next')}
+          >
+            Next
+          </Button>
+        }
       </div>
     </div>
   );
