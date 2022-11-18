@@ -4,6 +4,7 @@ import {
   Rating
 } from '../../../database/models';
 import mongoConnection from '../../../database/database-configuration';
+import { Player as IPlayer, IPlayerList } from '../../../interfaces/Player';
 
 // TODO: type req and res
 const handler = async(req: any, res: any) => {
@@ -14,6 +15,9 @@ const handler = async(req: any, res: any) => {
       break;
       case 'POST':
         registerPlayer(req, res);
+      break;
+      case 'GET':
+        getPlayers(req, res);
       break;
       default:
         res.status(400).json({message: 'Bad method'});
@@ -130,5 +134,50 @@ const updatePlayer = async(req: any, res: any) => {
     res.status(500).json({message: 'Unexpected error'});
   }
 };
+
+const getPlayers = async(req: any, res: any) => {
+  try {
+    let playersList: IPlayerList[] = [];
+    const { query } = req.headers;
+    await mongoConnection();
+    const regex = new RegExp(query, 'i');
+    const playersDB = await Player.find({
+      $or: [
+        { email: regex },
+        { name: regex }
+      ]
+    });
+
+    if(!playersDB || playersDB.length === 0) {
+      res.status(200).json({players: []});
+      return;
+    }
+
+    playersDB.forEach((player: IPlayer) => {
+      const {
+        nationality,
+        position,
+        name,
+        image,
+        _id
+      } = player;
+
+      const playerProfile: IPlayerList = {
+        nationality,
+        position,
+        name,
+        image,
+        _id: _id!
+      };
+      
+      playersList.push(playerProfile);
+    });
+    
+    res.status(200).json({players: playersList});
+  }catch(err) {
+    console.log(err);
+    res.status(500).json({message: 'Unexpected error'});
+  }
+}
 
 export default handler;

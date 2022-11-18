@@ -42,7 +42,7 @@ const initialState: ICreateMatchState = {
     },
   ],
   home_players: [],
-  current_step: 0
+  current_step: 1
 };
 
 const updateInput: CaseReducer<ICreateMatchState, PayloadAction<IPayload>> = 
