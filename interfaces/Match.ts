@@ -1,3 +1,4 @@
+import { IPlayerList } from './Player';
 import { ITeam } from './Team';
 
 interface base {
@@ -21,5 +22,8 @@ export interface ICreateMatchState {
   away_team_name: string;
   home_team_shield: string;
   away_team_shield: string;
-  // current_step: number;
+  home_players: IPlayerList[];
+  away_players: IPlayerList[];
+  players_number: number;
+  current_step: number;
 };

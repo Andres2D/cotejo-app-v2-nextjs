@@ -8,6 +8,9 @@ import {
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { ReactNode } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../interfaces/State';
+import { createMatchActions } from '../../../../store/create-match.slice';
 import styles from './steps.module.css';
 
 const selectedTab: SystemStyleObject = {
@@ -22,6 +25,15 @@ interface Props {
 }
 
 const Steps: NextPage<Props> = ({teams, players, schedule}) => {
+
+  const dispatch = useDispatch();
+
+  const handleTabsChange = (index: number) => {
+    dispatch(createMatchActions.updateInputNumber({input: 'current_step', value: index}));
+  }
+
+  const form = useSelector((state: RootState) => state.createMatch);
+
   return (
     <Tabs 
       className={styles.tabs}
@@ -30,6 +42,8 @@ const Steps: NextPage<Props> = ({teams, players, schedule}) => {
       isFitted
       justifyContent='space-around' 
       colorScheme='brand'
+      index={form.current_step} 
+      onChange={handleTabsChange}
     >
       <TabList>
         <Tab 

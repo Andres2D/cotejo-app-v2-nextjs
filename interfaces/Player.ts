@@ -15,6 +15,14 @@ export interface Player extends base {
   _id?: string;
 }
 
+export interface IPlayerList {
+  _id: string;
+  name: string;
+  nationality: string;
+  position: string;
+  image: string;
+}
+
 export interface IProfile {
   overall: number;
   position: string;
@@ -42,3 +50,8 @@ export interface UpdateProfileRequest extends IStats {
 }
 
 export interface RegisterPlayerRequest extends base {}
+
+export interface PlayerFixture {
+  label: string;
+  value: number;
+}
