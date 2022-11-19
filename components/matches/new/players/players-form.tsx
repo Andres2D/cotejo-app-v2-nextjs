@@ -1,4 +1,4 @@
-import { ChangeEvent, MutableRefObject, useRef } from 'react';
+import { ChangeEvent, MutableRefObject, useRef, useState } from 'react';
 import type { NextPage } from 'next';
 import { 
   Select,
@@ -7,6 +7,10 @@ import {
   TagLabel,
   Avatar,
   TagCloseButton,
+  Flex,
+  Box,
+  Text,
+  Badge,
 } from '@chakra-ui/react';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +19,11 @@ import { getRandomColorSchema } from '../../../../helpers/styles';
 import styles from './players-form.module.css';
 import { RootState } from '../../../../interfaces/State';
 import { createMatchActions } from '../../../../store/create-match.slice';
+import { IPlayerList } from '../../../../interfaces/Player';
 
 const PlayersForm: NextPage = () => {
 
+  const [ playersSearch, setPlayersSearch ] = useState([]);
   const formState = useSelector((state: RootState) => state.createMatch);
   const dispatch = useDispatch();
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
@@ -45,8 +51,9 @@ const PlayersForm: NextPage = () => {
       console.log('unhandled error');
       return;
     }
-    const players = await response.json();
-    console.log(players);
+    const result = await response.json();
+    console.log(result)
+    setPlayersSearch(result.players);
   });
 
   const playersSelector = playersFixture.map(p => 
@@ -58,6 +65,12 @@ const PlayersForm: NextPage = () => {
       {p.label}
     </option>
   );
+
+  const addPlayer = (player: IPlayerList) => {
+    dispatch(createMatchActions.addPlayer(player));
+    inputRef.current.value = '';
+    setPlayersSearch([]);
+  };
 
   const removePlayer = (idPlayer: string) => {
     dispatch(createMatchActions.removePlayer(idPlayer));
@@ -75,6 +88,26 @@ const PlayersForm: NextPage = () => {
   const searchPlayer = () => {
     inputSubject.next(inputRef.current.value);
   };
+
+  const playersResults = playersSearch.map((player: IPlayerList) => {
+    return (
+      <Flex
+        onClick={() => addPlayer(player)}
+        key={player._id} 
+        className={styles.playerResult}>
+        <Avatar src={player.image} />
+        <Box ml='3'>
+          <Text fontWeight='bold'>
+            {player.name}
+            <Badge ml='1' colorScheme='green'>
+              {player.position}
+            </Badge>
+          </Text>
+          <Text fontSize='sm'>{player.nationality}</Text>
+        </Box>
+      </Flex>
+    )
+  });
 
   const playersAdded = [...formState.away_players, ...formState.home_players].map((player, idx) => {
     const color = getRandomColorSchema();
@@ -121,6 +154,7 @@ const PlayersForm: NextPage = () => {
         ref={inputRef}
         onChange={searchPlayer}
       />
+      {playersResults}
       <div className={styles.players}>
         {playersAdded}
       </div>

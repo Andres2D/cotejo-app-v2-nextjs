@@ -9,3 +9,19 @@
 .player {
   margin: 5px;
 }
+
+.playerResult {
+  margin: 5px;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.playerResult:hover {
+  color: black;
+  background-color: white;
+}

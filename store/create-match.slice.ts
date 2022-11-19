@@ -1,5 +1,6 @@
 import { ICreateMatchState } from "../interfaces/Match";
 import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
+import { IPlayerList } from '../interfaces/Player';
 
 interface IPayload {
   input: 'home_team_name' | 'home_team_shield' | 'away_team_name' | 'away_team_shield',
@@ -18,29 +19,7 @@ const initialState: ICreateMatchState = {
   away_team_name: '',
   away_team_shield: '',
   players_number: 16,
-  away_players: [
-    {
-      _id: '63460e19837a188ab3792176',
-      name: 'Andres Alcaraz',
-      nationality: 'Canada',
-      position: 'RM',
-      image: 'https://lh3.googleusercontent.com/a/ALm5wu3E6trGcHwafmkXYujBFoPSvAbXCpazQ68-Zwnyww=s96-c'
-    },
-    {
-      _id: '6354990441df157b4d8d314e',
-      name: 'Mohamed Salah',
-      nationality: 'Egypt',
-      position: 'S',
-      image: 'http://www.wycliffe.ca/wp-content/uploads/2021/03/member-fallback-user-image.png'
-    },
-    {
-      _id: '63573b75e129b671e9b85472',
-      name: 'Darwin Nunez',
-      nationality: 'Uruguay',
-      position: 'S',
-      image: 'http://www.wycliffe.ca/wp-content/uploads/2021/03/member-fallback-user-image.png'
-    },
-  ],
+  away_players: [],
   home_players: [],
   current_step: 1
 };
@@ -57,6 +36,16 @@ const updateInputNumber: CaseReducer<ICreateMatchState, PayloadAction<INumberPay
   state[input] = value;
 }
 
+const addPlayer: CaseReducer<ICreateMatchState, PayloadAction<IPlayerList>> =
+(state: ICreateMatchState, action: PayloadAction<IPlayerList>) => {
+  const maxMatchSize = state.players_number / 2;
+  if(state.home_players.length < maxMatchSize) {
+    state.home_players.push(action.payload);
+  }else if(state.away_players.length < maxMatchSize) {
+    state.away_players.push(action.payload);
+  }
+}
+
 const removePlayer: CaseReducer<ICreateMatchState, PayloadAction<string>> =
 (state: ICreateMatchState, action: PayloadAction<string>) => {
   state.home_players = state.home_players.filter(p => p._id !== action.payload);
@@ -69,7 +58,8 @@ const createMatchSlice = createSlice({
   reducers: {
     updateInput,
     updateInputNumber,
-    removePlayer
+    removePlayer,
+    addPlayer
   }
 });
 
