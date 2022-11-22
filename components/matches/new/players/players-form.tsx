@@ -11,6 +11,7 @@ import {
   Box,
   Text,
   Badge,
+  Button,
 } from '@chakra-ui/react';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +29,7 @@ const PlayersForm: NextPage = () => {
   const dispatch = useDispatch();
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
   const inputSubject: Subject<string> = new Subject();
+  const missingState = formState.players_number;
 
   // Get player
   inputSubject.pipe(
@@ -87,6 +89,10 @@ const PlayersForm: NextPage = () => {
 
   const searchPlayer = () => {
     inputSubject.next(inputRef.current.value);
+  };
+
+  const autoCompletePlayers = () => {
+    dispatch(createMatchActions.autoCompletePlayers());
   };
 
   const playersResults = playersSearch.map((player: IPlayerList) => {
@@ -158,6 +164,15 @@ const PlayersForm: NextPage = () => {
       <div className={styles.players}>
         {playersAdded}
       </div>
+      <Button
+        className={styles.save}
+        size='lg'
+        colorScheme='brand'
+        mt='5px'
+        onClick={autoCompletePlayers}
+      >
+        Auto complete players ({missingState - playersAdded.length})
+      </Button>
     </section>
   );
 }
