@@ -60,7 +60,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
     setProfileState({
       overall: parsedStats.overall,
       position: parsedProfile.position,
-      flag: getFlagSvg(parsedProfile.nationality, true).flag,
+      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
       name: parsedProfile.name,
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
@@ -82,7 +82,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
 
   const updateProfile = (field: string, value: string) => {
     if(field === 'nationality') {
-      setProfileState(curr => {return {...curr, [field]: value, flag: getFlagSvg(value, true).flag}});
+      setProfileState(curr => {return {...curr, [field]: value, flag: getFlagSvg(value, true)?.flag}});
     } else {
       setProfileState(curr => {return {...curr, [field]: value}});
     }
