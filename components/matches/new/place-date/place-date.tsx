@@ -8,37 +8,35 @@ import { CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
 const PlaceDate: NextPage = () => {
   return (
     <div className={styles.form}>
-      <div>
+      <div className={styles.formControl}>
         <Text className={styles.titleInput}>Place</Text>
         <InputGroup>
           <InputLeftElement
             className={styles.iconInput}
-            children={<InfoOutlineIcon color='gray.300' />}
-          />
+          >
+            <InfoOutlineIcon color='gray.300' />
+          </InputLeftElement>
           <Input
              className={styles.input}
              type='text'
              placeholder='Anfield'
-             htmlSize={30} 
-             width='auto'
              size='lg'
              variant='filled'
           />
         </InputGroup>
       </div>
-      <div>
+      <div className={styles.formControl}>
         <Text className={styles.titleInput}>Date</Text>
         <InputGroup>
           <InputLeftElement
             className={styles.iconInput}
-            children={<CalendarIcon color='gray.300' />}
-          />
+          >
+            <CalendarIcon color='gray.300' />
+          </InputLeftElement>
           <Input
             className={styles.input}
-            type='text'
+            type='date'
             placeholder='Date'
-            htmlSize={30} 
-            width='auto'
             size='lg'
             variant='filled'
           />
