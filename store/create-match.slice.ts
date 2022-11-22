@@ -1,6 +1,7 @@
 import { ICreateMatchState } from "../interfaces/Match";
-import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, CaseReducer, current } from '@reduxjs/toolkit';
 import { IPlayerList } from '../interfaces/Player';
+import { botsData } from '../constants/players-bots-data';
 
 interface IPayload {
   input: 'home_team_name' | 'home_team_shield' | 'away_team_name' | 'away_team_shield',
@@ -38,6 +39,15 @@ const updateInputNumber: CaseReducer<ICreateMatchState, PayloadAction<INumberPay
 
 const addPlayer: CaseReducer<ICreateMatchState, PayloadAction<IPlayerList>> =
 (state: ICreateMatchState, action: PayloadAction<IPlayerList>) => {
+
+  const currentPlayers = [...current(state.home_players), ...current(state.away_players)];
+
+  if(
+    action.payload &&
+    currentPlayers.filter(pla => pla._id === action.payload._id).length > 0) {
+    return;
+  }
+
   const maxMatchSize = state.players_number / 2;
   if(state.home_players.length < maxMatchSize) {
     state.home_players.push(action.payload);
@@ -52,6 +62,18 @@ const removePlayer: CaseReducer<ICreateMatchState, PayloadAction<string>> =
   state.away_players = state.away_players.filter(p => p._id !== action.payload);
 }
 
+const autoCompletePlayers: CaseReducer<ICreateMatchState> = 
+(state: ICreateMatchState) => {
+  const playersAdded = [...current(state.home_players), ...current(state.away_players)];
+  const availableBots = botsData.filter(bot => !playersAdded.includes(bot));
+  const missingPlayers = current(state).players_number - playersAdded.length;
+
+  for (let i = 0; i < missingPlayers; i++) {
+    addPlayer(state, {payload: availableBots[i], type: ''});
+  }
+  
+}
+
 const createMatchSlice = createSlice({
   name: 'createMatch',
   initialState,
@@ -59,7 +81,8 @@ const createMatchSlice = createSlice({
     updateInput,
     updateInputNumber,
     removePlayer,
-    addPlayer
+    addPlayer,
+    autoCompletePlayers
   }
 });
 
