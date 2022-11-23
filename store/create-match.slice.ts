@@ -4,7 +4,7 @@ import { IPlayerList } from '../interfaces/Player';
 import { botsData } from '../constants/players-bots-data';
 
 interface IPayload {
-  input: 'home_team_name' | 'home_team_shield' | 'away_team_name' | 'away_team_shield',
+  input: 'home_team_name' | 'home_team_shield' | 'away_team_name' | 'away_team_shield' | 'place' | 'date',
   value: string
 }
 
@@ -12,7 +12,6 @@ interface INumberPayload {
   input: 'players_number' | 'current_step',
   value: number
 }
-
 
 const initialState: ICreateMatchState = {
   home_team_name: '',
@@ -22,7 +21,9 @@ const initialState: ICreateMatchState = {
   players_number: 16,
   away_players: [],
   home_players: [],
-  current_step: 1
+  current_step: 2,
+  date: '',
+  place: ''
 };
 
 const updateInput: CaseReducer<ICreateMatchState, PayloadAction<IPayload>> = 

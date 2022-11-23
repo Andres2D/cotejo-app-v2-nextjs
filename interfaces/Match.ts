@@ -26,4 +26,6 @@ export interface ICreateMatchState {
   away_players: IPlayerList[];
   players_number: number;
   current_step: number;
+  date: string;
+  place: string;
 };
