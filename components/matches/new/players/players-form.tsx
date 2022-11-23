@@ -21,12 +21,17 @@ import styles from './players-form.module.css';
 import { RootState } from '../../../../interfaces/State';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import { IPlayerList } from '../../../../interfaces/Player';
+import useRequest from '../../../../hooks/use-request';
 
 const PlayersForm: NextPage = () => {
 
   const [ playersSearch, setPlayersSearch ] = useState([]);
   const formState = useSelector((state: RootState) => state.createMatch);
   const dispatch = useDispatch();
+  const { 
+    isLoading,
+    sendRequest
+  } = useRequest();
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
   const inputSubject: Subject<string> = new Subject();
   const missingState = formState.players_number;
@@ -41,22 +46,18 @@ const PlayersForm: NextPage = () => {
       return;
     }
 
-    const response = await fetch('/api/player', {
-      method: 'GET',
+    sendRequest({
+      url: '/api/player',
       headers: {
         'Content-Type': 'application/json',
         'query': query
       }
-    });
-
-    if(!response) {
-      console.log('unhandled error');
-      return;
-    }
-    const result = await response.json();
-    console.log(result)
-    setPlayersSearch(result.players);
+    }, playersSearchHandler);
   });
+
+  const playersSearchHandler = (data: any) => {
+    setPlayersSearch(data.players)
+  };
 
   const playersSelector = playersFixture.map(p => 
     <option 

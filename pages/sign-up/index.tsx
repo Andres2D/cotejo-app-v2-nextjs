@@ -6,21 +6,27 @@ import { Link, useToast } from '@chakra-ui/react';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.css';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
+import useRequest from '../../hooks/use-request';
 
 const SignUp: NextPage = () => {
 
   const toast = useToast();
+  const {
+    error,
+    sendRequest
+  } = useRequest();
 
   const registerPlayer = async(request: RegisterPlayerRequest) => {
-    const response = await fetch('api/player', {
+    sendRequest({
+      url: 'api/player',
       method: 'POST',
       body: JSON.stringify(request),
       headers: {
         'Content-Type': 'application/json'
-      }
-    });
-    
-    if(!response.ok) {
+      },
+    }, requestHandler.bind(null, request));
+
+    if(error) {
       toast({
         title: 'Error.',
         description: "Profile could not be created. Try again later.",
@@ -30,8 +36,9 @@ const SignUp: NextPage = () => {
       });
       return;
     }
+  };
 
-    await response.json();
+  const requestHandler = (request: RegisterPlayerRequest) => {
     toast({
       title: 'Profile created.',
       description: "Profile has been created.",
@@ -39,7 +46,7 @@ const SignUp: NextPage = () => {
       duration: 9000,
       isClosable: true,
     });
-    
+
     signIn('credential_user', {email: request.email, password: request.password});
   };
 

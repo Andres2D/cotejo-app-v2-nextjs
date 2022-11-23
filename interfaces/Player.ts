@@ -32,6 +32,12 @@ export interface IProfile {
   nationality: string;
 }
 
+export interface IPlayerRequest {
+  player: string;
+  position: string;
+  isCaptain: boolean;
+}
+
 export interface IStats {
   peace: number;
   shooting: number;
