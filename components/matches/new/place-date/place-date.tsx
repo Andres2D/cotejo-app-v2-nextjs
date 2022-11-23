@@ -6,6 +6,7 @@ import {
   Button,
   Input, InputGroup, InputLeftElement, Text
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import styles from './place-date.module.css';
 import useRequest from '../../../../hooks/use-request';
@@ -16,6 +17,7 @@ const PlaceDate: NextPage = () => {
 
   const placeRef = useRef() as MutableRefObject<HTMLInputElement>;
   const dateRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const router = useRouter();
   const form = useSelector((state: RootState) => state.createMatch);
   const {
     error,
@@ -78,6 +80,8 @@ const PlaceDate: NextPage = () => {
   const createMatchHandler = (response: any) => {
     console.log('match created');
     console.log(response);
+    dispatch(createMatchActions.resetStore());
+    router.push('/matches');
   }
 
   return (
@@ -124,6 +128,7 @@ const PlaceDate: NextPage = () => {
         mt={10}
         colorScheme='brand'
         onClick={createMatch}
+        disabled={isLoading}
       >
         Create Match
       </Button>

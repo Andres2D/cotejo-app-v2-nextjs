@@ -21,7 +21,7 @@ const initialState: ICreateMatchState = {
   players_number: 16,
   away_players: [],
   home_players: [],
-  current_step: 2,
+  current_step: 0,
   date: '',
   place: ''
 };
@@ -72,7 +72,6 @@ const autoCompletePlayers: CaseReducer<ICreateMatchState> =
   for (let i = 0; i < missingPlayers; i++) {
     addPlayer(state, {payload: availableBots[i], type: ''});
   }
-  
 }
 
 const createMatchSlice = createSlice({
@@ -83,7 +82,8 @@ const createMatchSlice = createSlice({
     updateInputNumber,
     removePlayer,
     addPlayer,
-    autoCompletePlayers
+    autoCompletePlayers,
+    resetStore: () => initialState
   }
 });
 
