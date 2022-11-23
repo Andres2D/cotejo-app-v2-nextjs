@@ -1,5 +1,6 @@
 import mongoConnection from '../../../database/database-configuration';
-import { Match } from '../../../database/models'; 
+import { Match, Team } from '../../../database/models'; 
+import TeamPlayer from '../../../database/models/team-player';
 
 const handler = async(req: any, res: any) => {
   try {
@@ -19,15 +20,95 @@ const handler = async(req: any, res: any) => {
 
 const createMatch = async(req: any, res: any) => {
   try {
-    const { date, location, home_team, away_team } = req.body;
+    const { 
+      date, 
+      location, 
+      home_team, 
+      away_team, 
+      home_players, 
+      away_players 
+    } = req.body;
     await mongoConnection();
-    const match = new Match({date, location, home_team, away_team});
+
+    // Create home team
+    const homeTeam = await createTeam(home_team);
+
+    if(!homeTeam) {
+      throw new Error('Error creating the home team');
+    }
+
+    // Create away team
+    const awayTeam = await createTeam(away_team);
+
+    if(!awayTeam) {
+      throw new Error('Error creating the away team');
+    }
+
+    // Create home team players
+    const homeTeamPlayers = home_players.map((player: any) => {
+      return {
+        team: homeTeam._id,
+        ...player
+      }
+    });
+
+    const homeTeamPlayersDB = await createTeamPlayers(homeTeamPlayers);
+
+    if(!homeTeamPlayersDB) {
+      throw new Error('Error creating the home team players');
+    }
+
+    // Create away team players
+    const awayTeamPlayers = away_players.map((player: any) => {
+      return {
+        team: awayTeam._id,
+        ...player 
+      }
+    });
+
+    const awayTeamPlayersDB = await createTeamPlayers(awayTeamPlayers);
+
+    if(!awayTeamPlayersDB) {
+      throw new Error('Error creating the away team players');
+    }
+
+    const match = new Match({
+      date, 
+      location, 
+      home_team: homeTeam._id,
+      away_team: awayTeam._id
+    });
     await match.save();
-    res.status(201).json({message: 'Match created'});
+    res.status(201).json({message: 'Match created', match: match._id});
   }catch(err) {
     console.log(err);
     res.status(500).json({message: 'Error creating the match'});
   }
 }
+
+const createTeam = async(team: any) => {
+  try {
+    const {name, formation, shield} = team;
+    const teamDB = new Team({name, formation, shield});
+    await teamDB.save();
+    return teamDB;
+  }catch(err) {
+    console.log(err);
+    return null;
+  }
+};
+
+const createTeamPlayers = async(team_player: any) => {
+  try {
+    team_player.map(({position, isCaptain, player, team}: any) => 
+    {
+      new TeamPlayer({position, isCaptain, player, team}).save();
+    });
+    return true;
+  }catch(err) {
+    console.log(err);
+    return null;
+  }
+};
 
 export default handler;
