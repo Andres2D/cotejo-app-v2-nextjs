@@ -117,7 +117,7 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
     }
 
     sendRequest({
-      url: 'api/players',
+      url: 'api/player',
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
