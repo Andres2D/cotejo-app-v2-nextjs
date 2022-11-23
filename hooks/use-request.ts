@@ -5,7 +5,7 @@ const useRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = useCallback(async(requestConfig: IRequest, applyData: (data: any) => {}) => {
+  const sendRequest = useCallback(async(requestConfig: IRequest, applyData: any) => {
     try {
       setIsLoading(true);
       setError(null);

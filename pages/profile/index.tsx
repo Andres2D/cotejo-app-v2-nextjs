@@ -19,6 +19,7 @@ import {
   UpdateProfileRequest 
 } from '../../interfaces/Player';
 import { calculateAVG } from '../../helpers/stats';
+import useRequest from '../../hooks/use-request';
 
 interface Props {
   image?: string;
@@ -53,6 +54,10 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
 
   const [profileState, setProfileState] = useState(initialState);
   const [statsState, setStatsState] = useState(initialStats);
+  const {
+    error,
+    sendRequest,
+  } = useRequest();
 
   const toast = useToast();
 
@@ -111,15 +116,16 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
       shooting: statsState.shooting
     }
 
-    const response = await fetch('api/player', {
+    sendRequest({
+      url: 'api/players',
       method: 'PUT',
-      body: JSON.stringify(request),
       headers: {
         'Content-Type': 'application/json'
-      }
-    });
+      },
+      body: JSON.stringify(request)
+    }, responseHandler);
     
-    if(!response.ok) {
+    if(error) {
       toast({
         title: 'Error.',
         description: "Profile could not be updated. Try again later.",
@@ -128,16 +134,17 @@ const Profile: NextPage = ({image, name, stats, profile, email}: Props) => {
         isClosable: true,
       })
     }
+  };
 
-    await response.json();
+  const responseHandler = () => {
     toast({
       title: 'Profile updated.',
       description: "Profile has been updated.",
       status: 'success',
       duration: 9000,
       isClosable: true,
-    })
-  };
+    });
+  }; 
   
   return (
     <section className={styles.section}>
