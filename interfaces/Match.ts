@@ -1,5 +1,5 @@
-import { IPlayerList, IPlayerRequest } from './Player';
-import { ITeam } from './Team';
+import { IFullPlayer, IPlayerList, IPlayerRequest } from './Player';
+import { IFullTeam, ITeam } from './Team';
 
 interface base {
   date: string;
@@ -36,3 +36,15 @@ export interface ICreateMatchRequest extends base {
   home_players: IPlayerRequest[];
   away_players: IPlayerRequest[];
 }
+
+export interface IFullMatch extends base {
+  _id: string;
+  home_team: IFullTeam;
+  away_team: IFullTeam;
+}
+
+export interface IMatchDetails {
+  match: IFullMatch,
+  home: IFullPlayer[];
+  away: IFullPlayer[];
+};
