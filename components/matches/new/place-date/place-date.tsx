@@ -38,8 +38,8 @@ const PlaceDate: NextPage = () => {
     dispatch(createMatchActions.updateInput({input: 'date', value: date}));
 
     const request: ICreateMatchRequest = {
-      date: form.date,
-      location: form.place,
+      date,
+      location: place,
       home_team: {
         name: form.home_team_name,
         formation: 't',
