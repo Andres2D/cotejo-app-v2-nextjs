@@ -5,6 +5,7 @@ import Image from 'next/image';
 import styles from './match-list.module.css';
 import Team from './team';
 import { FullMatch } from '../../interfaces/Match';
+import { useRouter } from 'next/router';
 
 interface Props {
   matches: FullMatch[]
@@ -12,9 +13,19 @@ interface Props {
 
 const MatchList: NextPage<Props> = ({matches}) => {
 
+  const router = useRouter();
+
+  const goToMatchDetails = (matchId: string) => {
+    router.push(`/matches/${matchId}`)
+  };
+
   const matchesListMap = matches.map(({_id, date, location, away_team, home_team}) => {
     return (
-      <div className={styles.container} key={_id}>
+      <div 
+        className={styles.container} 
+        key={_id}
+        onClick={() => goToMatchDetails(_id)}
+      >
         <Team
           name={home_team.name}
           image={home_team.shield}
