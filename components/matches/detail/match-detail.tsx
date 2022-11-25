@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import { matchDetailsMock } from '../../../mock/match.mock';
 import FieldLayout from './field/field';
+import FieldHeader from './field/header';
+import styles from './match-detail.module.css';
 
 interface Props {
   matchId: string;
@@ -8,10 +10,34 @@ interface Props {
 
 const MatchDetailsLayout: NextPage<Props> = ({matchId}) => {
 
+  const { match, home, away } = matchDetailsMock;
+  const homeTeamName = match.home_team.name;
+  const awayTeamName = match.away_team.name;
+
   return (
-    <>
-      <FieldLayout />
-    </>
+    <section>
+      <div className={styles.header}>
+        <FieldHeader
+          teamName={homeTeamName}
+          teamShield={match.home_team.shield}
+        />
+        <FieldHeader
+          teamName={awayTeamName}
+          teamShield={match.away_team.shield}
+          isAway
+        />
+      </div>
+      <div className={styles.fields}>
+        <FieldLayout 
+          team={home.slice(0, 4)}
+          formation={match.home_team.formation}
+        />
+        <FieldLayout 
+          team={away.slice(0, 4)}
+          formation={match.away_team.formation}
+        />
+      </div>
+    </section>
   );
 }
 

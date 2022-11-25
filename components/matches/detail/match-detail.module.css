@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.fields {
+  display: flex;
+  justify-content: space-evenly;
+}
