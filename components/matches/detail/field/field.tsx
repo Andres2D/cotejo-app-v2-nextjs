@@ -1,25 +1,34 @@
+import { Avatar } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { matchDetailsMock } from '../../../../mock/match.mock';
-import FieldHeader from './header';
+import { IFullPlayer } from '../../../../interfaces/Player';
 import styles from './field.module.css';
+import { 
+  formationKeyMap, 
+  formationTypeMap 
+} from '../../../../constants/formation';
 
-const FieldLayout: NextPage = () => {
+interface Props {
+  team: IFullPlayer[],
+  formation: string
+}
 
-  const { match } = matchDetailsMock;
-  const homeTeamName = match.home_team.name;
-  const awayTeamName = match.away_team.name;
+const FieldLayout: NextPage<Props> = ({team, formation}) => {
+
+  const playersMap = team.map((player, idx) => {
+    return (
+      <Avatar
+        key={idx}
+        size='lg'
+        className={`${styles.avatar} ${styles.player} ${styles[`player${idx+1}`]}`}
+        name={player.player.name} 
+        src='https://bit.ly/tioluwani-kolawole'
+      />
+    )
+  });
 
   return (
-    <section className={styles.header}>
-      <FieldHeader
-        teamName={homeTeamName}
-        teamShield={match.home_team.shield}
-      />
-      <FieldHeader
-        teamName={awayTeamName}
-        teamShield={match.away_team.shield}
-        isAway
-      />
+    <section className={`${styles.field} ${styles[`${formationTypeMap[formation]}${formationKeyMap[team.length]}`]}`}>
+      {playersMap}
     </section>
   );
 }

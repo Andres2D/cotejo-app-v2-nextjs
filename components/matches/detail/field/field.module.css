@@ -1,4 +1,55 @@
-.header {
-  display: flex;
-  justify-content: space-evenly;
+.field {
+  width: 50%;
+  height: 400px;
+  background-image: url('/images/field.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: 20px;
+  display: grid;
+}
+
+.avatar {
+  border: 2px solid white;
+}
+
+.player {
+  margin: auto auto;
+}
+
+.player1 {
+  grid-area: player1;
+  margin-bottom: 55px;
+}
+
+.player2 {
+  grid-area: player2;
+}
+
+.player3 {
+  grid-area: player3;
+}
+
+.player4 {
+  grid-area: player4;
+}
+
+.squareFour {
+  grid-template-areas:
+    ". player4 ."
+    "player2 . player3"
+    ". player1 .";
+}
+
+.triangleFour {
+  grid-template-areas:
+  ". player5 ."
+  "player2 player3 player4"
+  ". player1 .";  
+}
+
+.forwardFour {
+  grid-template-areas:
+    "player2 player3 player4"
+    ". . ."
+    ". player1 .";
 }
