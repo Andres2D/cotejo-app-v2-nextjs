@@ -48,3 +48,8 @@ export interface IMatchDetails {
   home: IFullPlayer[];
   away: IFullPlayer[];
 };
+
+export interface IMatchDetailsState {
+  home_team_formation: string;
+  away_team_formation: string;
+}
