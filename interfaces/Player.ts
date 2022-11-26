@@ -61,3 +61,21 @@ export interface PlayerFixture {
   label: string;
   value: number;
 }
+
+export interface IMatchPlayer {
+  _id: string,
+  nickname: string,
+  name: string,
+  number: number,
+  status: string,
+  image: string;
+}
+
+export interface IFullPlayer {
+  _id: string;
+  position: string;
+  isCaptain: boolean;
+  player: IMatchPlayer;
+  team: string;
+  overall: number;
+}

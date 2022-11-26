@@ -1,15 +1,22 @@
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
-import NewMatch from '../../../components/matches/new/new-match';
+import MatchDetailsLayout from '../../../components/matches/detail/match-detail';
 
-const CreateMatch: NextPage = () => {
+interface Props {
+  matchId: string;
+}
+
+const MatchDetails: NextPage<Props> = ({matchId}) => {
 
   return (
-    <NewMatch />
+    <MatchDetailsLayout
+      matchId={matchId} 
+    />
   );
 }
 
 export const getServerSideProps = async(context: any) => {
+  const { matchId } = context.query;
   const session = await getSession({ req: context.req});
   if(!session) {
     return {
@@ -21,8 +28,11 @@ export const getServerSideProps = async(context: any) => {
   }
 
   return {
-    props: { session }
+    props: { 
+      session,
+      matchId
+    }
   }
 };
 
-export default CreateMatch;
+export default MatchDetails;

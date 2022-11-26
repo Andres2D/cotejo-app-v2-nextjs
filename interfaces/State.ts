@@ -1,5 +1,6 @@
-import { ICreateMatchState } from "./Match";
+import { ICreateMatchState, IMatchDetailsState } from './Match';
 
 export interface RootState {
-  createMatch: ICreateMatchState
+  createMatch: ICreateMatchState;
+  matchDetails: IMatchDetailsState;
 }
