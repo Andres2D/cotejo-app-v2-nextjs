@@ -3,7 +3,7 @@ import { IMatchDetailsState } from '../interfaces/Match';
 
 interface IPayload {
   input: 'home_team_formation' | 'away_team_formation',
-  value: 't' | 's' | 'f'
+  value: string
 }
 
 const initialState: IMatchDetailsState = {

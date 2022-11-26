@@ -1,18 +1,32 @@
-import { Avatar } from '@chakra-ui/react';
+import { Avatar, Select } from '@chakra-ui/react';
 import type { NextPage } from 'next';
+import { MutableRefObject, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { IFullPlayer } from '../../../../interfaces/Player';
 import styles from './field.module.css';
 import { 
   formationKeyMap, 
   formationTypeMap 
 } from '../../../../constants/formation';
+import { RootState } from '../../../../interfaces/State';
+import { matchDetailsActions } from '../../../../store/match-details.slice';
 
 interface Props {
   team: IFullPlayer[],
-  formation: string
+  isAway?: boolean
 }
 
-const FieldLayout: NextPage<Props> = ({team, formation}) => {
+const FieldLayout: NextPage<Props> = ({team, isAway}) => {
+
+  const formationRef = useRef() as MutableRefObject<HTMLSelectElement>;
+  const dispatch = useDispatch();
+  const formationKey = isAway ? 'away_team_formation' : 'home_team_formation';
+  
+  const match = useSelector((state: RootState) => state.matchDetails);
+
+  const updateFormation = () => {
+    dispatch(matchDetailsActions.updateInput({input: formationKey, value: formationRef.current.value}));
+  };
 
   const playersMap = team.map((player, idx) => {
     return (
@@ -27,9 +41,23 @@ const FieldLayout: NextPage<Props> = ({team, formation}) => {
   });
 
   return (
-    <section className={`${styles.field} ${styles[`${formationTypeMap[formation]}${formationKeyMap[team.length]}`]}`}>
-      {playersMap}
-    </section>
+    <div className={styles.fieldGroup}>
+      <section className={`${styles.field} 
+        ${styles[`${formationTypeMap[match[formationKey]]}${formationKeyMap[team.length]}`]}`}>
+        {playersMap}
+      </section>
+      <Select 
+        width={'50%'}
+        className={styles.formations}
+        ref={formationRef}
+        onChange={updateFormation}
+        value={match[formationKey]}
+      >
+        <option value='t'>Triangle</option>
+        <option value='s'>Square</option>
+        <option value='f'>Forward</option>
+      </Select>
+    </div>
   );
 }
 

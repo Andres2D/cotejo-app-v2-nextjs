@@ -30,11 +30,10 @@ const MatchDetailsLayout: NextPage<Props> = ({matchId}) => {
       <div className={styles.fields}>
         <FieldLayout 
           team={home.slice(0, 4)}
-          formation={match.home_team.formation}
-        />
+          />
         <FieldLayout 
           team={away.slice(0, 4)}
-          formation={match.away_team.formation}
+          isAway
         />
       </div>
     </section>
