@@ -1,26 +1,56 @@
 import { createSlice, PayloadAction, CaseReducer, current } from '@reduxjs/toolkit';
-import { IMatchDetailsState } from '../interfaces/Match';
+import { IMatchDetails } from '../interfaces/Match';
 
 interface IPayload {
-  input: 'home_team_formation' | 'away_team_formation',
+  input: 'home_team' | 'away_team',
   value: string
 }
 
-const initialState: IMatchDetailsState = {
-  home_team_formation: 't',
-  away_team_formation: 't',
+const initialState: IMatchDetails = {
+  match: {
+    _id: '',
+    home_team: {
+      _id: '',
+      formation: 't',
+      name: '',
+      shield: ''
+    },
+    away_team: {
+      _id: '',
+      formation: 't',
+      name: '',
+      shield: ''
+    },
+    date: '',
+    location: '',
+  },
+  home: [],
+  away: []
 };
 
-const updateInput: CaseReducer<IMatchDetailsState, PayloadAction<IPayload>> = 
-  (state: IMatchDetailsState, action: PayloadAction<IPayload>) => {
+const setMatchState: CaseReducer<IMatchDetails, PayloadAction<IMatchDetails>> = 
+  (state: IMatchDetails, action: PayloadAction<IMatchDetails>) => {
+    const { match, away, home } = action.payload;
+    state.match = match;
+    state.home = home;
+    state.away = away;
+}
+
+const updateInput: CaseReducer<IMatchDetails, PayloadAction<IPayload>> = 
+  (state: IMatchDetails, action: PayloadAction<IPayload>) => {
   const { input, value } = action.payload;
-  state[input] = value;
+  if(input === 'home_team') {
+    state.match.home_team.formation = value;
+  }else{
+    state.match.away_team.formation = value;
+  }
 }
 
 const matchDetailSlice = createSlice({
   name: 'matchDetails',
   initialState,
   reducers: {
+    setMatchState,
     updateInput
   }
 });
