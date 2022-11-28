@@ -20,9 +20,9 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
 
   const formationRef = useRef() as MutableRefObject<HTMLSelectElement>;
   const dispatch = useDispatch();
-  const formationKey = isAway ? 'away_team_formation' : 'home_team_formation';
+  const formationKey = isAway ? 'away_team' : 'home_team';
   
-  const match = useSelector((state: RootState) => state.matchDetails);
+  const matchDetails = useSelector((state: RootState) => state.matchDetails);
 
   const updateFormation = () => {
     dispatch(matchDetailsActions.updateInput({input: formationKey, value: formationRef.current.value}));
@@ -43,7 +43,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
   return (
     <div className={styles.fieldGroup}>
       <section className={`${styles.field} 
-        ${styles[`${formationTypeMap[match[formationKey]]}${formationKeyMap[team.length]}`]}`}>
+        ${styles[`${formationTypeMap[matchDetails.match[formationKey].formation]}${formationKeyMap[team.length]}`]}`}>
         {playersMap}
       </section>
       <Select 
@@ -51,7 +51,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         className={styles.formations}
         ref={formationRef}
         onChange={updateFormation}
-        value={match[formationKey]}
+        value={matchDetails.match[formationKey].formation}
       >
         <option value='t'>Triangle</option>
         <option value='s'>Square</option>

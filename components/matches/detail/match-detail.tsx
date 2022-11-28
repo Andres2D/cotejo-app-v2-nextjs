@@ -1,38 +1,35 @@
 import type { NextPage } from 'next';
-import { matchDetailsMock } from '../../../mock/match.mock';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../interfaces/State';
 import FieldLayout from './field/field';
 import FieldHeader from './field/header';
 import styles from './match-detail.module.css';
 
-interface Props {
-  matchId: string;
-}
+const MatchDetailsLayout: NextPage = () => {
 
-const MatchDetailsLayout: NextPage<Props> = ({matchId}) => {
-
-  const { match, home, away } = matchDetailsMock;
-  const homeTeamName = match.home_team.name;
-  const awayTeamName = match.away_team.name;
+  const matchDetails = useSelector((state: RootState) => state.matchDetails);
+  const homeTeam = matchDetails.match.home_team;
+  const awayTeam = matchDetails.match.away_team;
 
   return (
     <section>
       <div className={styles.header}>
         <FieldHeader
-          teamName={homeTeamName}
-          teamShield={match.home_team.shield}
+          teamName={homeTeam.name}
+          teamShield={homeTeam.shield}
         />
         <FieldHeader
-          teamName={awayTeamName}
-          teamShield={match.away_team.shield}
+          teamName={awayTeam.name}
+          teamShield={awayTeam.shield}
           isAway
         />
       </div>
       <div className={styles.fields}>
         <FieldLayout 
-          team={home.slice(0, 4)}
+          team={matchDetails.home.slice(0, 4)}
           />
         <FieldLayout 
-          team={away.slice(0, 4)}
+          team={matchDetails.away.slice(0, 4)}
           isAway
         />
       </div>
