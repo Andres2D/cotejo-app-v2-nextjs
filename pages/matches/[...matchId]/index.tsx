@@ -1,17 +1,27 @@
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import MatchDetailsLayout from '../../../components/matches/detail/match-detail';
+import { IMatchDetails } from '../../../interfaces/Match';
+import { matchDetailsMock } from '../../../mock/match.mock';
+import { matchDetailsActions } from '../../../store/match-details.slice';
 
 interface Props {
-  matchId: string;
+  match: IMatchDetails;
 }
 
-const MatchDetails: NextPage<Props> = ({matchId}) => {
+const MatchDetails: NextPage<Props> = ({match}) => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(matchDetailsActions.setMatchState(match));
+  }, [dispatch, match])
+  
 
   return (
-    <MatchDetailsLayout
-      matchId={matchId} 
-    />
+    <MatchDetailsLayout />
   );
 }
 
@@ -30,7 +40,7 @@ export const getServerSideProps = async(context: any) => {
   return {
     props: { 
       session,
-      matchId
+      match: matchDetailsMock
     }
   }
 };
