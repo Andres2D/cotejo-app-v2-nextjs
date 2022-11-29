@@ -1,5 +1,5 @@
 .fieldGroup {
-  width: 50%;
+  width: 550px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -62,6 +62,10 @@
 
 .player9 {
   grid-area: player9;
+}
+
+.player10 {
+  grid-area: player10;
 }
 
 /*
@@ -245,7 +249,7 @@
 }
 
 /*
-  8 vs 8 Formations
+  9 vs 9 Formations
 */
 
 .squareNine {
@@ -284,5 +288,56 @@
 
 .forwardNine > .player5,
 .forwardNine > .player8 {
+  margin-bottom: 5px;
+}
+
+/*
+  10 vs 10 Formations
+*/
+
+.squareTen {
+  grid-template-areas:
+  ". player9 player10 ."
+  "player5 player6 player7 player8"
+  "player2 player3 player3 player4"
+  ". player1 player1  .";
+}
+
+.squareTen > .player3,
+.squareTen > .player6,
+.squareTen > .player7 {
+  margin-bottom: 5px;
+}
+
+.squareTen > .player5,
+.squareTen > .player2 {
+  
+}
+
+.triangleTen {
+  grid-template-areas:
+  " . player10 player10 ."
+  "player6 player7 player8 player9"
+  "player2 player3 player4 player5"
+  ". player1 player1 .";
+}
+
+.squareTen > .player3,
+.squareTen > .player4,
+.squareTen > .player7,
+.squareTen > .player8 {
+  margin-bottom: 5px;
+}
+
+.forwardTen {
+  grid-template-areas:
+  " . player9 player10 ."
+  "player6 player7 player7 player8"
+  "player2 player3 player4 player5"
+  ". player1 player1 . ";
+}
+
+.forwardTen > .player3,
+.forwardTen > .player4 {
   margin-bottom: 5px;
 }
