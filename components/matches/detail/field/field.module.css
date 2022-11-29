@@ -56,6 +56,10 @@
   grid-area: player7;
 }
 
+.player8 {
+  grid-area: player8;
+}
+
 /*
   4 vs 4 Formations
 */
@@ -188,5 +192,50 @@
 
 .forwardSeven > .player3,
 .forwardSeven > .player6 {
+  margin-bottom: 5px;
+}
+
+/*
+  8 vs 8 Formations
+*/
+
+.squareEight {
+  grid-template-areas:
+  "player7 . player8"
+  "player5 . player6"
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.squareEight > .player3 {
+  margin-bottom: 5px;
+}
+
+.triangleEight {
+  grid-template-areas:
+  "player6 player7 player8"
+  ". player5 ."
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.triangleEight > .player3 {
+  margin-bottom: 5px;
+} 
+
+.triangleEight > .player7 {
+  margin-top: 5px;
+}
+
+.forwardEight {
+  grid-template-areas:
+  ". player8 ."
+  "player5 player6 player7"
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.forwardEight > .player3, 
+.forwardEight > .player6 {
   margin-bottom: 5px;
 }

@@ -26,10 +26,10 @@ const MatchDetailsLayout: NextPage = () => {
       </div>
       <div className={styles.fields}>
         <FieldLayout 
-          team={matchDetails.home.slice(0, 7)}
+          team={matchDetails.home.slice(0, 8)}
           />
         <FieldLayout 
-          team={matchDetails.away.slice(0, 7)}
+          team={matchDetails.away.slice(0, 8)}
           isAway
         />
       </div>
