@@ -29,7 +29,6 @@
 
 .player1 {
   grid-area: player1;
-  margin-bottom: 55px;
 }
 
 .player2 {
@@ -66,6 +65,10 @@
 
 .player10 {
   grid-area: player10;
+}
+
+.player11 {
+  grid-area: player11;
 }
 
 /*
@@ -309,11 +312,6 @@
   margin-bottom: 5px;
 }
 
-.squareTen > .player5,
-.squareTen > .player2 {
-  
-}
-
 .triangleTen {
   grid-template-areas:
   " . player10 player10 ."
@@ -339,5 +337,51 @@
 
 .forwardTen > .player3,
 .forwardTen > .player4 {
+  margin-bottom: 5px;
+}
+
+/*
+  11 vs 11 Formations
+*/
+
+.squareEleven {
+  grid-template-areas:
+  "player9 player10 player10 player11"
+  "player6 player7 player7 player8"
+  "player2 player3 player4 player5"
+  ". player1 player1 .";
+}
+
+.squareEleven > .player3,
+.squareEleven > .player4, 
+.squareEleven > .player7 {
+  margin-bottom: 5px;
+}
+
+.triangleEleven {
+  grid-template-areas:
+  " . player10 player11 ."
+  "player6 player7 player8 player9"
+  "player2 player3 player4 player5"
+  ". player1 player1 .";
+}
+
+.triangleEleven > .player3, 
+.triangleEleven > .player4,
+.triangleEleven > .player7,
+.triangleEleven > .player8 {
+  margin-bottom: 5px;
+}
+
+.forwardEleven {
+  grid-template-areas:
+  " player8 player9 player10 player11"
+  ". player6 player7 ."
+  "player2 player3 player4 player5"
+  ". player1 player1 . ";
+}
+
+.forwardEleven > .player3,
+.forwardEleven > .player4 {
   margin-bottom: 5px;
 }
