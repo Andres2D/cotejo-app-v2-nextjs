@@ -147,6 +147,54 @@ export const matchDetailsMock: IMatchDetails = {
       team: '62379c6daca6e9a04e944904',
       overall: 100,
     },
+    {
+      _id: '62379c6daca6e9a04e944444',
+      position: 'CM',
+      isCaptain: false,
+      player: {
+        _id: '626390a86e81e11f4b2b1cbb',
+        nickname: 'Andres Alcaraz',
+        name: 'Andres Alcaraz',
+        number: 99,
+        status: 'new',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Serious&skinColor=Brown',
+      },
+      team: '62379c6daca6e9a04e944904',
+      overall: 50,
+    },
+    {
+      _id: '62379c6daca6e9a04e944784',
+      position: 'RF',
+      isCaptain: false,
+      player: {
+        _id: '6209c712252cbba26f130694',
+        nickname: 'guajiro',
+        name: 'Luis Díaz',
+        number: 23,
+        status: 'focused',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Black&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Smile&skinColor=Light',
+      },
+      team: '62379c6daca6e9a04e944904',
+      overall: 58,
+    },
+    {
+      _id: '62379c6daca6e9a04e9445534',
+      position: 'CMD',
+      isCaptain: false,
+      player: {
+        _id: '622ff3d7fb5fff7bae7700fb',
+        nickname: 'SAC',
+        name: 'Sebastián Alcaraz ',
+        number: 99,
+        status: 'new',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=LongHairCurly&accessoriesType=Blank&hairColor=Black&facialHairType=MoustacheFancy&clotheType=Hoodie&clotheColor=Blue02&eyeType=Dizzy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=DarkBrown',
+      },
+      team: '62379c6daca6e9a04e944904',
+      overall: 100,
+    },
   ],
   away: [
     {
@@ -263,6 +311,54 @@ export const matchDetailsMock: IMatchDetails = {
     },
     {
       _id: '62379c6daca6e9a04e94491e',
+      position: 'LB',
+      isCaptain: false,
+      player: {
+        _id: '6215bb13f9d3f88d9412d562',
+        nickname: 'Sebas',
+        name: 'Sebastian M.',
+        number: 69,
+        status: '#2196F3',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Side&eyebrowType=UpDown&mouthType=Serious&skinColor=Light',
+      },
+      team: '62379c6daca6e9a04e944902',
+      overall: 100,
+    },
+    {
+      _id: '62379c6daca6e9a0333e944921',
+      position: 'CM',
+      isCaptain: false,
+      player: {
+        _id: '617eb9339e449d570558b195',
+        nickname: 'Messi',
+        name: 'Lionel Messi',
+        number: 10,
+        status: 'shooting',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&accessoriesType=Blank&hairColor=Black&facialHairType=BeardLight&clotheType=Hoodie&clotheColor=Red&eyeType=Side&eyebrowType=FlatNatural&mouthType=Smile&skinColor=Light',
+      },
+      team: '62379c6daca6e9a04e944902',
+      overall: 50,
+    },
+    {
+      _id: '62379c6dac4356a04e944920',
+      position: 'CAM',
+      isCaptain: false,
+      player: {
+        _id: '617eb9199e449d570558b192',
+        nickname: 'Mané',
+        name: 'Sadio Mané',
+        number: 12,
+        status: 'passing',
+        image:
+          'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairTheCaesarSidePart&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Red&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Black',
+      },
+      team: '62379c6daca6e9a04e944902',
+      overall: 50,
+    },
+    {
+      _id: '62379c6dweeg56e9a04e94491e',
       position: 'LB',
       isCaptain: false,
       player: {
