@@ -52,14 +52,18 @@
   grid-area: player6;
 }
 
+.player7 {
+  grid-area: player7;
+}
+
 /*
   4 vs 4 Formations
 */
 .squareFour {
   grid-template-areas:
-    ". player4 ."
-    "player2 . player3"
-    ". player1 .";
+  ". player4 ."
+  "player2 . player3"
+  ". player1 .";
 }
 
 .triangleFour {
@@ -71,9 +75,9 @@
 
 .forwardFour {
   grid-template-areas:
-    "player2 player3 player4"
-    ". . ."
-    ". player1 .";
+  "player2 player3 player4"
+  ". . ."
+  ". player1 .";
 }
 
 /*
@@ -146,3 +150,43 @@
   margin-bottom: 5px;
 }
 
+/*
+  7 vs 7 Formations
+*/
+
+.squareSeven {
+  grid-template-areas:
+  ". player7 ."
+  "player5 . player6"
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.squareSeven > .player3 {
+  margin-bottom: 5px;
+}
+
+.triangleSeven {
+  grid-template-areas:
+  "player6 . player7"
+  ". player5 ."
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.triangleSeven > .player3 {
+  margin-bottom: 5px;
+}
+
+.forwardSeven {
+  grid-template-areas:
+  ". . ."
+  "player5 player6 player7"
+  "player2 player3 player4"
+  ". player1 .";
+}
+
+.forwardSeven > .player3,
+.forwardSeven > .player6 {
+  margin-bottom: 5px;
+}
