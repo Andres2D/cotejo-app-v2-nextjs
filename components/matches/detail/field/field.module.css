@@ -44,6 +44,13 @@
   grid-area: player4;
 }
 
+.player5 {
+  grid-area: player5;
+}
+
+/*
+  4 vs 4 Formations
+*/
 .squareFour {
   grid-template-areas:
     ". player4 ."
@@ -63,4 +70,42 @@
     "player2 player3 player4"
     ". . ."
     ". player1 .";
+}
+
+/*
+  5 vs 5 Formations
+*/
+.squareFive {
+  grid-template-areas:
+    "player4 . player5"
+    "player2 . player3"
+    ". player1 .";
+}
+
+.triangleFive {
+  grid-template-areas:
+  ". player5 ."
+  "player2 player3 player4"
+  ". player1 .";  
+}
+
+.triangleFive > .player2, 
+.triangleFive > .player4 {
+  margin-top: 10px;
+}
+
+.triangleFive > .player3 {
+  margin-bottom: 10px;
+} 
+
+.forwardFive {
+  grid-template-areas:
+      "player3 player4 player5"
+      ". player2 ."
+      ". player1 .";
+}
+
+.forwardFive > .player2, 
+.forwardFive > .player4 {
+  margin-bottom: 10px;
 }
