@@ -10,6 +10,7 @@ import {
 } from '../../../../constants/formation';
 import { RootState } from '../../../../interfaces/State';
 import { matchDetailsActions } from '../../../../store/match-details.slice';
+import AvatarMatchLayout from '../avatar/avatar';
 
 interface Props {
   team: IFullPlayer[],
@@ -30,12 +31,11 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
 
   const playersMap = team.map((player, idx) => {
     return (
-      <Avatar
+      <AvatarMatchLayout
         key={idx}
-        size='lg'
         className={`${styles.avatar} ${styles.player} ${styles[`player${idx+1}`]}`}
         name={player.player.name} 
-        src='https://bit.ly/tioluwani-kolawole'
+        image='https://bit.ly/tioluwani-kolawole'
       />
     )
   });
