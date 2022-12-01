@@ -112,12 +112,12 @@
   ". player1 .";  
 }
 
-.triangleFive > .player2, 
-.triangleFive > .player4 {
+.triangleFive  .player2, 
+.triangleFive  .player4 {
   margin-top: 10px;
 }
 
-.triangleFive > .player3 {
+.triangleFive  .player3 {
   margin-bottom: 10px;
 } 
 
@@ -128,8 +128,8 @@
   ". player1 .";
 }
 
-.forwardFive > .player2, 
-.forwardFive > .player4 {
+.forwardFive  .player2, 
+.forwardFive  .player4 {
   margin-bottom: 10px;
 }
 
@@ -161,7 +161,7 @@
   ". player1 .";
 }
 
-.forwardSix > .player3 {
+.forwardSix  .player3 {
   margin-bottom: 5px;
 }
 
@@ -177,7 +177,7 @@
   ". player1 .";
 }
 
-.squareSeven > .player3 {
+.squareSeven  .player3 {
   margin-bottom: 5px;
 }
 
@@ -189,7 +189,7 @@
   ". player1 .";
 }
 
-.triangleSeven > .player3 {
+.triangleSeven  .player3 {
   margin-bottom: 5px;
 }
 
@@ -201,8 +201,8 @@
   ". player1 .";
 }
 
-.forwardSeven > .player3,
-.forwardSeven > .player6 {
+.forwardSeven  .player3,
+.forwardSeven  .player6 {
   margin-bottom: 5px;
 }
 
@@ -218,7 +218,7 @@
   ". player1 .";
 }
 
-.squareEight > .player3 {
+.squareEight  .player3 {
   margin-bottom: 5px;
 }
 
@@ -230,11 +230,11 @@
   ". player1 .";
 }
 
-.triangleEight > .player3 {
+.triangleEight  .player3 {
   margin-bottom: 5px;
 } 
 
-.triangleEight > .player7 {
+.triangleEight  .player7 {
   margin-top: 5px;
 }
 
@@ -246,8 +246,8 @@
   ". player1 .";
 }
 
-.forwardEight > .player3, 
-.forwardEight > .player6 {
+.forwardEight  .player3, 
+.forwardEight  .player6 {
   margin-bottom: 5px;
 }
 
@@ -263,8 +263,8 @@
   ". player1 .";
 }
 
-.squareNine > .player3, 
-.squareNine > .player6 {
+.squareNine  .player3, 
+.squareNine  .player6 {
   margin-bottom: 5px;
 }
 
@@ -276,8 +276,8 @@
   ". player1 . ";
 }
 
-.triangleNine > .player3, 
-.triangleNine > .player8 {
+.triangleNine  .player3, 
+.triangleNine  .player8 {
   margin-bottom: 5px;
 }
 
@@ -289,8 +289,8 @@
   ". player1 .";
 }
 
-.forwardNine > .player5,
-.forwardNine > .player8 {
+.forwardNine  .player5,
+.forwardNine  .player8 {
   margin-bottom: 5px;
 }
 
@@ -306,9 +306,9 @@
   ". player1 player1  .";
 }
 
-.squareTen > .player3,
-.squareTen > .player6,
-.squareTen > .player7 {
+.squareTen  .player3,
+.squareTen  .player6,
+.squareTen  .player7 {
   margin-bottom: 5px;
 }
 
@@ -320,10 +320,10 @@
   ". player1 player1 .";
 }
 
-.squareTen > .player3,
-.squareTen > .player4,
-.squareTen > .player7,
-.squareTen > .player8 {
+.squareTen  .player3,
+.squareTen  .player4,
+.squareTen  .player7,
+.squareTen  .player8 {
   margin-bottom: 5px;
 }
 
@@ -335,8 +335,8 @@
   ". player1 player1 . ";
 }
 
-.forwardTen > .player3,
-.forwardTen > .player4 {
+.forwardTen  .player3,
+.forwardTen  .player4 {
   margin-bottom: 5px;
 }
 
@@ -352,9 +352,9 @@
   ". player1 player1 .";
 }
 
-.squareEleven > .player3,
-.squareEleven > .player4, 
-.squareEleven > .player7 {
+.squareEleven  .player3,
+.squareEleven  .player4, 
+.squareEleven  .player7 {
   margin-bottom: 5px;
 }
 
@@ -366,10 +366,10 @@
   ". player1 player1 .";
 }
 
-.triangleEleven > .player3, 
-.triangleEleven > .player4,
-.triangleEleven > .player7,
-.triangleEleven > .player8 {
+.triangleEleven  .player3, 
+.triangleEleven  .player4,
+.triangleEleven  .player7,
+.triangleEleven  .player8 {
   margin-bottom: 5px;
 }
 
@@ -381,7 +381,7 @@
   ". player1 player1 . ";
 }
 
-.forwardEleven > .player3,
-.forwardEleven > .player4 {
+.forwardEleven  .player3,
+.forwardEleven  .player4 {
   margin-bottom: 5px;
 }
