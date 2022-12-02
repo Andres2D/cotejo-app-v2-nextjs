@@ -26,12 +26,20 @@ interface Props {
   onUpdate: (field: string, value: string) => void;
 }
 
+interface IEventFile {
+  target: {
+    files: any[];
+    value: null;
+  }
+}
+
 const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Props) => {
 
   const positionRef = useRef<HTMLSelectElement>();
   const flagRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
   const [flagsList, setFlagsList] = useState(getAllFlags());
+  const inputRef = useRef(null);
 
   const { 
     overall,
@@ -96,6 +104,29 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
     const flags = getFlagSvg(flagRef?.current?.value);
     setFlagsList(Array.isArray(flags) ? flags : [flags]);
   }
+
+  const handleClick = () => {
+    // 👇️ open file input box on click of other element
+    inputRef.current.click();
+  };
+
+  const handleFileChange = (event: IEventFile) => {
+    const fileObj = event.target.files && event.target.files[0];
+    if (!fileObj) {
+      return;
+    }
+    console.log('fileObj is', fileObj);
+
+    // 👇️ reset file input
+    event.target.value = null;
+
+    // 👇️ is now empty
+    console.log(event.target.files);
+
+    // 👇️ can still access file object here
+    console.log(fileObj);
+    console.log(fileObj.name);
+  };
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -166,7 +197,14 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
           name={name}
           src={image} 
           size='2xl'
+          onClick={handleClick}
         />
+        <input
+        style={{display: 'none'}}
+        ref={inputRef}
+        type="file"
+        onChange={handleFileChange}
+      />
       </div>
       <div className={styles.cardBody}>
         <Popover>
