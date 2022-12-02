@@ -32,7 +32,15 @@ const Navbar: NextPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
+    <div className={styles.container}>
+        <Avatar 
+          className={styles.avatar}
+          src='/images/cotejoAppUI.png'
+          onClick={() => {
+            onClose();
+            router.push('/menu');
+          }}
+        />
         <Avatar 
           className={styles.avatar}
           name={name} 
@@ -40,7 +48,7 @@ const Navbar: NextPage = () => {
           onClick={onOpen}
           ref={btnRef}
         />
-      </div>
+    </div>
       <Drawer
         isOpen={isOpen}
         placement='right'
@@ -50,36 +58,20 @@ const Navbar: NextPage = () => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton className={styles.dark} />
-          <DrawerHeader className={styles.dark}>
+          <DrawerHeader className={styles.headerMenu}>
             <Avatar 
-              className={styles.avatar}
+              className={styles.avatarMenu}
               name={name} 
               src={image}
-            />
-            <h2>{name}</h2>
-          </DrawerHeader>
-
-          <DrawerBody className={styles.menu}>
-            <Button 
-              className={styles.option} 
-              colorScheme='blue' 
-              variant='outline'
               onClick={() => {
                 onClose();
                 router.push('/profile');
-              }}>
-              Profile
-            </Button>
-            <Button 
-              className={styles.option} 
-              colorScheme='green' 
-              variant='outline'
-              onClick={() => {
-                onClose();
-                router.push('/menu');
-              }}>
-              Menu
-            </Button>
+              }}
+            />
+            <h2 className={styles.username}>{name}</h2>
+          </DrawerHeader>
+
+          <DrawerBody className={styles.columnMenu}>
             <Button 
               className={styles.option} 
               colorScheme='green' 
@@ -90,8 +82,12 @@ const Navbar: NextPage = () => {
               }}>
               Matches
             </Button>
+          </DrawerBody>
+
+          <DrawerFooter className={styles.columnMenu}>
+            <p className={styles.dark}>Cotejo App v2 </p>
             <Button 
-              className={styles.option}
+              className={styles.option} 
               colorScheme='red' 
               variant='outline'
               onClick={() => {
@@ -100,10 +96,6 @@ const Navbar: NextPage = () => {
               }}>
               Log out
             </Button>
-          </DrawerBody>
-
-          <DrawerFooter className={styles.dark}>
-            Cotejo App v2 
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
