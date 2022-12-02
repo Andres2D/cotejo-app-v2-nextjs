@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { createMatchActions } from '../../../../store/create-match.slice';
-import styles from './place-date.module.css';
+import styles from './place-date.module.scss';
 import useRequest from '../../../../hooks/use-request';
 import { ICreateMatchRequest } from '../../../../interfaces/Match';
 import { RootState } from '../../../../interfaces/State';

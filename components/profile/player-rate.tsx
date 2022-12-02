@@ -5,9 +5,8 @@ import {
   SliderTrack 
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './player-rate.module.css';
+import styles from './player-rate.module.scss';
 import { IStats } from '../../interfaces/Player';
-import { useState } from 'react';
 
 interface Props {
   className?: string;

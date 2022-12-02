@@ -4,7 +4,7 @@ import { getSession, useSession } from "next-auth/react";
 import { Button } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import Steps from './header/steps';
-import styles from './new-match.module.css';
+import styles from './new-match.module.scss';
 import PlaceDate from './place-date/place-date';
 import CreateTeams from './teams/create-teams';
 import PlayersForm from './players/players-form';

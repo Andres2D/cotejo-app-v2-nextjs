@@ -6,7 +6,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './sign-up-form.module.css';
+import styles from './sign-up-form.module.scss';
 import { validateEmail } from '../../helpers/validation';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 

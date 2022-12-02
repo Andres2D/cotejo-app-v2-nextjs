@@ -1,9 +1,9 @@
-import { Avatar, Select } from '@chakra-ui/react';
+import { Select } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { MutableRefObject, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFullPlayer } from '../../../../interfaces/Player';
-import styles from './field.module.css';
+import styles from './field.module.scss';
 import { 
   formationKeyMap, 
   formationTypeMap 
@@ -33,7 +33,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
     return (
       <AvatarMatchLayout
         key={idx}
-        className={`${styles.avatar} ${styles.player} ${styles[`player${idx+1}`]}`}
+        className={`${styles.player} ${styles[`player${idx+1}`]}`}
         name={player.player.name} 
         image='https://bit.ly/tioluwani-kolawole'
       />

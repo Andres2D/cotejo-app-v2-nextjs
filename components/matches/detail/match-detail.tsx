@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../interfaces/State';
 import FieldLayout from './field/field';
 import FieldHeader from './field/header';
-import styles from './match-detail.module.css';
+import styles from './match-detail.module.scss';
 
 const MatchDetailsLayout: NextPage = () => {
 

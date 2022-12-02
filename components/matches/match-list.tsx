@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { IconButton } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
 import Image from 'next/image';
-import styles from './match-list.module.css';
+import styles from './match-list.module.scss';
 import Team from './team';
 import { FullMatch } from '../../interfaces/Match';
 import { useRouter } from 'next/router';

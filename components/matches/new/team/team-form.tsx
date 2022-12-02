@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MutableRefObject, useRef, useState } from 'react';
 import { getAllTeams, getTeamPng } from 'empty-skull';
 import { createMatchActions } from '../../../../store/create-match.slice';
-import styles from './team-form.module.css';
+import styles from './team-form.module.scss';
 import { RootState } from '../../../../interfaces/State';
 
 interface Props {

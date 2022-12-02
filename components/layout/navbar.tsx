@@ -15,7 +15,7 @@ import { useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
-import styles from './navbar.module.css';
+import styles from './navbar.module.scss';
 
 const Navbar: NextPage = () => {
 

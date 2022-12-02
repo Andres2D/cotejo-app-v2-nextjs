@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { signIn } from "next-auth/react";
 import GoogleIcon from '../../assets/svg/google.svg';
-import styles from './login-form.module.css';
+import styles from './login-form.module.scss';
 import { validateEmail } from '../../helpers/validation';
 
 const LoginForm: NextPage = () => {
@@ -51,7 +51,8 @@ const LoginForm: NextPage = () => {
         size='lg'
         variant='filled'
         ref={emailRef}
-      />
+        id="emailRef"
+        />
       <Input 
         className={styles.input}
         type='password'
@@ -61,6 +62,7 @@ const LoginForm: NextPage = () => {
         size='lg'
         variant='filled'
         ref={passwordRef}
+        id="passwordRef"
       />
       <div className={styles.actions}>
         <Button 

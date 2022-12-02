@@ -15,7 +15,7 @@ import {
   Input
 } from '@chakra-ui/react';
 import Image from 'next/image';
-import styles from './player-card.module.css';
+import styles from './player-card.module.scss';
 import { IProfile, IStats } from '../../interfaces/Player';
 import { playerPositions } from '../../constants/player-positions';
 

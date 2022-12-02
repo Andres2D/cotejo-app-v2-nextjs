@@ -3,7 +3,7 @@ import {
   Heading
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './header.module.css';
+import styles from './header.module.scss';
 
 interface Props {
   teamName: string;

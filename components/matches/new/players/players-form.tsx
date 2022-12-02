@@ -1,4 +1,9 @@
-import { ChangeEvent, MutableRefObject, useRef, useState } from 'react';
+import { 
+  ChangeEvent, 
+  MutableRefObject, 
+  useRef, 
+  useState 
+} from 'react';
 import type { NextPage } from 'next';
 import { 
   Select,
@@ -17,7 +22,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { playersFixture } from '../../../../constants/player-positions';
 import { getRandomColorSchema } from '../../../../helpers/styles';
-import styles from './players-form.module.css';
+import styles from './players-form.module.scss';
 import { RootState } from '../../../../interfaces/State';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import { IPlayerList } from '../../../../interfaces/Player';
@@ -141,8 +146,7 @@ const PlayersForm: NextPage = () => {
 
   return (
     <section>
-      <Select 
-        className={styles.selector}
+      <Select
         width={'120px'} 
         bgColor='white'
         color='#333'
@@ -151,8 +155,7 @@ const PlayersForm: NextPage = () => {
       >
         {playersSelector}
       </Select>
-      <Input 
-        className={styles.input}
+      <Input
         placeholder='Player name or email'
         colorScheme='white' 
         width={'50%'} 
@@ -166,7 +169,6 @@ const PlayersForm: NextPage = () => {
         {playersAdded}
       </div>
       <Button
-        className={styles.save}
         size='lg'
         colorScheme='brand'
         mt='5px'
