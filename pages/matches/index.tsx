@@ -4,7 +4,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import MatchList from '../../components/matches/match-list';
 import { getMatches } from '../../server/matches';
-import styles from './matches.module.css';
+import styles from './matches.module.scss';
 import { FullMatch, IMatch } from '../../interfaces/Match';
 
 interface Props {

@@ -1,0 +1,29 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px auto;
+  max-width: 1050px;
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 100px;
+
+    .playerCard {
+      height: 500px;
+      width: 400px;
+    }
+    
+    .playerStats {
+      height: 500px;
+      width: 400px;
+    }
+  }
+  
+  .save {
+    margin: 40px auto;
+    width: 20%;
+  }
+}

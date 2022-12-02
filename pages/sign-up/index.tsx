@@ -4,7 +4,7 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import { Link, useToast } from '@chakra-ui/react';
 import SignUpForm from '../../components/sign-up/sign-up-form';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 import useRequest from '../../hooks/use-request';
 

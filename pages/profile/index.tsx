@@ -6,7 +6,7 @@ import {
 import { getFlagSvg } from 'empty-skull';
 import { getSession } from 'next-auth/react';
 import { Button, useToast } from '@chakra-ui/react';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 import PlayerCard from '../../components/profile/player-card';
 import PlayerRate from '../../components/profile/player-rate';
 import { 
