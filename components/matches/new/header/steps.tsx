@@ -11,7 +11,7 @@ import { ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../interfaces/State';
 import { createMatchActions } from '../../../../store/create-match.slice';
-import styles from './steps.module.css';
+import styles from './steps.module.scss';
 
 const selectedTab: SystemStyleObject = {
   color: '#4ECB71',

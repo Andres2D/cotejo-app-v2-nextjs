@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { SessionProvider } from "next-auth/react"
 import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'react-redux';
-import '../styles/globals.css';
+import '../styles/globals.scss';
 import theme from '../styles/theme.conf';
 import Navbar from '../components/layout/navbar';
 import store from "../store";

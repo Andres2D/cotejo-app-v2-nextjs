@@ -6,7 +6,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './sign-up-form.module.css';
+import styles from './sign-up-form.module.scss';
 import { validateEmail } from '../../helpers/validation';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 
@@ -65,6 +65,7 @@ const SignUpForm: NextPage<Props> = ({onSignUp}) => {
         size='lg'
         variant='filled'
         ref={emailRef}
+        id="emailRef"
       />
       <Input 
         className={styles.input}
@@ -75,6 +76,7 @@ const SignUpForm: NextPage<Props> = ({onSignUp}) => {
         size='lg'
         variant='filled'
         ref={nameRef}
+        id="nameRef"
       />
       <Input 
         className={styles.input}
@@ -85,6 +87,7 @@ const SignUpForm: NextPage<Props> = ({onSignUp}) => {
         size='lg'
         variant='filled'
         ref={passwordRef}
+        id="passwordRef"
       />
       <Input 
         className={styles.input}
@@ -95,6 +98,7 @@ const SignUpForm: NextPage<Props> = ({onSignUp}) => {
         size='lg'
         variant='filled'
         ref={confirmPasswordRef}
+        id="confirmPasswordRef"
       />
       <Button 
         onClick={signUp}

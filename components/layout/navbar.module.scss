@@ -1,7 +1,7 @@
 .container {
   display: flex;
   justify-content: flex-end;
-  margin: 5px 10px;
+  margin: 5px 10px;  
 }
 
 .avatar {
@@ -16,8 +16,8 @@
 .menu {
   display: flex;
   flex-direction: column;
-}
-
-.option {
-  margin: 5px 0;
+  
+  .option {
+    margin: 5px 0;
+  }
 }

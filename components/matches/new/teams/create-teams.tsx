@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import TeamForm from '../team/team-form';
-import styles from './create-teams.module.css';
+import styles from './create-teams.module.scss';
 
 const CreateTeams: NextPage = () => {
   return (

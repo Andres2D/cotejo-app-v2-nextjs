@@ -4,7 +4,7 @@ import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import styles from './menu.module.css';
+import styles from './menu.module.scss';
 
 const Menu: NextPage = () => {
 

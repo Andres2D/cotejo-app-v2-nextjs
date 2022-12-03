@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { Link } from '@chakra-ui/react'
 import Image from 'next/image';
 import { getSession } from 'next-auth/react';
-import styles from './index.module.css';
+import styles from './index.module.scss';
 import LoginForm from '../../components/auth/login-form';
 
 const Login: NextPage = () => {

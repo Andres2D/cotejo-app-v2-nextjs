@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -40px;
+  width: 61%;
+  
+  .input {
+    margin-bottom: 8px;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    width: 325px;
+    
+    .login {
+      width: 83%;
+    }
+    
+    .google {
+      width: 15%;
+    }
+  }
+}

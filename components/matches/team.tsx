@@ -1,7 +1,7 @@
 import { Tag } from '@chakra-ui/react'
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import styles from './team.module.css';
+import styles from './team.module.scss';
 
 interface Props {
   name: string;

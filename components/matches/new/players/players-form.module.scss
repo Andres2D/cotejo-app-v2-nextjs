@@ -4,10 +4,10 @@
   justify-content: flex-start;
   margin-top: 20px;
   width: 50%;
-}
-
-.player {
-  margin: 5px;
+  
+  .player {
+    margin: 5px;
+  }
 }
 
 .playerResult {
@@ -19,9 +19,10 @@
   width: 50%;
   cursor: pointer;
   padding: 5px;
+  
+  &:hover {
+    color: black;
+    background-color: white;
+  }
 }
 
-.playerResult:hover {
-  color: black;
-  background-color: white;
-}
