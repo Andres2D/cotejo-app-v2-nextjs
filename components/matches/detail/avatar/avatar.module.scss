@@ -3,10 +3,19 @@
   flex-direction: column;
   align-items: center;
   
-  .avatar {
-    border: 2px solid white;
-    cursor: pointer;
+  .avatarContainer {
+    .avatar {
+      position: relative;
+      border: 2px solid white;
+      cursor: pointer;
+    }
+
+    .changeIcon {
+      position: absolute;
+      animation: spin 2s infinite linear;
+    }
   }
+
 
   .tagInfo {
     display: flex;
@@ -18,5 +27,14 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+  }
+}
+
+@keyframes spin {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
   }
 }
