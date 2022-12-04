@@ -3,15 +3,26 @@ import {
   Tag
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import styles from './avatar.module.css'; 
+import { useDispatch } from 'react-redux';
+import { matchDetailsActions } from "../../../../store/match-details.slice";
+import styles from './avatar.module.scss'; 
 
 interface Props {
   name: string;
+  id: string;
+  overall: number;
+  isAway?: boolean;
   className?: string;
   image?: string;
 }
 
-const AvatarMatchLayout: NextPage<Props> = ({name, image, className}) => {
+const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className, isAway = false}) => {
+
+  const dispatch = useDispatch();
+
+  const selectPlayerHandler = () => {
+    dispatch(matchDetailsActions.selectPlayer({playerId: id, isAway}));
+  };
 
   return (
     <div 
@@ -22,8 +33,12 @@ const AvatarMatchLayout: NextPage<Props> = ({name, image, className}) => {
         className={styles.avatar}
         name={name} 
         src={image ? image : 'https://bit.ly/tioluwani-kolawole'}
+        onClick={selectPlayerHandler}
       />
-      <Tag>{name}</Tag>
+      <div className={styles.tagInfo}>
+        <Tag className={styles.tag}>{name}</Tag>
+        <Tag className={styles.tag}>{overall}</Tag>
+      </div>
     </div>
   )
 }
