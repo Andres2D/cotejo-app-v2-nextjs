@@ -1,4 +1,8 @@
-import { createSlice, PayloadAction, CaseReducer } from '@reduxjs/toolkit';
+import { 
+  createSlice, 
+  PayloadAction, 
+  CaseReducer 
+} from '@reduxjs/toolkit';
 import { IMatchDetails } from '../interfaces/Match';
 import { ISelectPayload } from '../interfaces/Player';
 
@@ -59,20 +63,22 @@ const selectPlayer: CaseReducer<IMatchDetails, PayloadAction<ISelectPayload>> =
   state.playersSelected.push(action.payload);
 
   if(state.playersSelected.length > 1 ) {
+    const [first, second] = state.playersSelected;
+    const firstPlayer = state[first.isAway ? 'away' : 'home'].filter(p => p.player._id === first.playerId)[0];
+    const secondPlayer = state[second.isAway ? 'away' : 'home'].filter(p => p.player._id === second.playerId)[0];
 
-    if(state.playersSelected[0].isAway === state.playersSelected[1].isAway) {
-      const [first, second] = state.playersSelected;
-  
-      const firstPlayer = state[first.isAway ? 'away' : 'home'].filter(p => p.player._id === first.playerId)[0];
-      const secondPlayer = state[first.isAway ? 'away' : 'home'].filter(p => p.player._id === second.playerId)[0];
-  
-      state[first.isAway ? 'away' : 'home'] = state[first.isAway ? 'away' : 'home'].map(t => {
-        return t.player._id === first.playerId ? secondPlayer : (
-          t.player._id === second.playerId ? firstPlayer : t
-        );
-      });
-    }
+    state.home = state.home.map(p => {
+      return p.player._id === first.playerId ? { ...secondPlayer, team: firstPlayer.team } : (
+        p.player._id === second.playerId ? { ...firstPlayer, team: secondPlayer.team } : p
+      );
+    });
 
+    state.away = state.away.map(p => {
+      return p.player._id === first.playerId ? { ...secondPlayer, team: firstPlayer.team } : (
+        p.player._id === second.playerId ? { ...firstPlayer, team: secondPlayer.team } : p
+      );
+    });
+    
     state.playersSelected = [];
   }
 }
