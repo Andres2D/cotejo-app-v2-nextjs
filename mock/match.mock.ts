@@ -120,7 +120,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'RF',
       isCaptain: false,
       player: {
-        _id: '6209c712252cbba26f130694',
+        _id: '6209c712252cssea26f130694',
         nickname: 'guajiro',
         name: 'Luis Díaz',
         number: 23,
@@ -136,7 +136,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'CMD',
       isCaptain: false,
       player: {
-        _id: '622ff3d7fb5fff7bae7700fb',
+        _id: '622ff3d7fb5fff7bae7700ddb',
         nickname: 'SAC',
         name: 'Sebastián Alcaraz ',
         number: 99,
@@ -152,7 +152,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'CM',
       isCaptain: false,
       player: {
-        _id: '626390a86e81e11f4b2b1cbb',
+        _id: '626390a86e81e11f4b2blls1cbb',
         nickname: 'Andres Alcaraz',
         name: 'Andres Alcaraz',
         number: 99,
@@ -298,7 +298,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'CAM',
       isCaptain: false,
       player: {
-        _id: '617eb9199e449d570558b192',
+        _id: '617eb9199e449d5705ssfb192',
         nickname: 'Mané',
         name: 'Sadio Mané',
         number: 12,
@@ -330,7 +330,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'CM',
       isCaptain: false,
       player: {
-        _id: '617eb9339e449d570558b195',
+        _id: '617eb9339e449d570ppol8b195',
         nickname: 'Messi',
         name: 'Lionel Messi',
         number: 10,
@@ -362,7 +362,7 @@ export const matchDetailsMock: IMatchDetails = {
       position: 'LB',
       isCaptain: false,
       player: {
-        _id: '6215bb13f9d3f88d9412d562',
+        _id: '6215bb13f9d3f88d9412tt662',
         nickname: 'Sebas',
         name: 'Sebastian M.',
         number: 69,

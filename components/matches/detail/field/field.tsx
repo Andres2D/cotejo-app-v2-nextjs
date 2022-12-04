@@ -32,10 +32,13 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
   const playersMap = team.map((player, idx) => {
     return (
       <AvatarMatchLayout
-        key={idx}
+        key={player.player._id}
+        id={player.player._id}
         className={`${styles.player} ${styles[`player${idx+1}`]}`}
         name={player.player.name} 
         image='https://bit.ly/tioluwani-kolawole'
+        isAway={isAway}
+        overall={player.overall}
       />
     )
   });
