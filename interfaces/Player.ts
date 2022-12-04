@@ -79,3 +79,8 @@ export interface IFullPlayer {
   team: string;
   overall: number;
 }
+
+export interface ISelectPayload {
+  playerId: string,
+  isAway: boolean
+}

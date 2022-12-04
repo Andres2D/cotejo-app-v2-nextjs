@@ -1,4 +1,4 @@
-import { IFullPlayer, IPlayerList, IPlayerRequest } from './Player';
+import { IFullPlayer, IPlayerList, IPlayerRequest, ISelectPayload } from './Player';
 import { IFullTeam, ITeam } from './Team';
 
 interface base {
@@ -45,7 +45,8 @@ export interface IFullMatch extends base {
 
 export interface IMatchDetails {
   match: IFullMatch,
-  home: IFullPlayer[];
-  away: IFullPlayer[];
+  home: IFullPlayer[],
+  away: IFullPlayer[],
+  playersSelected: ISelectPayload[]
 };
 
