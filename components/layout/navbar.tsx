@@ -35,11 +35,12 @@ const Navbar: NextPage = () => {
     <div className={styles.container}>
         <Avatar 
           className={styles.avatar}
-          src='/images/cotejoAppUI.png'
+          src='/images/cotejo-app-ui.png'
           onClick={() => {
             onClose();
             router.push('/menu');
           }}
+          bg="green.600" 
         />
         <Avatar 
           className={styles.avatar}
@@ -67,6 +68,8 @@ const Navbar: NextPage = () => {
                 onClose();
                 router.push('/profile');
               }}
+              h="80px"
+              minW="80px"
             />
             <h2 className={styles.username}>{name}</h2>
           </DrawerHeader>

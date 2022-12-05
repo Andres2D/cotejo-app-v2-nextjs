@@ -7,7 +7,6 @@
 .avatar {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   cursor: pointer;
-  background: #1c6759 !important;
 }
 
 .headerMenu {
@@ -21,13 +20,10 @@
   margin-top: 2rem;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   cursor: pointer;
-  min-width: 5rem !important;
-  height: 5rem !important;
 }
 
 .username {
-  padding-top: 10% ;
-  /* padding-bottom: 5% ; */
+  padding-top: 16px ;
 }
 
 .dark {
