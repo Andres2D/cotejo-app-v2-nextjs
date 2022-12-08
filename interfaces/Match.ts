@@ -43,10 +43,11 @@ export interface IFullMatch extends base {
   away_team: IFullTeam;
 }
 
-export interface IMatchDetails {
+export interface IMatchDetailsResponse {
   match: IFullMatch,
   home: IFullPlayer[],
   away: IFullPlayer[],
+}
+export interface IMatchDetails extends IMatchDetailsResponse {
   playersSelected: ISelectPayload[]
 };
-

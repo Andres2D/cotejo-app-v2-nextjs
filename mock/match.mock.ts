@@ -1,6 +1,6 @@
-import { IMatchDetails } from "../interfaces/Match";
+import { IMatchDetailsResponse } from "../interfaces/Match";
 
-export const matchDetailsMock: IMatchDetails = {
+export const matchDetailsMock: IMatchDetailsResponse = {
   match: {
     _id: '62379c6faca6e9a04e94492b',
     date: '2022-05-01T05:00:00.000Z',
