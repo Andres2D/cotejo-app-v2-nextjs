@@ -4,3 +4,10 @@ export interface ITeamPlayer {
   player: string,
   team: string
 };
+
+export interface IUpdateTeamPlayerRequest {
+  playerOneId: string;
+  playerTwoId: string;
+  playerOneTeam: string;
+  playerTwoTeam: string;
+}

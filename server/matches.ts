@@ -82,3 +82,7 @@ export const getMatch = async (matchId: string) => {
     return null;
   }
 };
+
+export const putChangePlayersPosition = () => {
+  console.log('Inn');
+};
