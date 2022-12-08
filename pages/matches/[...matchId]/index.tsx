@@ -3,6 +3,8 @@ import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import MatchDetailsLayout from '../../../components/matches/detail/match-detail';
+import { orderRule } from '../../../constants/player-positions';
+import { IMatchDetailsResponse } from '../../../interfaces/Match';
 import { getMatch } from '../../../server/matches';
 import { matchDetailsActions } from '../../../store/match-details.slice';
 
@@ -14,11 +16,12 @@ const MatchDetails: NextPage<Props> = ({match}) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(matchDetailsActions.setMatchState(JSON.parse(match)));
-  }, [dispatch, match])
-  
+  const matchDetail: IMatchDetailsResponse = JSON.parse(match);
 
+  useEffect(() => {
+    dispatch(matchDetailsActions.setMatchState({playersSelected: [], ...matchDetail}));
+  }, [dispatch, matchDetail])
+  
   return (
     <MatchDetailsLayout />
   );

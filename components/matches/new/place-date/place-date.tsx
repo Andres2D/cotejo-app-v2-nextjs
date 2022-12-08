@@ -4,7 +4,10 @@ import { MutableRefObject, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
-  Input, InputGroup, InputLeftElement, Text
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Text
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { createMatchActions } from '../../../../store/create-match.slice';
@@ -12,6 +15,18 @@ import styles from './place-date.module.scss';
 import useRequest from '../../../../hooks/use-request';
 import { ICreateMatchRequest } from '../../../../interfaces/Match';
 import { RootState } from '../../../../interfaces/State';
+import * as formations from '../../../../constants/formations-positions'; 
+
+const playerPositionsMap: { [id: number]: string[] } = {
+  4: formations.fourTeam,
+  5: formations.fiveTeam,
+  6: formations.sixTeam,
+  7: formations.sevenTeam,
+  8: formations.eightTeam,
+  9: formations.nineTeam,
+  10: formations.tenTeam,
+  11: formations.elevenTeam
+};  
 
 const PlaceDate: NextPage = () => {
 
@@ -50,16 +65,16 @@ const PlaceDate: NextPage = () => {
         formation: 't',
         shield: form.away_team_shield
       },
-      home_players: form.home_players.map(player => {
+      home_players: form.home_players.map((player, idx) => {
         return {
-          position: player.position,
+          position: playerPositionsMap[form.players_number][idx],
           isCaptain: false,
           player: player._id
         }
       }),
-      away_players: form.away_players.map(player => {
+      away_players: form.away_players.map((player, idx) => {
         return {
-          position: player.position,
+          position: playerPositionsMap[form.players_number][idx],
           isCaptain: false,
           player: player._id
         }
@@ -73,7 +88,7 @@ const PlaceDate: NextPage = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(request)
-    }, createMatchHandler)
+    }, createMatchHandler);
 
   };
 

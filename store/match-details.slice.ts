@@ -3,6 +3,8 @@ import {
   PayloadAction, 
   CaseReducer 
 } from '@reduxjs/toolkit';
+import { orderRule } from '../constants/player-positions';
+import { sortPlayerPositions } from '../helpers/positions';
 import { IMatchDetails } from '../interfaces/Match';
 import { ISelectPayload } from '../interfaces/Player';
 
@@ -37,9 +39,10 @@ const initialState: IMatchDetails = {
 const setMatchState: CaseReducer<IMatchDetails, PayloadAction<IMatchDetails>> = 
   (state: IMatchDetails, action: PayloadAction<IMatchDetails>) => {
     const { match, away, home } = action.payload;
+
     state.match = match;
-    state.home = home;
-    state.away = away;
+    state.home = sortPlayerPositions(home);
+    state.away = sortPlayerPositions(away);
 }
 
 const updateInput: CaseReducer<IMatchDetails, PayloadAction<IPayload>> = 
@@ -68,15 +71,23 @@ const selectPlayer: CaseReducer<IMatchDetails, PayloadAction<ISelectPayload>> =
     const secondPlayer = state[second.isAway ? 'away' : 'home'].filter(p => p.player._id === second.playerId)[0];
 
     state.home = state.home.map(p => {
-      return p.player._id === first.playerId ? { ...secondPlayer, team: firstPlayer.team } : (
-        p.player._id === second.playerId ? { ...firstPlayer, team: secondPlayer.team } : p
-      );
+      return p.player._id === first.playerId 
+        ? { ...secondPlayer, position: firstPlayer.position, team: firstPlayer.team } 
+        : (
+          p.player._id === second.playerId 
+            ? { ...firstPlayer, position: secondPlayer.position, team: secondPlayer.team } 
+            : p
+        );
     });
 
     state.away = state.away.map(p => {
-      return p.player._id === first.playerId ? { ...secondPlayer, team: firstPlayer.team } : (
-        p.player._id === second.playerId ? { ...firstPlayer, team: secondPlayer.team } : p
-      );
+      return p.player._id === first.playerId 
+        ? { ...secondPlayer, position: firstPlayer.position, team: firstPlayer.team } 
+        : (
+          p.player._id === second.playerId 
+            ? { ...firstPlayer, position: secondPlayer.position, team: secondPlayer.team } 
+            : p
+        );
     });
     
     state.playersSelected = [];
