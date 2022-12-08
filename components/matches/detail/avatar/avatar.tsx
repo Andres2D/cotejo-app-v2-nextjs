@@ -25,6 +25,8 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
 
   const selectPlayerHandler = () => {
     dispatch(matchDetailsActions.selectPlayer({playerId: id, isAway}));
+    console.log(details.playersSelected);
+    console.log({playerId: id, isAway});
   };
 
   return (
