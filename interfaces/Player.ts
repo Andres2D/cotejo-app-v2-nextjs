@@ -84,3 +84,7 @@ export interface ISelectPayload {
   playerId: string,
   isAway: boolean
 }
+
+export interface MapOrder {
+  [key: string]: number
+}
