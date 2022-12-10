@@ -3,7 +3,6 @@ import {
   PayloadAction, 
   CaseReducer 
 } from '@reduxjs/toolkit';
-import { orderRule } from '../constants/player-positions';
 import { sortPlayerPositions } from '../helpers/positions';
 import { IMatchDetails } from '../interfaces/Match';
 import { ISelectPayload } from '../interfaces/Player';
