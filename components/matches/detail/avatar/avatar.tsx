@@ -1,8 +1,5 @@
 import { RepeatIcon } from "@chakra-ui/icons";
-import { 
-  Avatar,
-  Tag
-} from "@chakra-ui/react";
+import { Avatar } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../../../interfaces/State";
@@ -82,10 +79,8 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
             h={8}
             className={styles.changeIcon} /> 
         }
-      </div>
-      <div className={styles.tagInfo}>
-        <Tag className={styles.tag}>{name}</Tag>
-        <Tag className={styles.tag}>{overall}</Tag>
+        <h5 className={styles.playerName}>{name}</h5>
+        <h5 className={styles.playerOverall}>{overall}</h5>
       </div>
     </div>
   )
