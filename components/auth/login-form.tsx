@@ -32,7 +32,6 @@ const LoginForm: NextPage = () => {
     <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
       <FormControl className={styles.control} isInvalid={!!errors.userName}>
         <Input
-          className={styles.input}
           type="email"
           placeholder="Username"
           htmlSize={30}
@@ -51,7 +50,6 @@ const LoginForm: NextPage = () => {
       </FormControl>
       <FormControl className={styles.control} isInvalid={!!errors.password}>
         <Input
-          className={styles.input}
           type="password"
           placeholder="Password"
           htmlSize={30}
