@@ -1,15 +1,17 @@
 import type { NextPage } from 'next';
 import { CalendarIcon, InfoOutlineIcon } from '@chakra-ui/icons';
-import { MutableRefObject, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
+  FormErrorMessage,
   Input,
   InputGroup,
   InputLeftElement,
-  Text
+  Text,
+  FormControl
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import styles from './place-date.module.scss';
 import useRequest from '../../../../hooks/use-request';
@@ -26,12 +28,20 @@ const playerPositionsMap: { [id: number]: string[] } = {
   9: formations.nineTeam,
   10: formations.tenTeam,
   11: formations.elevenTeam
-};  
+};
+
+type Inputs = {
+  place: string;
+  date: string;
+};
 
 const PlaceDate: NextPage = () => {
 
-  const placeRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const dateRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
   const router = useRouter();
   const form = useSelector((state: RootState) => state.createMatch);
   const {
@@ -41,13 +51,7 @@ const PlaceDate: NextPage = () => {
   } = useRequest();
   const dispatch = useDispatch();
 
-  const createMatch = () => {
-    const place = placeRef.current.value;
-    const date = dateRef.current.value;
-
-    if(!place || !date) {
-      return;
-    }
+  const onCreateMatch: SubmitHandler<Inputs> = ({place, date}) => {
 
     dispatch(createMatchActions.updateInput({input: 'place', value: place}));
     dispatch(createMatchActions.updateInput({input: 'date', value: date}));
@@ -89,19 +93,18 @@ const PlaceDate: NextPage = () => {
       },
       body: JSON.stringify(request)
     }, createMatchHandler);
-
   };
 
   const createMatchHandler = (response: any) => {
-    console.log('match created');
-    console.log(response);
     dispatch(createMatchActions.resetStore());
     router.push('/matches');
   }
 
   return (
-    <div className={styles.form}>
-      <div className={styles.formControl}>
+    <form className={styles.form} onSubmit={handleSubmit(onCreateMatch)}>
+      <FormControl 
+        className={styles.formControl}
+        isInvalid={!!errors.place}>
         <Text className={styles.titleInput}>Place</Text>
         <InputGroup>
           <InputLeftElement
@@ -115,11 +118,18 @@ const PlaceDate: NextPage = () => {
             placeholder='Anfield'
             size='lg'
             variant='filled'
-            ref={placeRef}
+            {...register('place', {
+              required: 'The place name is required'
+            })}
           />
         </InputGroup>
-      </div>
-      <div className={styles.formControl}>
+        <FormErrorMessage>
+          {errors.place && errors.place.message}
+        </FormErrorMessage>
+      </FormControl>
+      <FormControl 
+        className={styles.formControl}
+        isInvalid={!!errors.date}>
         <Text className={styles.titleInput}>Date</Text>
         <InputGroup>
           <InputLeftElement
@@ -133,21 +143,26 @@ const PlaceDate: NextPage = () => {
             placeholder='Date'
             size='lg'
             variant='filled'
-            ref={dateRef}
+            {...register('date', {
+              required: 'The date name is required'
+            })}
           />
         </InputGroup>
-      </div>
+        <FormErrorMessage>
+          {errors.date && errors.date.message}
+        </FormErrorMessage>
+      </FormControl>
       <Button 
         className={styles.nextBtn}
         size='lg'
         mt={10}
         colorScheme='brand'
-        onClick={createMatch}
+        type='submit'
         disabled={isLoading}
       >
         Create Match
       </Button>
-    </div>
+    </form>
   );
 }
 
