@@ -4,28 +4,42 @@
   align-items: center;
   
   .avatarContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
     .avatar {
-      position: relative;
       border: 2px solid white;
       cursor: pointer;
     }
 
     .changeIcon {
       position: absolute;
+      left: 60px;
       animation: spin 2s infinite linear;
+      filter: drop-shadow(
+        #333 -2px 0 10px
+      );
     }
-  }
 
+    .playerName,
+    .playerOverall {
+      position: absolute;
+      font-weight: bold;
+      text-shadow: #333 -2px 0 10px;
+      text-align: center;
+      width: 110px;
+      word-break: break-word;
+      line-height: 15px;
+    }
 
-  .tagInfo {
-    display: flex;
+    .playerName {
+      bottom: 65px;
+    }
 
-    .tag {
-      max-width: 80px;
-      overflow:hidden;
-      display:inline-block;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .playerOverall {
+      color: #FAE505;
+      right: 15px;
     }
   }
 }
