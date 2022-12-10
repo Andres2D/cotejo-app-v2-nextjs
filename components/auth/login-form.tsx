@@ -1,89 +1,92 @@
-import { MutableRefObject, useRef } from 'react';
 import type { NextPage } from 'next';
 import {
   Button,
   FormControl,
   Input,
   IconButton,
-  useToast
+  FormErrorMessage,
 } from '@chakra-ui/react';
-import { signIn } from "next-auth/react";
+import { signIn } from 'next-auth/react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import GoogleIcon from '../../assets/svg/google.svg';
 import styles from './login-form.module.scss';
-import { validateEmail } from '../../helpers/validation';
+import { emailValidationPattern } from '../../constants/form';
+
+type Inputs = {
+  userName: string;
+  password: string;
+};
 
 const LoginForm: NextPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
 
-  const emailRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const toast = useToast();
-
-  const onLogin = () => {
-    
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-
-    if(!email || !password || !validateEmail(email)) {
-      toast({
-        title: 'Error.',
-        description: "Invalid login, please check the form values.",
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-      emailRef.current.value = '';
-      passwordRef.current.value = '';
-      return;
-    }
-
-    signIn('credential_user', {email, password});
-
+  const onLogin: SubmitHandler<Inputs> = ({ userName, password }) => {
+    signIn('credential_user', {email: userName, password});
   };
 
   return (
-    <FormControl className={styles.form}>
-      <Input 
-        className={styles.input}
-        type='email'
-        placeholder='Username'
-        htmlSize={30} 
-        width='auto'
-        size='lg'
-        variant='filled'
-        ref={emailRef}
-        id="emailRef"
+    <form className={styles.form} onSubmit={handleSubmit(onLogin)}>
+      <FormControl className={styles.control} isInvalid={!!errors.userName}>
+        <Input
+          className={styles.input}
+          type="email"
+          placeholder="Username"
+          htmlSize={30}
+          width="auto"
+          size="lg"
+          variant="filled"
+          {...register('userName', {
+            required: 'The user name is required',
+            pattern: emailValidationPattern
+          })}
+          id="userName"
         />
-      <Input 
-        className={styles.input}
-        type='password'
-        placeholder='Password' 
-        htmlSize={30} 
-        width='auto'
-        size='lg'
-        variant='filled'
-        ref={passwordRef}
-        id="passwordRef"
-      />
+        <FormErrorMessage>
+          {errors.userName && errors.userName.message}
+        </FormErrorMessage>
+      </FormControl>
+      <FormControl className={styles.control} isInvalid={!!errors.password}>
+        <Input
+          className={styles.input}
+          type="password"
+          placeholder="Password"
+          htmlSize={30}
+          width="auto"
+          size="lg"
+          variant="filled"
+          {...register('password', {
+            required: 'The password is required',
+          })}
+          id="password"
+        />
+        <FormErrorMessage>
+          {errors.password && errors.password.message}
+        </FormErrorMessage>
+      </FormControl>
       <div className={styles.actions}>
-        <Button 
+        <Button
           className={styles.login}
-          size='lg'
-          colorScheme='brand'
-          onClick={onLogin}
+          size="lg"
+          colorScheme="brand"
+          type="submit"
         >
           Login
         </Button>
         <IconButton
           className={styles.google}
-          colorScheme='gray'
-          aria-label='Call Segun'
-          size='lg'
+          colorScheme="gray"
+          aria-label="Call Segun"
+          size="lg"
           icon={<GoogleIcon boxSize={8} />}
           onClick={() => signIn('google_user')}
         />
       </div>
-    </FormControl>
+    </form>
   );
-}
+};
 
 export default LoginForm;

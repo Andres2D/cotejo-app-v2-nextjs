@@ -10,21 +10,21 @@ const handler = async(req: any, res: any) => {
 
       const player = await Player.findOne({email});
       if(!player) {
-        res.status(400).json({ message: 'User does not exist'});
+        return res.status(400).json({ message: 'User does not exist'});
       }
 
       const validPassword = bcryptjs.compareSync(password, player?.password!);
       
       if(!validPassword) {
-        res.status(400).json({ message: 'Invalid password or email'});
+       return res.status(400).json({ message: 'Invalid password or email'});
       }
 
       return  res.status(200).json(player);
     }
-    res.status(400).json({ message: 'Bad method'});
+    return res.status(400).json({ message: 'Bad method'});
   }catch(err) {
     console.log(err);
-    res.status(500).json({ message: 'Unexpected error'});
+    return res.status(500).json({ message: 'Unexpected error'});
   }
 };
 
