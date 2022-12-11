@@ -24,6 +24,13 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
   const {
     sendRequest
   } = useRequest();
+  const showNamesOption = isAway 
+    ? details.match.away_team.showNames 
+    : details.match.home_team.showNames;
+  
+  const showStatsOption = isAway 
+    ? details.match.away_team.showStats 
+    : details.match.home_team.showStats; 
 
   const selectPlayerHandler = () => {
     dispatch(matchDetailsActions.selectPlayer({playerId: id, isAway}));
@@ -79,8 +86,14 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
             h={8}
             className={styles.changeIcon} /> 
         }
-        <h5 className={styles.playerName}>{name}</h5>
-        <h5 className={styles.playerOverall}>{overall}</h5>
+        {
+          showNamesOption &&  
+          <h5 className={styles.playerName}>{name}</h5>
+        }
+        {
+          showStatsOption &&
+          <h5 className={styles.playerOverall}>{overall}</h5>
+        }
       </div>
     </div>
   )
