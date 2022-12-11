@@ -3,7 +3,6 @@ import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import MatchDetailsLayout from '../../../components/matches/detail/match-detail';
-import { orderRule } from '../../../constants/player-positions';
 import { IMatchDetailsResponse } from '../../../interfaces/Match';
 import { getMatch } from '../../../server/matches';
 import { matchDetailsActions } from '../../../store/match-details.slice';

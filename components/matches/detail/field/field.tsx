@@ -1,6 +1,6 @@
-import { Select } from '@chakra-ui/react';
+import { Checkbox, Select, Stack } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { MutableRefObject, useRef } from 'react';
+import { ChangeEvent, MutableRefObject, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFullPlayer } from '../../../../interfaces/Player';
 import styles from './field.module.scss';
@@ -11,6 +11,7 @@ import {
 import { RootState } from '../../../../interfaces/State';
 import { matchDetailsActions } from '../../../../store/match-details.slice';
 import AvatarMatchLayout from '../avatar/avatar';
+import { SettingOption } from '../../../../types/match';
 
 interface Props {
   team: IFullPlayer[],
@@ -28,6 +29,17 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
   const updateFormation = () => {
     dispatch(matchDetailsActions.updateInput({input: formationKey, value: formationRef.current.value}));
   };
+
+  const checkHandler = (evt: ChangeEvent<HTMLInputElement>, setting: SettingOption) => {
+
+    dispatch(matchDetailsActions.updateInterfaceSettings(
+      {
+        team: isAway ? 'away_team' : 'home_team', 
+        setting: setting,
+        value: evt.target.checked
+      }
+    ));
+  }
 
   const playersMap = team.map((player, idx) => {
     return (
@@ -49,6 +61,28 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         ${styles[`${formationTypeMap[matchDetails.match[formationKey].formation]}${formationKeyMap[team.length]}`]}`}>
         {playersMap}
       </section>
+      <Stack spacing={5} direction='row'>
+        <Checkbox 
+          colorScheme='yellow'
+          isChecked={
+            isAway 
+            ? matchDetails.match.away_team.showNames 
+            : matchDetails.match.home_team.showNames
+          }
+          onChange={(evt) => checkHandler(evt, 'showNames')}>
+          Show names
+        </Checkbox>
+        <Checkbox 
+          colorScheme='green'
+          isChecked={
+            isAway 
+            ? matchDetails.match.away_team.showStats 
+            : matchDetails.match.home_team.showStats
+          }
+          onChange={(evt) => checkHandler(evt, 'showStats')}>
+          Show stats
+        </Checkbox>
+      </Stack>
       <Select 
         width={'50%'}
         className={styles.formations}
