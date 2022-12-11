@@ -6,10 +6,17 @@ import {
 import { sortPlayerPositions } from '../helpers/positions';
 import { IMatchDetails } from '../interfaces/Match';
 import { ISelectPayload } from '../interfaces/Player';
+import { SettingOption, TeamCondition } from '../types/match';
 
 interface IPayload {
-  input: 'home_team' | 'away_team',
+  input: TeamCondition,
   value: string
+}
+
+interface IPayloadSetting {
+  team: TeamCondition,
+  setting: SettingOption,
+  value: boolean
 }
 
 const initialState: IMatchDetails = {
@@ -19,13 +26,17 @@ const initialState: IMatchDetails = {
       _id: '',
       formation: 't',
       name: '',
-      shield: ''
+      shield: '',
+      showNames: true,
+      showStats: true,
     },
     away_team: {
       _id: '',
       formation: 't',
       name: '',
-      shield: ''
+      shield: '',
+      showNames: true,
+      showStats: true,
     },
     date: '',
     location: '',
@@ -40,6 +51,10 @@ const setMatchState: CaseReducer<IMatchDetails, PayloadAction<IMatchDetails>> =
     const { match, away, home } = action.payload;
 
     state.match = match;
+    state.match.home_team.showNames = true;
+    state.match.home_team.showStats = true;
+    state.match.away_team.showNames = true;
+    state.match.away_team.showStats = true;
     state.home = sortPlayerPositions(home);
     state.away = sortPlayerPositions(away);
 }
@@ -91,6 +106,12 @@ const selectPlayer: CaseReducer<IMatchDetails, PayloadAction<ISelectPayload>> =
     
     state.playersSelected = [];
   }
+};
+
+const updateInterfaceSettings: CaseReducer<IMatchDetails, PayloadAction<IPayloadSetting>> = 
+  (state: IMatchDetails, action: PayloadAction<IPayloadSetting>) => {
+  const { team, setting, value } = action.payload;
+  state.match[team][setting] = value;
 }
 
 const matchDetailSlice = createSlice({
@@ -99,7 +120,8 @@ const matchDetailSlice = createSlice({
   reducers: {
     setMatchState,
     updateInput,
-    selectPlayer
+    selectPlayer,
+    updateInterfaceSettings
   }
 });
 
