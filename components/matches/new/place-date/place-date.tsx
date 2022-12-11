@@ -20,14 +20,14 @@ import { RootState } from '../../../../interfaces/State';
 import * as formations from '../../../../constants/formations-positions'; 
 
 const playerPositionsMap: { [id: number]: string[] } = {
-  4: formations.fourTeam,
-  5: formations.fiveTeam,
-  6: formations.sixTeam,
-  7: formations.sevenTeam,
-  8: formations.eightTeam,
-  9: formations.nineTeam,
-  10: formations.tenTeam,
-  11: formations.elevenTeam
+  8: formations.fourTeam,
+  10: formations.fiveTeam,
+  12: formations.sixTeam,
+  14: formations.sevenTeam,
+  16: formations.eightTeam,
+  18: formations.nineTeam,
+  20: formations.tenTeam,
+  22: formations.elevenTeam
 };
 
 type Inputs = {
@@ -70,6 +70,7 @@ const PlaceDate: NextPage = () => {
         shield: form.away_team_shield
       },
       home_players: form.home_players.map((player, idx) => {
+        console.log()
         return {
           position: playerPositionsMap[form.players_number][idx],
           isCaptain: false,
