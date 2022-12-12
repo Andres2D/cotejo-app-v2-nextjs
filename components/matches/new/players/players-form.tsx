@@ -64,11 +64,10 @@ const PlayersForm: NextPage = () => {
     setPlayersSearch(data.players)
   };
 
-  const playersSelector = playersFixture.map(p => 
+  const playersSelector = playersFixture.map(p =>
     <option 
       key={p.value} 
       value={p.value} 
-      selected={p.value === formState.players_number}
     >
       {p.label}
     </option>
@@ -152,6 +151,7 @@ const PlayersForm: NextPage = () => {
         color='#333'
         size='md'
         onChange={updatePlayersNumber}
+        defaultValue={formState.players_number}
       >
         {playersSelector}
       </Select>

@@ -9,50 +9,49 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  Button
+  Button,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useSession } from 'next-auth/react';
-import { signOut } from "next-auth/react";
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import styles from './navbar.module.scss';
 
 const Navbar: NextPage = () => {
-
   const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const btnRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
-  if(!session) {
+  if (!session) {
     return <></>;
   }
 
-  const { image, name } = session?.user;
+  const { image, name } = session?.user!;
 
   return (
     <>
-    <div className={styles.container}>
-        <Avatar 
+      <div className={styles.container}>
+        <Avatar
           className={styles.avatar}
-          src='/images/cotejo-app-ui.png'
+          src="/images/cotejo-app-ui.png"
           onClick={() => {
             onClose();
             router.push('/menu');
           }}
-          bg="green.600" 
+          bg="green.600"
         />
-        <Avatar 
+        <Avatar
           className={styles.avatar}
-          name={name} 
+          name={name}
           src={image}
           onClick={onOpen}
           ref={btnRef}
         />
-    </div>
+      </div>
       <Drawer
         isOpen={isOpen}
-        placement='right'
+        placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
       >
@@ -60,9 +59,9 @@ const Navbar: NextPage = () => {
         <DrawerContent>
           <DrawerCloseButton className={styles.dark} />
           <DrawerHeader className={styles.headerMenu}>
-            <Avatar 
+            <Avatar
               className={styles.avatarMenu}
-              name={name} 
+              name={name}
               src={image}
               onClick={() => {
                 onClose();
@@ -75,28 +74,30 @@ const Navbar: NextPage = () => {
           </DrawerHeader>
 
           <DrawerBody className={styles.columnMenu}>
-            <Button 
-              className={styles.option} 
-              colorScheme='green' 
-              variant='outline'
+            <Button
+              className={styles.option}
+              colorScheme="green"
+              variant="outline"
               onClick={() => {
                 onClose();
                 router.push('/matches');
-              }}>
+              }}
+            >
               Matches
             </Button>
           </DrawerBody>
 
           <DrawerFooter className={styles.columnMenu}>
             <p className={styles.dark}>Cotejo App v2 </p>
-            <Button 
-              className={styles.option} 
-              colorScheme='red' 
-              variant='outline'
+            <Button
+              className={styles.option}
+              colorScheme="red"
+              variant="outline"
               onClick={() => {
                 onClose();
                 signOut();
-              }}>
+              }}
+            >
               Log out
             </Button>
           </DrawerFooter>
@@ -104,6 +105,6 @@ const Navbar: NextPage = () => {
       </Drawer>
     </>
   );
-}
+};
 
 export default Navbar;
