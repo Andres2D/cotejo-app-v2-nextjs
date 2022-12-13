@@ -1,0 +1,19 @@
+.ratio {
+  display: flex;
+  justify-content: center;
+
+  .star {
+    height: 24px;
+    margin-right: 5px;
+    stroke: white;
+    width: 24px;
+  }
+
+  .filled {
+    fill: gold;
+  }
+
+  .not-filled {
+    fill: white;
+  }
+}
