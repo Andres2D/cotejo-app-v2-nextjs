@@ -40,7 +40,7 @@ const Menu: NextPage = () => {
           colorScheme='brand'
           onClick={() => router.push('/matches')}
         >
-          Matchs
+          Matches
         </Button>
       </div>
     </div>

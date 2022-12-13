@@ -45,7 +45,7 @@ export const getServerSideProps = async(context: any) => {
     }
   }
 
-  matches = await getMatches() || [];
+  matches = await getMatches(session.user?.email!) || [];
 
   return {
     props: {
