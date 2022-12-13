@@ -1,14 +1,33 @@
 import { Query } from 'mongoose';
 import mongoConnection from '../database/database-configuration';
-import { Match } from '../database/models';
+import { Match, Player } from '../database/models';
 import { TeamPlayer } from '../database/models';
 import { Rating } from '../database/models';
 import { Rating as IRating } from '../interfaces/Rating';
 
-export const getMatches = async () => {
+export const getMatches = async (userEmail: string) => {
   try {
+    if(!userEmail) {
+      return null;
+    }
     await mongoConnection();
-    const matches = await Match.find()
+
+    const playerDB = await Player.findOne({email: userEmail});
+
+    if(!playerDB) {
+      return null;
+    }
+
+    const teamsDB = await TeamPlayer.find({ player: playerDB._id});
+    if(teamsDB.length < 0) {
+      return null;
+    }
+
+    const query = teamsDB.map(({team}) => team);
+
+    const matches = await Match.find({
+      $or: [{home_team: {$in: query}}, {away_team: {$in: query}}]
+    })
       .populate('home_team', 'name formation shield')
       .populate('away_team', 'name formation shield');
 
