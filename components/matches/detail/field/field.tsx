@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IFullPlayer } from '../../../../interfaces/Player';
 import styles from './field.module.scss';
 import { 
+  formationAlias,
   formationKeyMap, 
   formationTypeMap 
 } from '../../../../constants/formation';
@@ -90,9 +91,15 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         onChange={updateFormation}
         value={matchDetails.match[formationKey].formation}
       >
-        <option value='t'>Triangle</option>
-        <option value='s'>Square</option>
-        <option value='f'>Forward</option>
+        { team.length > 0 &&
+          ['t','s','f'].map(op => (
+            <option 
+              key={op} 
+              value={op}>
+                {formationAlias[team.length][op]}
+            </option>
+          ))
+        }
       </Select>
     </div>
   );
