@@ -18,9 +18,6 @@ const Matches: NextPage<Props> = ({matches}) => {
 
   return (
     <section className={styles.matches}>
-      <MatchList
-        matches={matchesList}
-      />
       <Button 
         size='lg'
         colorScheme='brand'
@@ -28,6 +25,9 @@ const Matches: NextPage<Props> = ({matches}) => {
       >
         New Match
       </Button>
+      <MatchList
+        matches={matchesList}
+      />
     </section>
   );
 }
