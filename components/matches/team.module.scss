@@ -2,10 +2,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   
   .tag {
     color: #333 !important;
     margin-top: 20px;
   }
-}
 
+  .logoShadow {
+    padding: 5px;
+    filter: drop-shadow( 2px 2px 3px rgba(245,245,245, 1));
+  }
+}

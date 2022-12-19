@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { IconButton } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
-import Image from 'next/image';
+import { Image } from '@chakra-ui/react';
 import styles from './match-list.module.scss';
 import Team from './team';
 import { FullMatch } from '../../interfaces/Match';
@@ -37,8 +37,8 @@ const MatchList: NextPage<Props> = ({matches}) => {
           <Image
             src={'/images/vs-icon.png'}
             alt='Icon versus'
-            width={80}
-            height={60}
+            width={55}
+            height={45}
           ></Image>
           <div>
             <h2>{date}</h2>
@@ -55,7 +55,7 @@ const MatchList: NextPage<Props> = ({matches}) => {
 
         <div className={styles.options}>
           <IconButton
-            colorScheme='blackAlpha'
+            colorScheme='teal'
             size='md'
             mb={2}
             aria-label='Edit match'
