@@ -40,7 +40,7 @@ const MatchList: NextPage<Props> = ({matches}) => {
             width={55}
             height={45}
           ></Image>
-          <div>
+          <div className={styles.details}>
             <h2>{date}</h2>
             <h2>{location}</h2>
           </div>

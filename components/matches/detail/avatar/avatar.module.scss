@@ -21,6 +21,16 @@
         #333 -2px 0 10px
       );
     }
+    
+    .replaceIcon {
+      position: absolute;
+      left: 60px;
+      top: 40px;
+      cursor: pointer;
+      filter: drop-shadow(
+        #333 -2px 0 10px
+      );
+    }
 
     .playerName,
     .playerOverall {
@@ -31,6 +41,7 @@
       width: 110px;
       word-break: break-word;
       line-height: 15px;
+      color: #F7FAFC;
     }
 
     .playerName {

@@ -4,7 +4,6 @@ const theme = extendTheme({
   styles: {
     global: {
       'html, body': {
-        color: 'gray.100',
         lineHeight: 'tall',
         bg: '#1C6758'
       },
