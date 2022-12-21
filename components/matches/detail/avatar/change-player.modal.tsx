@@ -1,5 +1,12 @@
 import { 
+  Avatar,
+  Badge,
+  Box,
   Button, 
+  Flex, 
+  Heading, 
+  Image, 
+  Input, 
   Modal, 
   ModalBody, 
   ModalCloseButton, 
@@ -7,19 +14,78 @@ import {
   ModalFooter, 
   ModalHeader, 
   ModalOverlay, 
+  Text, 
   useDisclosure 
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
+import { useState, useRef, MutableRefObject } from 'react';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import useRequest from '../../../../hooks/use-request';
+import { IPlayerList } from '../../../../interfaces/Player';
 import styles from './change-player.modal.module.scss';
 
 const ChangePlayerModal: NextPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [ playersSearch, setPlayersSearch ] = useState([]);
+  const { 
+    isLoading,
+    sendRequest
+  } = useRequest();
+
+  const inputSubject: Subject<string> = new Subject();
+  const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
+
+  // Get player
+  inputSubject.pipe(
+    debounceTime(2000),
+    distinctUntilChanged()
+  ).subscribe(async(query: string) => {
+    if(!query) {
+      return;
+    }
+
+    sendRequest({
+      url: '/api/player',
+      headers: {
+        'Content-Type': 'application/json',
+        'query': query
+      }
+    }, playersSearchHandler);
+  });
+
+  const playersSearchHandler = (data: any) => {
+    setPlayersSearch(data.players)
+  };
+
+  const searchPlayer = () => {
+    inputSubject.next(inputRef.current.value);
+  };
+
+  const playersResults = playersSearch.map((player: IPlayerList) => {
+    return (
+      <Flex
+        // onClick={() => addPlayer(player)}
+        key={player._id} 
+        className={styles.playerResult}>
+        <Avatar src={player.image} />
+        <Box ml='3'>
+          <Text fontWeight='bold'>
+            {player.name}
+            <Badge ml='1' colorScheme='green'>
+              {player.position}
+            </Badge>
+          </Text>
+          <Text fontSize='sm'>{player.nationality}</Text>
+        </Box>
+      </Flex>
+    )
+  });
 
   return (
     <Modal 
       closeOnOverlayClick={false} 
-      isOpen={false} 
+      isOpen={true} 
       onClose={onClose}
       variant={'brand'}
     >
@@ -27,14 +93,52 @@ const ChangePlayerModal: NextPage = () => {
       <ModalContent>
         <ModalHeader>Change player</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>
-          {/* <Lorem count={2} /> */}
-          <p>This works!</p>
+        <ModalBody pb={6} className={styles.container}>
+          <div className={styles.playerAction}>
+            <Avatar
+              size='lg'
+              name={'Test'} 
+              src={'https://bit.ly/tioluwani-kolawole'}
+            />
+            <Heading as='h1' size='lg' noOfLines={1}>
+              Andres Alcaraz
+            </Heading>
+            <Image 
+              src='/images/out.svg'
+              alt='in-signal'
+              width={20}
+            />
+          </div>
+          <div className={styles.playerAction}>
+            <Avatar
+              size='lg'
+              name={'Test'} 
+              src={'https://bit.ly/tioluwani-kolawole'}
+            />
+            <div className={styles.inputChange}>
+              <Input
+                placeholder='Player name or email'
+                colorScheme='white'
+                variant='filled' 
+                className={styles.inputPlayer}
+                ref={inputRef}
+                onChange={searchPlayer}
+              />
+              <div className={styles.resultList}>
+                {playersResults}
+              </div>
+            </div>
+            <Image 
+              src='/images/in.svg'
+              width={20}
+              alt='out-signal'
+            />
+          </div>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='blue' mr={3}>
-            Save
+          <Button colorScheme='brand' mr={3}>
+            Change
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
