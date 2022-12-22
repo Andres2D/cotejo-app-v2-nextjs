@@ -1,11 +1,12 @@
 import { 
   createSlice, 
   PayloadAction, 
-  CaseReducer 
+  CaseReducer, 
+  current
 } from '@reduxjs/toolkit';
 import { sortPlayerPositions } from '../helpers/positions';
 import { IMatchDetails } from '../interfaces/Match';
-import { ISelectPayload } from '../interfaces/Player';
+import { IPlayerList, ISelectPayload } from '../interfaces/Player';
 import { SettingOption, TeamCondition } from '../types/match';
 
 interface IPayload {
@@ -43,7 +44,8 @@ const initialState: IMatchDetails = {
   },
   home: [],
   away: [],
-  playersSelected: []
+  playersSelected: [],
+  changePlayerModalActive: false
 };
 
 const setMatchState: CaseReducer<IMatchDetails, PayloadAction<IMatchDetails>> = 
@@ -114,6 +116,26 @@ const updateInterfaceSettings: CaseReducer<IMatchDetails, PayloadAction<IPayload
   state.match[team][setting] = value;
 }
 
+const toggleChangePlayerModal: CaseReducer<IMatchDetails> = 
+(state: IMatchDetails) => {
+  state.changePlayerModalActive = !state.changePlayerModalActive;
+};
+
+const replacePlayer: CaseReducer<IMatchDetails, PayloadAction<IPlayerList>> = 
+(state: IMatchDetails, action: PayloadAction<IPlayerList>) => {
+
+  const isAway = state.playersSelected[0].isAway;
+  const teamType = isAway ? 'away' : 'home';
+
+  console.log(current(state[teamType][state[teamType].findIndex(p => p.player._id === state.playersSelected[0].playerId)].player));
+  
+  state[teamType][state[teamType].findIndex(p => p.player._id === state.playersSelected[0].playerId)].player.image = action.payload.image;
+  state[teamType][state[teamType].findIndex(p => p.player._id === state.playersSelected[0].playerId)].player.name = action.payload.name;
+  state[teamType][state[teamType].findIndex(p => p.player._id === state.playersSelected[0].playerId)].overall = action.payload?.overall || 50;
+  state[teamType][state[teamType].findIndex(p => p.player._id === state.playersSelected[0].playerId)].player._id = action.payload._id;
+  state.playersSelected = [];
+};
+
 const matchDetailSlice = createSlice({
   name: 'matchDetails',
   initialState,
@@ -121,7 +143,9 @@ const matchDetailSlice = createSlice({
     setMatchState,
     updateInput,
     selectPlayer,
-    updateInterfaceSettings
+    updateInterfaceSettings,
+    toggleChangePlayerModal,
+    replacePlayer
   }
 });
 

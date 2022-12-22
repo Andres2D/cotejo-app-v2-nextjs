@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../interfaces/State';
+import ChangePlayerModal from './avatar/change-player.modal';
 import FieldLayout from './field/field';
 import FieldHeader from './field/header';
 import styles from './match-detail.module.scss';
@@ -35,6 +36,7 @@ const MatchDetailsLayout: NextPage = () => {
           teamOverall={awayAverage}
           isAway
         />
+        <ChangePlayerModal />
       </div>
       <div className={styles.fields}>
         <FieldLayout team={matchDetails.home.slice(0, 11)} />

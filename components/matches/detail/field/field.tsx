@@ -62,7 +62,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         ${styles[`${formationTypeMap[matchDetails.match[formationKey].formation]}${formationKeyMap[team.length]}`]}`}>
         {playersMap}
       </section>
-      <Stack spacing={5} direction='row'>
+      <Stack className={styles.check} spacing={5} direction='row'>
         <Checkbox 
           colorScheme='yellow'
           isChecked={
@@ -90,6 +90,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         ref={formationRef}
         onChange={updateFormation}
         value={matchDetails.match[formationKey].formation}
+        color={'gray.50'}
       >
         { team.length > 0 &&
           ['t','s','f'].map(op => (

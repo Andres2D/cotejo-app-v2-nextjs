@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+  
+  .playerAction {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+
+    .playerResult {
+      margin: 5px;
+      border: 2px solid gray;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 5px;
+      
+      &:hover {
+        color: white;
+        background-color: gray;
+      }
+    }
+
+    .resultList {
+      max-height: 150px;
+      overflow-y: scroll;
+    }
+  }
+
+  .inputChange {
+    display: flex;
+    flex-direction: column;
+
+    .inputPlayer {
+      border: 2px solid gray;
+    }
+  }
+}

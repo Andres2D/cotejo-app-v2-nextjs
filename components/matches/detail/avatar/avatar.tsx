@@ -1,4 +1,4 @@
-import { RepeatIcon } from "@chakra-ui/icons";
+import { RepeatIcon, EditIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +30,11 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
   
   const showStatsOption = isAway 
     ? details.match.away_team.showStats 
-    : details.match.home_team.showStats; 
+    : details.match.home_team.showStats;
+
+  const changePlayerHandler = () => {
+    dispatch(matchDetailsActions.toggleChangePlayerModal());
+  };
 
   const selectPlayerHandler = () => {
     dispatch(matchDetailsActions.selectPlayer({playerId: id, isAway}));
@@ -81,10 +85,20 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
           onClick={selectPlayerHandler}
         />
         { details.playersSelected.some(p => p.playerId === id) && 
-          <RepeatIcon 
-            w={8} 
-            h={8}
-            className={styles.changeIcon} /> 
+          <div>
+            <RepeatIcon 
+              w={8} 
+              h={8}
+              color={'gray.50'}
+              className={styles.changeIcon} />
+            <EditIcon 
+              w={7} 
+              h={7}
+              color={'gray.50'}
+              focusable
+              onClick={changePlayerHandler}
+              className={styles.replaceIcon} />
+          </div>
         }
         {
           showNamesOption &&  

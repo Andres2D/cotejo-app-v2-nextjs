@@ -26,7 +26,7 @@ const FieldHeader: NextPage<Props> = ({teamName, teamShield, teamOverall, isAway
           title={teamName}
           m='8px'
         />
-        <Heading size='2xl'>{teamName}</Heading>
+        <Heading color={'gray.50'} size='2xl'>{teamName}</Heading>
       </section>
       <RatioStars average={teamOverall} />
     </header>

@@ -8,8 +8,10 @@ const handler = async (req: any, res: any) => {
         createTeamPlayers(req, res);
         break;
       case 'PUT':
-        putTeamPlayers(req, res);
+        //TODO: improve condition logic
+        req.body.playerOutId ? replacePlayer(req, res) : putTeamPlayers(req, res);
         break;
+
       default:
         res.status(400).json({ message: 'Unknown method' });
         break;
@@ -78,6 +80,41 @@ const putTeamPlayers = async (req: any, res: any) => {
       { team: playerTwoTeam, player: playerTwoId },
       newPlayer2,
       { new: true }
+    );
+
+    return res.status(201).json({ message: 'Players updated' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Error updating the Team Player' });
+  }
+};
+
+const replacePlayer = async (req: any, res: any) => {
+  try {
+    const { playerOutId, playerInId, teamId } = req.body;
+
+    await mongoConnection();
+
+    const teamPlayerDB = await TeamPlayer.findOne({
+      team: teamId,
+      player: playerOutId,
+    });
+
+    if (!teamPlayerDB) {
+      return res.status(400).json({ message: 'Bad identifier data' });
+    }
+
+    const newPlayer = {
+      _id: teamPlayerDB._id,
+      position: teamPlayerDB.position,
+      isCaptain: teamPlayerDB.isCaptain,
+      player: playerInId,
+      team: teamPlayerDB.team,
+    };
+
+    await TeamPlayer.findOneAndUpdate(
+      { team: teamId, player: playerOutId },
+      newPlayer
     );
 
     return res.status(201).json({ message: 'Players updated' });
