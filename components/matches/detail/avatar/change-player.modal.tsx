@@ -32,7 +32,7 @@ const ChangePlayerModal: NextPage = () => {
   const dispatch = useDispatch();
   const details = useSelector((state: RootState) => state.matchDetails);
   const { onClose } = useDisclosure();
-  const [ inPlayer, setInPlayer ] = useState('https://bit.ly/broken-link');
+  const [ inPlayer, setInPlayer ] = useState<IPlayerList>();
   const [ playersSearch, setPlayersSearch ] = useState([]);
   const { 
     isLoading,
@@ -61,6 +61,7 @@ const ChangePlayerModal: NextPage = () => {
   });
 
   const playersSearchHandler = (data: any) => {
+    console.log(data);
     const basePlayersId = [...details.home, ...details.away].map(p => p.player._id);
     // TODO: Add types
     const filteredPlayers = data.players.filter((p: any) => !basePlayersId.includes(p._id))
@@ -81,9 +82,17 @@ const ChangePlayerModal: NextPage = () => {
   }
 
   const setChangePlayer = (player: IPlayerList) => {
-    setInPlayer(player.image);
+    setInPlayer(player);
     inputRef.current.value = player.name;
     setPlayersSearch([]);
+  };
+
+  const changePlayerHandler = () => {
+    if(!inPlayer) { 
+      return;
+    }
+    dispatch(matchDetailsActions.replacePlayer(inPlayer));
+    dispatch(matchDetailsActions.toggleChangePlayerModal());
   };
 
   const playersResults = playersSearch.map((player: IPlayerList) => {
@@ -138,7 +147,7 @@ const ChangePlayerModal: NextPage = () => {
           <div className={styles.playerAction}>
             <Avatar
               size='lg'
-              src={inPlayer}
+              src={inPlayer?.image || 'https://bit.ly/broken-link'}
             />
             <div className={styles.inputChange}>
               <Input
@@ -162,7 +171,11 @@ const ChangePlayerModal: NextPage = () => {
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme='brand' mr={3}>
+          <Button 
+            colorScheme='brand' 
+            mr={3}
+            onClick={changePlayerHandler}
+          >
             Change
           </Button>
           <Button onClick={closeChangePlayerHandler}>Cancel</Button>
