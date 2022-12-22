@@ -56,7 +56,7 @@ const ChangePlayerModal: NextPage = () => {
       headers: {
         'Content-Type': 'application/json',
         'query': query
-      }
+      },
     }, playersSearchHandler);
   });
 
@@ -91,8 +91,26 @@ const ChangePlayerModal: NextPage = () => {
     if(!inPlayer) { 
       return;
     }
+
+    const request = {
+      playerOutId: details.playersSelected[0].playerId,
+      playerInId: inPlayer._id,
+      teamId: details.playersSelected[0].isAway 
+        ? details.match.away_team._id
+        : details.match.home_team._id 
+    }
+
+    sendRequest({
+      url: '/api/team-player',
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(request)
+    }, () => {});
+
     dispatch(matchDetailsActions.replacePlayer(inPlayer));
-    dispatch(matchDetailsActions.toggleChangePlayerModal());
+    dispatch(matchDetailsActions.toggleChangePlayerModal());    
   };
 
   const playersResults = playersSearch.map((player: IPlayerList) => {
