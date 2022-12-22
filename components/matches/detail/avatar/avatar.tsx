@@ -30,7 +30,11 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
   
   const showStatsOption = isAway 
     ? details.match.away_team.showStats 
-    : details.match.home_team.showStats; 
+    : details.match.home_team.showStats;
+
+  const changePlayerHandler = () => {
+    dispatch(matchDetailsActions.toggleChangePlayerModal());
+  };
 
   const selectPlayerHandler = () => {
     dispatch(matchDetailsActions.selectPlayer({playerId: id, isAway}));
@@ -92,6 +96,7 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
               h={7}
               color={'gray.50'}
               focusable
+              onClick={changePlayerHandler}
               className={styles.replaceIcon} />
           </div>
         }

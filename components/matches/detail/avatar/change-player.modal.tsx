@@ -19,14 +19,20 @@ import {
 } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import { useState, useRef, MutableRefObject } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import useRequest from '../../../../hooks/use-request';
-import { IPlayerList } from '../../../../interfaces/Player';
+import { IMatchPlayer, IPlayerList } from '../../../../interfaces/Player';
+import { RootState } from '../../../../interfaces/State';
+import { matchDetailsActions } from "../../../../store/match-details.slice";
 import styles from './change-player.modal.module.scss';
 
 const ChangePlayerModal: NextPage = () => {
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const details = useSelector((state: RootState) => state.matchDetails);
+  const { onClose } = useDisclosure();
+  const [ inPlayer, setInPlayer ] = useState('https://bit.ly/broken-link');
   const [ playersSearch, setPlayersSearch ] = useState([]);
   const { 
     isLoading,
@@ -62,10 +68,25 @@ const ChangePlayerModal: NextPage = () => {
     inputSubject.next(inputRef.current.value);
   };
 
+  const closeChangePlayerHandler = () => {
+    dispatch(matchDetailsActions.toggleChangePlayerModal());
+  };
+
+  const getOutPlayer = (): IMatchPlayer => {
+    return  [...details.home, ...details.away]
+      .filter(p => p.player._id === details.playersSelected[0]?.playerId)[0]?.player;
+  }
+
+  const setChangePlayer = (player: IPlayerList) => {
+    setInPlayer(player.image);
+    inputRef.current.value = player.name;
+    setPlayersSearch([]);
+  };
+
   const playersResults = playersSearch.map((player: IPlayerList) => {
     return (
       <Flex
-        // onClick={() => addPlayer(player)}
+        onClick={() => setChangePlayer(player)}
         key={player._id} 
         className={styles.playerResult}>
         <Avatar src={player.image} />
@@ -85,23 +106,25 @@ const ChangePlayerModal: NextPage = () => {
   return (
     <Modal 
       closeOnOverlayClick={false} 
-      isOpen={true} 
+      isOpen={details.changePlayerModalActive} 
       onClose={onClose}
       variant={'brand'}
     >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Change player</ModalHeader>
-        <ModalCloseButton />
+        <ModalCloseButton 
+          onClick={closeChangePlayerHandler}
+        />
         <ModalBody pb={6} className={styles.container}>
           <div className={styles.playerAction}>
             <Avatar
               size='lg'
-              name={'Test'} 
-              src={'https://bit.ly/tioluwani-kolawole'}
+              name={ getOutPlayer()?.name } 
+              src={ getOutPlayer()?.image || 'https://bit.ly/tioluwani-kolawole'}
             />
             <Heading as='h1' size='lg' noOfLines={1}>
-              Andres Alcaraz
+              { getOutPlayer()?.name }
             </Heading>
             <Image 
               src='/images/out.svg'
@@ -112,8 +135,7 @@ const ChangePlayerModal: NextPage = () => {
           <div className={styles.playerAction}>
             <Avatar
               size='lg'
-              name={'Test'} 
-              src={'https://bit.ly/tioluwani-kolawole'}
+              src={inPlayer}
             />
             <div className={styles.inputChange}>
               <Input
@@ -140,7 +162,7 @@ const ChangePlayerModal: NextPage = () => {
           <Button colorScheme='brand' mr={3}>
             Change
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={closeChangePlayerHandler}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
