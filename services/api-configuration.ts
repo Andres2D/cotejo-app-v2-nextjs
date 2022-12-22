@@ -1,5 +1,5 @@
 import { create } from 'apisauce'
-import { UpdateProfileRequest } from '../interfaces/Player';
+import { UpdateProfileRequest, RegisterPlayerRequest } from '../interfaces/Player';
 
 const api = create({
   baseURL: '/api',
@@ -7,3 +7,5 @@ const api = create({
 });
 
 export const updatePlayer = (request: UpdateProfileRequest) => api.put('/player', request);
+
+export const registerPlayer = (request: RegisterPlayerRequest) => api.post('/player', request);

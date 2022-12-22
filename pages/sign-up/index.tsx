@@ -2,31 +2,19 @@ import type { NextPage } from 'next';
 import { getSession, signIn } from 'next-auth/react';
 import Image from 'next/image';
 import NextLink from 'next/link';
+import { useMutation } from 'react-query';
 import { Link, useToast } from '@chakra-ui/react';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.scss';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
-import useRequest from '../../hooks/use-request';
+import { registerPlayer } from '../../services/api-configuration';
 
 const SignUp: NextPage = () => {
 
   const toast = useToast();
-  const {
-    error,
-    sendRequest
-  } = useRequest();
-
-  const registerPlayer = async(request: RegisterPlayerRequest) => {
-    sendRequest({
-      url: 'api/player',
-      method: 'POST',
-      body: JSON.stringify(request),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }, requestHandler.bind(null, request));
-
-    if(error) {
+  let requestData: RegisterPlayerRequest;
+  const { mutate } = useMutation(registerPlayer, {
+    onError: () => {
       toast({
         title: 'Error.',
         description: "Profile could not be created. Try again later.",
@@ -34,21 +22,23 @@ const SignUp: NextPage = () => {
         duration: 9000,
         isClosable: true,
       });
-      return;
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Profile created.',
+        description: "Profile has been created.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+      signIn('credential_user', {email: requestData?.email, password: requestData?.password});
     }
-  };
+  });
 
-  const requestHandler = (request: RegisterPlayerRequest) => {
-    toast({
-      title: 'Profile created.',
-      description: "Profile has been created.",
-      status: 'success',
-      duration: 9000,
-      isClosable: true,
-    });
-
-    signIn('credential_user', {email: request.email, password: request.password});
-  };
+  const registerPlayerHandler = async(request: RegisterPlayerRequest) => {
+    requestData = request;
+    mutate(request);
+  }
 
   return (
     <div className={styles.signUp}>
@@ -59,7 +49,7 @@ const SignUp: NextPage = () => {
         height={294}
       ></Image>
       <SignUpForm
-        onSignUp={registerPlayer}
+        onSignUp={registerPlayerHandler}
       />
       <NextLink href='/auth'>
         <Link className={styles.loginLink}>
