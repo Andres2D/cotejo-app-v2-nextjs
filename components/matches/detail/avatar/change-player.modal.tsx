@@ -61,7 +61,10 @@ const ChangePlayerModal: NextPage = () => {
   });
 
   const playersSearchHandler = (data: any) => {
-    setPlayersSearch(data.players)
+    const basePlayersId = [...details.home, ...details.away].map(p => p.player._id);
+    // TODO: Add types
+    const filteredPlayers = data.players.filter((p: any) => !basePlayersId.includes(p._id))
+    setPlayersSearch(filteredPlayers);
   };
 
   const searchPlayer = () => {
