@@ -43,7 +43,8 @@ const initialState: IMatchDetails = {
   },
   home: [],
   away: [],
-  playersSelected: []
+  playersSelected: [],
+  changePlayerModalActive: false
 };
 
 const setMatchState: CaseReducer<IMatchDetails, PayloadAction<IMatchDetails>> = 
@@ -114,6 +115,11 @@ const updateInterfaceSettings: CaseReducer<IMatchDetails, PayloadAction<IPayload
   state.match[team][setting] = value;
 }
 
+const toggleChangePlayerModal: CaseReducer<IMatchDetails> = 
+(state: IMatchDetails) => {
+  state.changePlayerModalActive = !state.changePlayerModalActive;
+};
+
 const matchDetailSlice = createSlice({
   name: 'matchDetails',
   initialState,
@@ -121,7 +127,8 @@ const matchDetailSlice = createSlice({
     setMatchState,
     updateInput,
     selectPlayer,
-    updateInterfaceSettings
+    updateInterfaceSettings,
+    toggleChangePlayerModal
   }
 });
 

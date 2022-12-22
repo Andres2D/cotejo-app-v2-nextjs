@@ -49,5 +49,6 @@ export interface IMatchDetailsResponse {
   away: IFullPlayer[],
 }
 export interface IMatchDetails extends IMatchDetailsResponse {
-  playersSelected: ISelectPayload[]
+  playersSelected: ISelectPayload[],
+  changePlayerModalActive: boolean
 };
