@@ -148,12 +148,14 @@ const getPlayers = async(req: any, res: any) => {
       ]
     });
 
+
     if(!playersDB || playersDB.length === 0) {
       res.status(200).json({players: []});
       return;
     }
 
-    playersDB.forEach((player: IPlayer) => {
+    for (const player of playersDB) {
+      const stats = await Rating.findOne({ player: player._id });
       const {
         nationality,
         position,
@@ -167,11 +169,12 @@ const getPlayers = async(req: any, res: any) => {
         position,
         name,
         image,
-        _id: _id!
+        _id: _id!,
+        overall: stats?.overall
       };
-      
+
       playersList.push(playerProfile);
-    });
+    }
     
     res.status(200).json({players: playersList});
   }catch(err) {

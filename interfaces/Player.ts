@@ -21,6 +21,7 @@ export interface IPlayerList {
   nationality: string;
   position: string;
   image: string;
+  overall?: number;
 }
 
 export interface IProfile {
