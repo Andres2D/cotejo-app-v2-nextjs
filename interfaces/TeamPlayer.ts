@@ -11,3 +11,9 @@ export interface IUpdateTeamPlayerRequest {
   playerOneTeam: string;
   playerTwoTeam: string;
 }
+
+export interface IChangePlayerRequest {
+  playerOutId: string;
+  playerInId: string;
+  teamId: string;
+}

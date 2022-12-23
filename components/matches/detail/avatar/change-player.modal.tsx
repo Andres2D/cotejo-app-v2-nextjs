@@ -20,12 +20,18 @@ import {
 import { NextPage } from 'next';
 import { useState, useRef, MutableRefObject } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
-import useRequest from '../../../../hooks/use-request';
+import { 
+  debounceTime, 
+  distinctUntilChanged, 
+  Subject 
+} from 'rxjs';
+import { useMutation } from 'react-query';
 import { IMatchPlayer, IPlayerList } from '../../../../interfaces/Player';
 import { RootState } from '../../../../interfaces/State';
 import { matchDetailsActions } from "../../../../store/match-details.slice";
 import styles from './change-player.modal.module.scss';
+import { changePlayer, getPlayers } from '../../../../services/api-configuration';
+import { IChangePlayerRequest } from '../../../../interfaces/TeamPlayer';
 
 const ChangePlayerModal: NextPage = () => {
 
@@ -34,10 +40,18 @@ const ChangePlayerModal: NextPage = () => {
   const { onClose } = useDisclosure();
   const [ inPlayer, setInPlayer ] = useState<IPlayerList>();
   const [ playersSearch, setPlayersSearch ] = useState([]);
-  const { 
-    isLoading,
-    sendRequest
-  } = useRequest();
+  
+  // TODO handle error and loading
+  const { mutate: getPlayersMutation } = useMutation(getPlayers, {
+    onSuccess: (data) => {
+      const basePlayersId = [...details.home, ...details.away].map(p => p.player._id);
+      // TODO: Add types
+      const filteredPlayers = data?.data?.players.filter((p: any) => !basePlayersId.includes(p._id))
+      setPlayersSearch(filteredPlayers);
+    }
+  });
+  
+  const { mutate: changePlayerMutation } = useMutation(changePlayer);
 
   const inputSubject: Subject<string> = new Subject();
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
@@ -51,22 +65,8 @@ const ChangePlayerModal: NextPage = () => {
       return;
     }
 
-    sendRequest({
-      url: '/api/player',
-      headers: {
-        'Content-Type': 'application/json',
-        'query': query
-      },
-    }, playersSearchHandler);
+    getPlayersMutation(query);
   });
-
-  const playersSearchHandler = (data: any) => {
-    console.log(data);
-    const basePlayersId = [...details.home, ...details.away].map(p => p.player._id);
-    // TODO: Add types
-    const filteredPlayers = data.players.filter((p: any) => !basePlayersId.includes(p._id))
-    setPlayersSearch(filteredPlayers);
-  };
 
   const searchPlayer = () => {
     inputSubject.next(inputRef.current.value);
@@ -92,7 +92,7 @@ const ChangePlayerModal: NextPage = () => {
       return;
     }
 
-    const request = {
+    const request: IChangePlayerRequest = {
       playerOutId: details.playersSelected[0].playerId,
       playerInId: inPlayer._id,
       teamId: details.playersSelected[0].isAway 
@@ -100,14 +100,7 @@ const ChangePlayerModal: NextPage = () => {
         : details.match.home_team._id 
     }
 
-    sendRequest({
-      url: '/api/team-player',
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(request)
-    }, () => {});
+    changePlayerMutation(request);
 
     dispatch(matchDetailsActions.replacePlayer(inPlayer));
     dispatch(matchDetailsActions.toggleChangePlayerModal());    
