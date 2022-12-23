@@ -20,23 +20,29 @@ import {
 } from '@chakra-ui/react';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
 import { playersFixture } from '../../../../constants/player-positions';
 import { getRandomColorSchema } from '../../../../helpers/styles';
 import styles from './players-form.module.scss';
 import { RootState } from '../../../../interfaces/State';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import { IPlayerList } from '../../../../interfaces/Player';
-import useRequest from '../../../../hooks/use-request';
+import { getPlayers } from '../../../../services/api-configuration';
 
 const PlayersForm: NextPage = () => {
 
   const [ playersSearch, setPlayersSearch ] = useState([]);
   const formState = useSelector((state: RootState) => state.createMatch);
   const dispatch = useDispatch();
-  const { 
-    isLoading,
-    sendRequest
-  } = useRequest();
+
+  // TODO handle error and loading
+  const { mutate } = useMutation(getPlayers, {
+    onSuccess: (data) => {
+      //TODO fix interface
+      setPlayersSearch(data?.data?.players || [])
+    }
+  });
+
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>;
   const inputSubject: Subject<string> = new Subject();
   const missingState = formState.players_number;
@@ -48,21 +54,13 @@ const PlayersForm: NextPage = () => {
   ).subscribe(async(query: string) => {
 
     if(!query) {
+      setPlayersSearch([])
       return;
     }
 
-    sendRequest({
-      url: '/api/player',
-      headers: {
-        'Content-Type': 'application/json',
-        'query': query
-      }
-    }, playersSearchHandler);
+    mutate(query);
   });
 
-  const playersSearchHandler = (data: any) => {
-    setPlayersSearch(data.players)
-  };
 
   const playersSelector = playersFixture.map(p =>
     <option 

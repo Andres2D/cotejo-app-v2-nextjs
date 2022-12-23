@@ -9,6 +9,9 @@ const api = create({
 });
 
 export const updatePlayer = (request: UpdateProfileRequest) => api.put('/player', request);
-export const changePlayer = (request: IUpdateTeamPlayerRequest) => api.put('/team-player', request);
 export const registerPlayer = (request: RegisterPlayerRequest) => api.post('/player', request);
+export const getPlayers = (query: string) => api.get('/player', { query });
+
+export const changePlayer = (request: IUpdateTeamPlayerRequest) => api.put('/team-player', request);
+
 export const createMatch = (request: ICreateMatchRequest) => api.post('/match', request);
