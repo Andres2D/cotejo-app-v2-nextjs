@@ -11,13 +11,14 @@ import {
   FormControl
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useMutation } from 'react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { createMatchActions } from '../../../../store/create-match.slice';
 import styles from './place-date.module.scss';
-import useRequest from '../../../../hooks/use-request';
 import { ICreateMatchRequest } from '../../../../interfaces/Match';
 import { RootState } from '../../../../interfaces/State';
 import * as formations from '../../../../constants/formations-positions'; 
+import { createMatch } from '../../../../services/api-configuration';
 
 const playerPositionsMap: { [id: number]: string[] } = {
   8: formations.fourTeam,
@@ -44,11 +45,14 @@ const PlaceDate: NextPage = () => {
   } = useForm<Inputs>();
   const router = useRouter();
   const form = useSelector((state: RootState) => state.createMatch);
-  const {
-    error,
-    isLoading,
-    sendRequest
-  } = useRequest();
+
+  //TODO: handle error and loading states
+  const { mutate, isLoading } = useMutation(createMatch, {
+    onSuccess: () => {
+      dispatch(createMatchActions.resetStore());
+      router.push('/matches');
+    }
+  });
   const dispatch = useDispatch();
 
   const onCreateMatch: SubmitHandler<Inputs> = ({place, date}) => {
@@ -70,7 +74,6 @@ const PlaceDate: NextPage = () => {
         shield: form.away_team_shield
       },
       home_players: form.home_players.map((player, idx) => {
-        console.log()
         return {
           position: playerPositionsMap[form.players_number][idx],
           isCaptain: false,
@@ -86,20 +89,8 @@ const PlaceDate: NextPage = () => {
       })
     }
 
-    sendRequest({
-      url: '/api/match',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(request)
-    }, createMatchHandler);
+    mutate(request);
   };
-
-  const createMatchHandler = (response: any) => {
-    dispatch(createMatchActions.resetStore());
-    router.push('/matches');
-  }
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onCreateMatch)}>

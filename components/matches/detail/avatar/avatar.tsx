@@ -2,11 +2,12 @@ import { RepeatIcon, EditIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useDispatch, useSelector } from 'react-redux';
+import { useMutation } from 'react-query';
 import { RootState } from "../../../../interfaces/State";
 import { matchDetailsActions } from "../../../../store/match-details.slice";
-import styles from './avatar.module.scss'; 
-import useRequest from "../../../../hooks/use-request";
+import styles from './avatar.module.scss';
 import { IUpdateTeamPlayerRequest } from "../../../../interfaces/TeamPlayer";
+import { changePlayer } from "../../../../services/api-configuration";
 
 interface Props {
   name: string;
@@ -20,10 +21,10 @@ interface Props {
 const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className, isAway = false}) => {
 
   const dispatch = useDispatch();
+  //TODO: handle error and loading states
+  const { mutate } = useMutation(changePlayer);
   const details = useSelector((state: RootState) => state.matchDetails);
-  const {
-    sendRequest
-  } = useRequest();
+
   const showNamesOption = isAway 
     ? details.match.away_team.showNames 
     : details.match.home_team.showNames;
@@ -61,14 +62,7 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
         };
       };
 
-      sendRequest({
-        url: '/api/team-player',
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(request)
-      }, () => {});
+      mutate(request);
     }
   };
 

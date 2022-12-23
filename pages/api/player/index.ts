@@ -138,7 +138,7 @@ const updatePlayer = async(req: any, res: any) => {
 const getPlayers = async(req: any, res: any) => {
   try {
     let playersList: IPlayerList[] = [];
-    const { query } = req.headers;
+    const { query } = req.query;
     await mongoConnection();
     const regex = new RegExp(query, 'i');
     const playersDB = await Player.find({
