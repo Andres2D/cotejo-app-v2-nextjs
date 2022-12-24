@@ -43,8 +43,7 @@ const Navbar: NextPage = () => {
         />
         <Avatar
           className={styles.avatar}
-          name={name}
-          src={image}
+          src={image || 'https://bit.ly/broken-link'}
           onClick={onOpen}
           ref={btnRef}
         />
@@ -61,8 +60,7 @@ const Navbar: NextPage = () => {
           <DrawerHeader className={styles.headerMenu}>
             <Avatar
               className={styles.avatarMenu}
-              name={name}
-              src={image}
+              src={image || 'https://bit.ly/broken-link'}
               onClick={() => {
                 onClose();
                 router.push('/profile');

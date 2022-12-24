@@ -131,7 +131,6 @@ const PlayersForm: NextPage = () => {
         <Avatar
           src={player.image}
           size='xs'
-          name={player.name}
           ml={-1}
           mr={2}
         />

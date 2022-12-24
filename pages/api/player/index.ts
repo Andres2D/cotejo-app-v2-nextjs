@@ -49,7 +49,7 @@ const registerPlayer = async(req: any, res: any) => {
       nickname: name,
       number: 0,
       status: '',
-      image: 'http://www.wycliffe.ca/wp-content/uploads/2021/03/member-fallback-user-image.png',
+      image: 'https://bit.ly/broken-link',
       google: false,
       nationality: 'World',
       position: 'CM'

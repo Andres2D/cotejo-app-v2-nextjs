@@ -74,7 +74,6 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
         <Avatar
           size='lg'
           className={styles.avatar}
-          name={name} 
           src={image ? image : 'https://bit.ly/tioluwani-kolawole'}
           onClick={selectPlayerHandler}
         />
