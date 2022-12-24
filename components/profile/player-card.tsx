@@ -193,9 +193,8 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
             className={styles.divider} />
         </div>
         <Avatar
-          className={styles.avatar} 
-          name={name}
-          src={image} 
+          className={styles.avatar}
+          src={image || 'https://bit.ly/broken-link'} 
           size='2xl'
           onClick={handleClick}
         />

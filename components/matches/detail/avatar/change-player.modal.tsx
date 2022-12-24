@@ -143,7 +143,6 @@ const ChangePlayerModal: NextPage = () => {
           <div className={styles.playerAction}>
             <Avatar
               size='lg'
-              name={ getOutPlayer()?.name } 
               src={ getOutPlayer()?.image || 'https://bit.ly/tioluwani-kolawole'}
             />
             <Heading as='h1' size='lg' noOfLines={1}>
