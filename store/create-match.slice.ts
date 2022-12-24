@@ -15,9 +15,9 @@ interface INumberPayload {
 
 const initialState: ICreateMatchState = {
   home_team_name: '',
-  home_team_shield: '',
+  home_team_shield: 'https://media.api-sports.io/football/teams/40.png',
   away_team_name: '',
-  away_team_shield: '',
+  away_team_shield: 'https://media.api-sports.io/football/teams/40.png',
   players_number: 16,
   away_players: [],
   home_players: [],
