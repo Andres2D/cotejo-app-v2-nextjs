@@ -11,13 +11,12 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
-  Select,
   Input
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import styles from './player-card.module.scss';
 import { IProfile, IStats } from '../../interfaces/Player';
-import { playerPositions } from '../../constants/player-positions';
+import Position from './player-card/position';
 
 interface Props {
   className: string;
@@ -35,7 +34,6 @@ interface IEventFile {
 
 const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Props) => {
 
-  const positionRef = useRef<HTMLSelectElement>();
   const flagRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
   const [flagsList, setFlagsList] = useState(getAllFlags());
@@ -59,13 +57,6 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
     physical,
   } = stats;
 
-  const updatePosition = () => {
-    if(!positionRef.current?.value) {
-      return;
-    }
-    onUpdate('position', positionRef.current?.value);
-  }
-
   const updateFlag = (country: string) => {
     if(!country) {
       return;
@@ -79,8 +70,6 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
     }
     onUpdate('name', nameRef.current?.value);
   };
-
-  const positions = playerPositions.map(pos => <option key={pos} value={pos}>{pos}</option>);
 
   const flags = flagsList.map((country: any) => (
     <Image
@@ -133,26 +122,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
       <div className={styles.cardHeader}>
         <div className={styles.overall}>
           <h1 className={styles.title}>{overall}</h1>
-          <Popover>
-            <PopoverTrigger>
-              <p className={styles.position}>{position}</p>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>Position</PopoverHeader>
-              <PopoverBody>
-                <Select 
-                  defaultValue={position}
-                  placeholder='Select option'
-                  ref={positionRef}
-                  onChange={updatePosition}
-                >
-                  {positions}
-                </Select>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
+          <Position position={position} />
           <Divider
             borderColor={'darks.50'}
             border='1px'
