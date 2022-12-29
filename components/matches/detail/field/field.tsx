@@ -49,7 +49,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         id={player.player._id}
         className={`${styles.player} ${styles[`player${idx+1}`]}`}
         name={player.player.name} 
-        image='https://bit.ly/tioluwani-kolawole'
+        image={player.player.image}
         isAway={isAway}
         overall={player.overall}
       />
