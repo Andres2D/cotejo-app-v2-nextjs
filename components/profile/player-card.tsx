@@ -15,14 +15,12 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import styles from './player-card.module.scss';
-import { IProfile, IStats } from '../../interfaces/Player';
 import Position from './player-card/position';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../interfaces/State';
 
 interface Props {
   className: string;
-  profile: IProfile;
-  stats: IStats;
-  onUpdate: (field: string, value: string) => void;
 }
 
 interface IEventFile {
@@ -32,21 +30,21 @@ interface IEventFile {
   }
 }
 
-const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Props) => {
+const PlayerCard: NextPage<Props> = ({ className }: Props) => {
 
   const flagRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
   const [flagsList, setFlagsList] = useState(getAllFlags());
   const inputRef = useRef(null);
+  const profileState = useSelector((state: RootState) => state.profile);
 
   const { 
     overall,
     flag,
     image,
     name,
-    position,
     nationality
-  } = profile;
+  } = profileState?.profile;
   
   const {
     peace,
@@ -55,20 +53,20 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
     dribbling,
     passing,
     physical,
-  } = stats;
+  } = profileState.stats;
 
   const updateFlag = (country: string) => {
     if(!country) {
       return;
     }
-    onUpdate('nationality', country);
+    // onUpdate('nationality', country);
   };
 
   const updateName = () => {
     if(!nameRef.current?.value) {
       return;
     }
-    onUpdate('name', nameRef.current?.value);
+    // onUpdate('name', nameRef.current?.value);
   };
 
   const flags = flagsList.map((country: any) => (
@@ -122,7 +120,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
       <div className={styles.cardHeader}>
         <div className={styles.overall}>
           <h1 className={styles.title}>{overall}</h1>
-          <Position position={position} />
+          <Position />
           <Divider
             borderColor={'darks.50'}
             border='1px'
@@ -187,7 +185,7 @@ const PlayerCard: NextPage<Props> = ({profile, className, onUpdate, stats}: Prop
             <PopoverBody>
               <Input 
                 placeholder='Basic usage'
-                defaultValue={profile.name}
+                defaultValue={name}
                 ref={nameRef}
                 onChange={updateName}
               />
