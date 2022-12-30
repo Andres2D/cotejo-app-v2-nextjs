@@ -3,25 +3,11 @@ import {
   PayloadAction, 
   CaseReducer,
 } from '@reduxjs/toolkit';
+import { calculateAVG } from '../helpers/stats';
 import { IProfile, IStats } from '../interfaces/Player';
 
 import { IProfileState } from '../interfaces/Profile';
-
-type Profile = 
-    'image' 
-  | 'flag' 
-  | 'name' 
-  | 'nationality' 
-  | 'position';
-
-type Stats = 
-    'overall' 
-  | 'defense' 
-  | 'dribbling' 
-  | 'passing' 
-  | 'peace'
-  | 'physical' 
-  | 'shooting'
+import { Profile } from '../types/profile';
 
 interface IPayload {
   prop: Profile;
@@ -29,7 +15,7 @@ interface IPayload {
 }
 
 interface INumberPayload {
-  prop: Stats;
+  prop: string;
   value: number;
 }
 
@@ -75,6 +61,8 @@ const updateInputNumber: CaseReducer<IProfileState, PayloadAction<INumberPayload
   prop === 'overall' 
     ? state.profile[prop] = value 
     : state.stats[prop] = value;
+  
+  state.profile.overall = calculateAVG(Object.values(state.stats));
 }
 
 const profileSlice = createSlice({

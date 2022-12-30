@@ -5,9 +5,11 @@ import {
   SliderTrack 
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './player-rate.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { profileActions } from '../../store/profile.slice';
 import { RootState } from '../../interfaces/State';
+import styles from './player-rate.module.scss';
+import { calculateAVG } from '../../helpers/stats';
 
 interface Props {
   className?: string;
@@ -16,10 +18,13 @@ interface Props {
 const PlayerRate: NextPage<Props> = ({ className }: Props) => {
 
   const stats = useSelector((state: RootState) => state.profile).stats;
-
+  const dispatch = useDispatch();
 
   const updateStats = (label: string, value: number) => {
-    // onUpdate(label, value);
+    dispatch(profileActions.updateInputNumber({
+      prop: label,
+      value 
+    }));
   }
 
   const statsRates = Object.entries(stats).map(([label, value]) => {
