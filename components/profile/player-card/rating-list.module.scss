@@ -1,0 +1,18 @@
+.rating {
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  
+  .score {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    
+    .rate {
+      display: flex;
+      justify-content: space-around;
+      font-size: 35px;
+      width: 100%;
+    }
+  }
+}
