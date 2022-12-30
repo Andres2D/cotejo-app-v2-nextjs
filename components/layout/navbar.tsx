@@ -11,23 +11,24 @@ import {
   useDisclosure,
   Button,
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import { useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import styles from './navbar.module.scss';
+import { RootState } from '../../interfaces/State';
 
 const Navbar: NextPage = () => {
   const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const btnRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const { image, name } = useSelector((state: RootState) => state.profile).profile;
 
   if (!session) {
     return <></>;
   }
-
-  const { image, name } = session?.user!;
 
   return (
     <>
