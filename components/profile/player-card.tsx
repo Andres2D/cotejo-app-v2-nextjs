@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import type { NextPage } from 'next';
 import { 
-  Avatar, 
   Divider,
   Popover,
   PopoverTrigger,
@@ -17,27 +16,19 @@ import Position from './player-card/position';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
 import Nationality from './player-card/nationality';
+import AvatarSelector from './player-card/avatar-selector';
 
 interface Props {
   className: string;
 }
 
-interface IEventFile {
-  target: {
-    files: any[];
-    value: null;
-  }
-}
-
 const PlayerCard: NextPage<Props> = ({ className }: Props) => {
 
   const nameRef = useRef<HTMLInputElement>();
-  const inputRef = useRef(null);
   const profileState = useSelector((state: RootState) => state.profile);
 
   const { 
     overall,
-    image,
     name,
   } = profileState?.profile;
   
@@ -55,52 +46,6 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
       return;
     }
     // onUpdate('name', nameRef.current?.value);
-  };
-
-  // const flags = flagsList.map((country: any) => (
-  //   <Image
-  //     width={70}
-  //     key={country.name}
-  //     height={50}
-  //     src={country.flag}
-  //     alt={nationality}
-  //     className={styles.flag}
-  //     title={country.name}
-  //     onClick={() => updateFlag(country.name)}
-  //   />
-  // ));
-
-  // const searchFlag = () => {
-  //   if(!flagRef?.current?.value) {
-  //     setFlagsList(getAllFlags);
-  //     return;
-  //   }
-
-  //   const flags = getFlagSvg(flagRef?.current?.value);
-  //   setFlagsList(Array.isArray(flags) ? flags : [flags]);
-  // }
-
-  const handleClick = () => {
-    // 👇️ open file input box on click of other element
-    inputRef.current.click();
-  };
-
-  const handleFileChange = (event: IEventFile) => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-    console.log('fileObj is', fileObj);
-
-    // 👇️ reset file input
-    event.target.value = null;
-
-    // 👇️ is now empty
-    console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
   };
 
   return (
@@ -121,18 +66,7 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
             w='80px'
             className={styles.divider} />
         </div>
-        <Avatar
-          className={styles.avatar}
-          src={image || 'https://bit.ly/broken-link'} 
-          size='2xl'
-          onClick={handleClick}
-        />
-        <input
-        style={{display: 'none'}}
-        ref={inputRef}
-        type="file"
-        onChange={handleFileChange}
-      />
+        <AvatarSelector />
       </div>
       <div className={styles.cardBody}>
         <Popover>
