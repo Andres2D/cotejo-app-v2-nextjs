@@ -1,4 +1,25 @@
 .avatar {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
   border: 3px solid black;
+  cursor: pointer;
+}
+
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .avatarList {
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+      border: 3px solid white;
+      cursor: pointer;
+      margin: 5px;
+    }
+  }
 }
