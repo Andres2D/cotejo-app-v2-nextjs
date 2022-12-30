@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
 import Nationality from './player-card/nationality';
 import AvatarSelector from './player-card/avatar-selector';
+import NameInput from './player-card/name-input';
 
 interface Props {
   className: string;
@@ -24,7 +25,6 @@ interface Props {
 
 const PlayerCard: NextPage<Props> = ({ className }: Props) => {
 
-  const nameRef = useRef<HTMLInputElement>();
   const profileState = useSelector((state: RootState) => state.profile);
 
   const { 
@@ -40,13 +40,6 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
     passing,
     physical,
   } = profileState.stats;
-
-  const updateName = () => {
-    if(!nameRef.current?.value) {
-      return;
-    }
-    // onUpdate('name', nameRef.current?.value);
-  };
 
   return (
     <div className={`${styles.card} ${className}`}>
@@ -69,24 +62,7 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
         <AvatarSelector />
       </div>
       <div className={styles.cardBody}>
-        <Popover>
-          <PopoverTrigger>
-            <h2 className={styles.title}>{name}</h2>
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverHeader>Name</PopoverHeader>
-            <PopoverBody>
-              <Input 
-                placeholder='Basic usage'
-                defaultValue={name}
-                ref={nameRef}
-                onChange={updateName}
-              />
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <NameInput />
         <Divider
           borderColor={'darks.50'}
           border='1px'
