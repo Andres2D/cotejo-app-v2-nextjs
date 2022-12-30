@@ -1,20 +1,42 @@
 import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
+import { getFlagSvg } from 'empty-skull';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import MatchList from '../../components/matches/match-list';
 import { getMatches } from '../../server/matches';
 import styles from './matches.module.scss';
 import { FullMatch, IMatch } from '../../interfaces/Match';
+import { profileActions } from '../../store/profile.slice';
+import { getProfile } from '../../server/player';
 
 interface Props {
   matches: string;
+  profile: string;
 }
 
-const Matches: NextPage<Props> = ({matches}) => {
+const Matches: NextPage<Props> = ({matches, profile}) => {
 
   const matchesList: FullMatch[] = JSON.parse(matches);
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // Persisting store profile
+  // TODO: Change way to persis state
+  let parsedProfile = JSON.parse(profile || '');
+
+  useEffect(() => {
+    dispatch(profileActions.setProfile({
+      overall: 0,
+      position: parsedProfile.position,
+      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
+      name: parsedProfile.name,
+      image: parsedProfile.image,
+      nationality: parsedProfile.nationality,
+    }));
+  }, []);
 
   return (
     <section className={styles.matches}>
@@ -45,11 +67,14 @@ export const getServerSideProps = async(context: any) => {
     }
   }
 
+  const { email } = session?.user;
+  const profile = await getProfile(email);
   matches = await getMatches(session.user?.email!) || [];
 
   return {
     props: {
-      matches: JSON.stringify(matches) 
+      matches: JSON.stringify(matches),
+      profile: JSON.stringify(profile)
     }
   }
 };

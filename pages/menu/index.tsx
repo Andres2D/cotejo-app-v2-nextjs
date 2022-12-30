@@ -3,13 +3,38 @@ import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
+import { getFlagSvg } from 'empty-skull';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 import styles from './menu.module.scss';
+import { getProfile } from '../../server/player';
+import { profileActions } from '../../store/profile.slice';
 
-const Menu: NextPage = () => {
+interface Props {
+  profile: string;
+}
+
+const Menu: NextPage<Props> = ({profile}) => {
 
   const { data: session } = useSession();
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  // Persisting store profile
+  // TODO: Change way to persis state
+  let parsedProfile = JSON.parse(profile || '');
+
+  useEffect(() => {
+    dispatch(profileActions.setProfile({
+      overall: 0,
+      position: parsedProfile.position,
+      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
+      name: parsedProfile.name,
+      image: parsedProfile.image,
+      nationality: parsedProfile.nationality,
+    }));
+  }, []);
 
   if(!session) {
     <p>Loading</p>
@@ -59,8 +84,14 @@ export const getServerSideProps = async(context: any) => {
     }
   }
 
+  const { email } = session?.user;
+  const profile = await getProfile(email);
+
   return {
-    props: { session }
+    props: { 
+      session, 
+      profile: JSON.stringify(profile), 
+    }
   }
 };
 
