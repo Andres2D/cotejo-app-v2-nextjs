@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
 import { getSession, signIn } from 'next-auth/react';
-import Image from 'next/image';
 import NextLink from 'next/link';
 import { useMutation } from 'react-query';
-import { Link, useToast } from '@chakra-ui/react';
+import { Link, useToast, Image } from '@chakra-ui/react';
 import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.scss';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
@@ -45,8 +44,9 @@ const SignUp: NextPage = () => {
       <Image
         src={'/images/app-logo-regular.png'}
         alt='Cotejo app logo'
-        width={400}
-        height={294}
+        className={styles.logo}
+        width={325}
+        height={219}
       ></Image>
       <SignUpForm
         onSignUp={registerPlayerHandler}

@@ -34,6 +34,7 @@ const LoginForm: NextPage = () => {
         <Input
           type="email"
           placeholder="Username"
+          className={styles.input}
           htmlSize={30}
           width="auto"
           size="lg"
@@ -53,6 +54,7 @@ const LoginForm: NextPage = () => {
           type="password"
           placeholder="Password"
           htmlSize={30}
+          className={styles.input}
           width="auto"
           size="lg"
           variant="filled"
