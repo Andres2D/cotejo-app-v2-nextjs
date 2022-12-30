@@ -1,7 +1,6 @@
 import type { NextPage } from 'next';
 import NextLink from "next/link";
-import { Link } from '@chakra-ui/react'
-import Image from 'next/image';
+import { Link, Image } from '@chakra-ui/react';
 import { getSession } from 'next-auth/react';
 import styles from './index.module.scss';
 import LoginForm from '../../components/auth/login-form';
@@ -12,9 +11,10 @@ const Login: NextPage = () => {
       <Image
         src={'/images/app-logo-regular.png'}
         alt='Cotejo app logo'
-        width={400}
-        height={294}
-      ></Image>
+        width={325}
+        height={219}
+        className={styles.logo}
+      />
       <LoginForm />
       <NextLink href='/sign-up'>
         <Link className={styles.signUpLink}>
