@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import type { NextPage } from 'next';
-import { getFlagSvg, getAllFlags } from 'empty-skull';
 import { 
   Avatar, 
   Divider,
@@ -13,11 +12,11 @@ import {
   PopoverCloseButton,
   Input
 } from '@chakra-ui/react';
-import Image from 'next/image';
 import styles from './player-card.module.scss';
 import Position from './player-card/position';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
+import Nationality from './player-card/nationality';
 
 interface Props {
   className: string;
@@ -32,18 +31,14 @@ interface IEventFile {
 
 const PlayerCard: NextPage<Props> = ({ className }: Props) => {
 
-  const flagRef = useRef<HTMLInputElement>();
   const nameRef = useRef<HTMLInputElement>();
-  const [flagsList, setFlagsList] = useState(getAllFlags());
   const inputRef = useRef(null);
   const profileState = useSelector((state: RootState) => state.profile);
 
   const { 
     overall,
-    flag,
     image,
     name,
-    nationality
   } = profileState?.profile;
   
   const {
@@ -55,13 +50,6 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
     physical,
   } = profileState.stats;
 
-  const updateFlag = (country: string) => {
-    if(!country) {
-      return;
-    }
-    // onUpdate('nationality', country);
-  };
-
   const updateName = () => {
     if(!nameRef.current?.value) {
       return;
@@ -69,28 +57,28 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
     // onUpdate('name', nameRef.current?.value);
   };
 
-  const flags = flagsList.map((country: any) => (
-    <Image
-      width={70}
-      key={country.name}
-      height={50}
-      src={country.flag}
-      alt={nationality}
-      className={styles.flag}
-      title={country.name}
-      onClick={() => updateFlag(country.name)}
-    />
-  ));
+  // const flags = flagsList.map((country: any) => (
+  //   <Image
+  //     width={70}
+  //     key={country.name}
+  //     height={50}
+  //     src={country.flag}
+  //     alt={nationality}
+  //     className={styles.flag}
+  //     title={country.name}
+  //     onClick={() => updateFlag(country.name)}
+  //   />
+  // ));
 
-  const searchFlag = () => {
-    if(!flagRef?.current?.value) {
-      setFlagsList(getAllFlags);
-      return;
-    }
+  // const searchFlag = () => {
+  //   if(!flagRef?.current?.value) {
+  //     setFlagsList(getAllFlags);
+  //     return;
+  //   }
 
-    const flags = getFlagSvg(flagRef?.current?.value);
-    setFlagsList(Array.isArray(flags) ? flags : [flags]);
-  }
+  //   const flags = getFlagSvg(flagRef?.current?.value);
+  //   setFlagsList(Array.isArray(flags) ? flags : [flags]);
+  // }
 
   const handleClick = () => {
     // 👇️ open file input box on click of other element
@@ -126,34 +114,7 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
             border='1px'
             w='80px'
             className={styles.divider}/>
-          <Popover>
-            <PopoverTrigger>
-              <div>
-                <Image
-                    width={70}
-                    height={50}
-                    src={flag || getAllFlags()[0].flag}
-                    alt={nationality}
-                    className={styles.flag}
-                  />
-              </div>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>Country</PopoverHeader>
-              <PopoverBody>
-                <Input 
-                  placeholder='Basic usage' 
-                  ref={flagRef}
-                  onChange={searchFlag}
-                />
-                <div className={styles.flags}>
-                  {flags}
-                </div>
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
+          <Nationality />
           <Divider
             borderColor={'darks.50'}
             border='1px'
