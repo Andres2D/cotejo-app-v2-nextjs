@@ -99,7 +99,8 @@ const updatePlayer = async(req: any, res: any) => {
       peace,
       physical,
       shooting,
-      overall
+      overall,
+      image
     } = req.body;
 
     await mongoConnection();
@@ -115,6 +116,7 @@ const updatePlayer = async(req: any, res: any) => {
     playerDB!.name = name;
     playerDB!.position = position;
     playerDB!.nationality = nationality;
+    playerDB!.image = image;
 
     ratingDB!.overall = overall;
     ratingDB!.defense = defense;

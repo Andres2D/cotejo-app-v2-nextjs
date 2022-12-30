@@ -54,6 +54,7 @@ export interface UpdateProfileRequest extends IStats {
   nationality: string;
   position: string;
   overall: number;
+  image: string;
 }
 
 export interface RegisterPlayerRequest extends base {}

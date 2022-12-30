@@ -91,6 +91,7 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
       peace: statsState.peace,
       physical: statsState.physical,
       shooting: statsState.shooting,
+      image: profileState?.image || ''
     };
 
     mutate(request);

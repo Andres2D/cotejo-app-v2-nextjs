@@ -16,27 +16,30 @@ import type { NextPage } from 'next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../../interfaces/State';
-// import { profileActions } from '../../../store/profile.slice';
+import { profileActions } from '../../../store/profile.slice';
 import styles from './avatar-selector.module.scss';
 import { IAvatarsSelection } from '../../../interfaces/Profile';
 import { avatarsCollection } from '../../../constants/avatars';
+import { useSession } from 'next-auth/react';
 
 const AvatarSelector: NextPage = () => {
   const { image } = useSelector((state: RootState) => state.profile).profile;
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const dispatch = useDispatch();
+  const session = useSession();
+  console.log(session);
+  const dispatch = useDispatch();
 
-  let currentAvatar: IAvatarsSelection | null = null;
+  let googleAvatar: IAvatarsSelection | null = null;
 
-  if(avatarsCollection.filter(a => a.src === image).length === 0){
-     currentAvatar = {
-      key: 'avCurr',
-      src: image || '',
+  if(session.data?.user?.image){
+     googleAvatar = {
+      key: 'avGoogle',
+      src: session.data?.user?.image || '',
       label: 'Google'
     };
   };
 
-  const avatarsMap = currentAvatar ? [ currentAvatar, ...avatarsCollection] : avatarsCollection;
+  const avatarsMap = googleAvatar ? [ googleAvatar, ...avatarsCollection] : avatarsCollection;
 
   const availableAvatars = avatarsMap.map(({ key, label, src }) => {
     return (
@@ -45,13 +48,21 @@ const AvatarSelector: NextPage = () => {
           className={styles.avatarList}
           src={src || 'https://bit.ly/broken-link'}
           size="xl"
+          onClick={() => changeAvatarHandler(src)}
         />
         <Heading as='h4' size='md'>
           {label}
         </Heading>
       </div>
     )
-  })
+  });
+
+  const changeAvatarHandler = (image: string) => {
+    dispatch(profileActions.updateInput({
+      prop: 'image',
+      value: image
+    }));
+  };
 
   return (
     <>
