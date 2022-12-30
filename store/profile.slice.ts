@@ -40,7 +40,6 @@ const initialState: IProfileState = {
 
 const setProfile: CaseReducer<IProfileState, PayloadAction<IProfile>> = 
   (state: IProfileState, action: PayloadAction<IProfile>) => {
-    console.log(action);
   state.profile = action.payload;
 }
 
