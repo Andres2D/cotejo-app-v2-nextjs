@@ -85,7 +85,7 @@ const AvatarSelector: NextPage = () => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w='85%' className={styles.modal}>
           <ModalHeader>Avatar selection</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

@@ -8,8 +8,7 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverTrigger,
-  Select,
+  PopoverTrigger
 } from '@chakra-ui/react';
 import { getAllFlags, getFlagSvg } from 'empty-skull';
 import type { NextPage } from 'next';
@@ -88,7 +87,7 @@ const Nationality: NextPage = () => {
           />
         </div>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent w='250px'>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Country</PopoverHeader>

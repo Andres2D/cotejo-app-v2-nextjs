@@ -42,7 +42,7 @@ const PlayerCard: NextPage<Props> = ({ className }: Props) => {
         <Divider
           borderColor={'darks.50'}
           border='1px'
-          w='280px'
+          w='80%'
           className={styles.divider} 
         />
         <RatingList />

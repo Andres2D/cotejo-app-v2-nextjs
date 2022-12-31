@@ -1,3 +1,5 @@
+@import '../../../styles/breakpoints';
+
 .rating {
   display: flex;
   justify-content: space-around;
@@ -13,6 +15,27 @@
       justify-content: space-around;
       font-size: 35px;
       width: 100%;
+    }
+  }
+}
+
+@media (max-width: $small-device) {
+  .rating {
+    .divider {
+      height: 120px;
+    }
+    .score {
+      .rate {
+        font-size: 25px;
+      }
+    }
+  }
+}
+
+@media (max-width: $extra-small-device) {
+  .rating {
+    .divider {
+      height: 130px;
     }
   }
 }

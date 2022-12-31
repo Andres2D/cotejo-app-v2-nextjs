@@ -30,3 +30,46 @@
   }
 }
 
+@media (max-width: $medium-large-device) {
+  .section {
+    .container {
+      flex-direction: column;
+
+      .playerCard {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: $medium-small-device) {
+  .section {
+    .container {
+      .playerCard,
+      .playerStats {
+        width: 85%;
+      }
+    }
+  }
+}
+
+@media (max-width: $small-device) {
+  .section {
+    .container {
+      .playerCard {
+        height: 440px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: $extra-small-device) {
+  .section {
+    .container {
+      .playerCard {
+        height: 580px;
+      }
+    }
+  }
+}

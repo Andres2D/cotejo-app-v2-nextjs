@@ -49,7 +49,7 @@ const NameInput: NextPage = () => {
           />
         </h2>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent w='100%'>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Name</PopoverHeader>

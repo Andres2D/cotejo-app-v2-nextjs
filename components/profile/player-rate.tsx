@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { profileActions } from '../../store/profile.slice';
 import { RootState } from '../../interfaces/State';
 import styles from './player-rate.module.scss';
-import { calculateAVG } from '../../helpers/stats';
 
 interface Props {
   className?: string;
