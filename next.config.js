@@ -21,11 +21,6 @@ const nextConfig = {
         hostname: 'media.api-sports.io'
       },
     ],
-  },
-  experimental: {
-    images: {
-      allowFutureImages: true
-    }
   }
 }
 

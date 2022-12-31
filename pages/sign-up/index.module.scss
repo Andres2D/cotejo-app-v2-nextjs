@@ -1,3 +1,5 @@
+@import '../../styles/breakpoints';
+
 .signUp {
   align-items: center;
   display: flex;
@@ -18,7 +20,7 @@
   }
 }
 
-@media (max-width: 565px) {
+@media (max-width: $medium-device) {
   .signUp {
     width: 90%;
 

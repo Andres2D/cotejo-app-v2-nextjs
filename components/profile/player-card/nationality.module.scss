@@ -13,3 +13,13 @@
 .flag {
   cursor: pointer;
 }
+
+.container {
+  position: relative;
+
+  .edit {
+    position: absolute;
+    color: black;
+    top: 5px;
+  }
+}

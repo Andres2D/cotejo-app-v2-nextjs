@@ -1,4 +1,6 @@
+import { EditIcon } from '@chakra-ui/icons';
 import {
+  IconButton,
   Input,
   Popover,
   PopoverArrow,
@@ -69,13 +71,20 @@ const Nationality: NextPage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <div>
+        <div className={styles.container}>
           <Image
             width={70}
             height={50}
             src={flag || getAllFlags()[0].flag}
             alt={nationality}
             className={styles.flag}
+          />
+          <IconButton
+            className={styles.edit}
+            colorScheme='transparent'
+            size='md'
+            aria-label='Edit flag'
+            icon={<EditIcon />}
           />
         </div>
       </PopoverTrigger>

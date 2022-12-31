@@ -2,4 +2,11 @@
   font-size: 30px;
   margin-top: -20px;
   cursor: pointer;
+  position: relative;
+
+  .edit {
+    position: absolute;
+    color: black;
+    top: 5px;
+  }
 }

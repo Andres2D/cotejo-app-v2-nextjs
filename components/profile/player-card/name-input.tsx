@@ -1,4 +1,6 @@
+import { EditIcon } from '@chakra-ui/icons';
 import {
+  IconButton,
   Input,
   Popover,
   PopoverArrow,
@@ -36,7 +38,16 @@ const NameInput: NextPage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <h2 className={styles.title}>{name}</h2>
+        <h2 className={styles.title}>
+          {name}
+          <IconButton
+            className={styles.edit}
+            colorScheme='transparent'
+            size='md'
+            aria-label='Edit name'
+            icon={<EditIcon />}
+          />
+        </h2>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
