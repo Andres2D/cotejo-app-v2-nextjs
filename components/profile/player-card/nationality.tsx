@@ -1,4 +1,6 @@
+import { EditIcon } from '@chakra-ui/icons';
 import {
+  IconButton,
   Input,
   Popover,
   PopoverArrow,
@@ -6,8 +8,7 @@ import {
   PopoverCloseButton,
   PopoverContent,
   PopoverHeader,
-  PopoverTrigger,
-  Select,
+  PopoverTrigger
 } from '@chakra-ui/react';
 import { getAllFlags, getFlagSvg } from 'empty-skull';
 import type { NextPage } from 'next';
@@ -69,7 +70,7 @@ const Nationality: NextPage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <div>
+        <div className={styles.container}>
           <Image
             width={70}
             height={50}
@@ -77,9 +78,16 @@ const Nationality: NextPage = () => {
             alt={nationality}
             className={styles.flag}
           />
+          <IconButton
+            className={styles.edit}
+            colorScheme='transparent'
+            size='md'
+            aria-label='Edit flag'
+            icon={<EditIcon />}
+          />
         </div>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent w='250px'>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Country</PopoverHeader>

@@ -10,6 +10,7 @@ import {
   Button,
   useDisclosure,
   Heading,
+  IconButton,
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 // import { useRef } from 'react';
@@ -21,12 +22,12 @@ import styles from './avatar-selector.module.scss';
 import { IAvatarsSelection } from '../../../interfaces/Profile';
 import { avatarsCollection } from '../../../constants/avatars';
 import { useSession } from 'next-auth/react';
+import { EditIcon } from '@chakra-ui/icons';
 
 const AvatarSelector: NextPage = () => {
   const { image } = useSelector((state: RootState) => state.profile).profile;
   const { isOpen, onOpen, onClose } = useDisclosure();
   const session = useSession();
-  console.log(session);
   const dispatch = useDispatch();
 
   let googleAvatar: IAvatarsSelection | null = null;
@@ -58,6 +59,7 @@ const AvatarSelector: NextPage = () => {
   });
 
   const changeAvatarHandler = (image: string) => {
+    onClose();
     dispatch(profileActions.updateInput({
       prop: 'image',
       value: image
@@ -66,16 +68,24 @@ const AvatarSelector: NextPage = () => {
 
   return (
     <>
-      <Avatar
-        className={styles.avatar}
-        src={image || 'https://bit.ly/broken-link'}
-        size="2xl"
-        onClick={onOpen}
-      />
+      <div className={styles.avatarContainer} onClick={onOpen}>
+        <Avatar
+          className={styles.avatar}
+          src={image || 'https://bit.ly/broken-link'}
+          size="2xl"
+        />
+        <IconButton
+          className={styles.edit}
+          colorScheme='transparent'
+          size='md'
+          aria-label='Edit picture'
+          icon={<EditIcon />}
+        />
+      </div>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w='85%' className={styles.modal}>
           <ModalHeader>Avatar selection</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

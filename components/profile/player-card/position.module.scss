@@ -1,5 +1,19 @@
+@import '../../../styles/breakpoints';
+
 .position {
   font-size: 30px;
   margin-top: -20px;
   cursor: pointer;
+  position: relative;
+
+  .edit {
+    position: absolute;
+    color: black;
+    top: 5px;
+  }
+}
+
+.content {
+  background-color: red;
+  width: 100%;
 }

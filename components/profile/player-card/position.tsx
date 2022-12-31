@@ -1,4 +1,6 @@
+import { EditIcon } from '@chakra-ui/icons';
 import {
+  IconButton,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -38,9 +40,18 @@ const Position: NextPage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <p className={styles.position}>{position}</p>
+        <p className={styles.position}>
+          {position}
+          <IconButton
+            className={styles.edit}
+            colorScheme='transparent'
+            size='md'
+            aria-label='Edit position'
+            icon={<EditIcon />}
+          />
+        </p>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent w='100%' className={styles.content}>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Position</PopoverHeader>
