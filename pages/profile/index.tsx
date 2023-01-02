@@ -33,6 +33,7 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
 
   useEffect(() => {
     dispatch(profileActions.setProfile({
+      _id: parsedProfile._id,
       overall: parsedStats.overall,
       position: parsedProfile.position,
       flag: getFlagSvg(parsedProfile.nationality, true)?.flag,

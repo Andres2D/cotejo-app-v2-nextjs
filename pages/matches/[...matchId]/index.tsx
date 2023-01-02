@@ -25,6 +25,7 @@ const MatchDetails: NextPage<Props> = ({match, profile}) => {
 
   useEffect(() => {
     dispatch(profileActions.setProfile({
+      _id: parsedProfile._id,
       overall: 0,
       position: parsedProfile.position,
       flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
