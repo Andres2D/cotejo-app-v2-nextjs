@@ -89,7 +89,6 @@ const PlayersForm: NextPage = () => {
 
     const value = Number(event.target.value);
     dispatch(createMatchActions.updateInputNumber({input: 'players_number', value}));
-    dispatch(createMatchActions.autoCompletePlayers(profileState.profile._id || ''));
   };
 
   const searchPlayer = () => {
