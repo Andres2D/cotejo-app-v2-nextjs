@@ -63,14 +63,28 @@ const removePlayer: CaseReducer<ICreateMatchState, PayloadAction<string>> =
   state.away_players = state.away_players.filter(p => p._id !== action.payload);
 }
 
-const autoCompletePlayers: CaseReducer<ICreateMatchState> = 
-(state: ICreateMatchState) => {
+const autoCompletePlayers: CaseReducer<ICreateMatchState, PayloadAction<string>> = 
+(state: ICreateMatchState, action: PayloadAction<string>) => {
   const playersAdded = [...current(state.home_players), ...current(state.away_players)];
   const availableBots = botsData.filter(bot => !playersAdded.includes(bot));
   const missingPlayers = current(state).players_number - playersAdded.length;
+  let playersAddedWithoutCurrentUser = [];
 
-  for (let i = 0; i < missingPlayers; i++) {
-    addPlayer(state, {payload: availableBots[i], type: ''});
+  if(missingPlayers < 0) {
+    playersAddedWithoutCurrentUser = playersAdded.filter(player => player._id !== action?.payload)
+    for (let i = 0; i < Math.abs(missingPlayers); i++) {
+      removePlayer(
+        state, 
+        { 
+          payload: playersAddedWithoutCurrentUser[playersAddedWithoutCurrentUser.length - (i + 1)]._id, 
+          type: '' 
+        }
+      )
+    }
+  }else {
+    for (let i = 0; i < missingPlayers; i++) {
+      addPlayer(state, {payload: availableBots[i], type: ''});
+    }
   }
 }
 
