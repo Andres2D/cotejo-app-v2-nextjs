@@ -13,6 +13,7 @@ import { RootState } from '../../../../interfaces/State';
 import { matchDetailsActions } from '../../../../store/match-details.slice';
 import AvatarMatchLayout from '../avatar/avatar';
 import { SettingOption } from '../../../../types/match';
+import FieldHeader from './header';
 
 interface Props {
   team: IFullPlayer[],
@@ -23,12 +24,18 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
 
   const formationRef = useRef() as MutableRefObject<HTMLSelectElement>;
   const dispatch = useDispatch();
-  const formationKey = isAway ? 'away_team' : 'home_team';
+  const teamKey = isAway ? 'away_team' : 'home_team';
+  const simpleTeamKey = isAway ? 'away' : 'home';
   
   const matchDetails = useSelector((state: RootState) => state.matchDetails);
+  const teamAverage: number =
+    matchDetails[simpleTeamKey].length > 0
+    ? Math.floor(matchDetails[simpleTeamKey].map((player) => player.overall).reduce((a, b) => a + b) /
+      matchDetails[simpleTeamKey].length)
+    : 0;
 
   const updateFormation = () => {
-    dispatch(matchDetailsActions.updateInput({input: formationKey, value: formationRef.current.value}));
+    dispatch(matchDetailsActions.updateInput({input: teamKey, value: formationRef.current.value}));
   };
 
   const checkHandler = (evt: ChangeEvent<HTMLInputElement>, setting: SettingOption) => {
@@ -58,8 +65,13 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
 
   return (
     <div className={styles.fieldGroup}>
+      <FieldHeader
+          teamName={matchDetails.match[teamKey].name}
+          teamShield={matchDetails.match[teamKey].shield}
+          teamOverall={teamAverage}
+      />
       <section className={`${styles.field} 
-        ${styles[`${formationTypeMap[matchDetails.match[formationKey].formation]}${formationKeyMap[team.length]}`]}`}>
+        ${styles[`${formationTypeMap[matchDetails.match[teamKey].formation]}${formationKeyMap[team.length]}`]}`}>
         {playersMap}
       </section>
       <Stack className={styles.check} spacing={5} direction='row'>
@@ -89,7 +101,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         className={styles.formations}
         ref={formationRef}
         onChange={updateFormation}
-        value={matchDetails.match[formationKey].formation}
+        value={matchDetails.match[teamKey].formation}
         color={'gray.50'}
       >
         { team.length > 0 &&
