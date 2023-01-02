@@ -1,12 +1,11 @@
 
-import { Button } from '@chakra-ui/react';
+import { Button, Image } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from 'next/router';
 import { getFlagSvg } from 'empty-skull';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Image from 'next/image';
 import styles from './menu.module.scss';
 import { getProfile } from '../../server/player';
 import { profileActions } from '../../store/profile.slice';
@@ -43,10 +42,11 @@ const Menu: NextPage<Props> = ({profile}) => {
   return (
     <div className={styles.container}>
       <Image
+        className={styles.logo}
         src={'/images/app-logo-regular.png'}
         alt='Cotejo app logo'
-        width={400}
-        height={294}
+        width={325}
+        height={219}
       ></Image>
       <div className={styles.actions}>
         <Button 

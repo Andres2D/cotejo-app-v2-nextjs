@@ -1,3 +1,5 @@
+@import '../../styles/breakpoints';
+
 .container {
   align-items: center;
   justify-content: center;
@@ -5,6 +7,12 @@
   flex-direction: column;
   margin: 100px auto;
   width: 50%;
+
+  .logo {
+    min-width: 325px;
+    min-height: 219px;
+    margin-bottom: 10px;
+  }
   
   .actions {
     display: flex;
@@ -14,6 +22,21 @@
     
     .btnOptionMenu {
       width: 100%;
+    }
+  }
+}
+
+@media (max-width: $medium-device) {
+  .container {
+    width: 90%;
+
+    .logo {
+      min-width: 277px;
+      min-height: 210px;
+    }
+
+    .actions {
+      width: 90%;
     }
   }
 }

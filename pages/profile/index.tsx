@@ -49,6 +49,8 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
       physical: parsedStats.physical,
       shooting: parsedStats.shooting,
     }));
+
+    window.scrollTo(0, 0);
   }, [])
   
 
