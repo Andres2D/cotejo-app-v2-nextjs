@@ -21,6 +21,7 @@ interface INumberPayload {
 
 const initialState: IProfileState = {
   profile: {
+    _id: '',
     image: '',
     flag: '',
     name: '',

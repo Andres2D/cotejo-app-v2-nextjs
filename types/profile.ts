@@ -8,7 +8,8 @@ export type Stats =
 | 'shooting';
 
 export type Profile = 
-'image' 
+'_id'
+| 'image' 
 | 'flag' 
 | 'name' 
 | 'nationality' 

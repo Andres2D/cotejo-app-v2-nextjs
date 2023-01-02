@@ -33,6 +33,7 @@ const PlayersForm: NextPage = () => {
 
   const [ playersSearch, setPlayersSearch ] = useState([]);
   const formState = useSelector((state: RootState) => state.createMatch);
+  const profileState = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
 
   // TODO handle error and loading
@@ -88,6 +89,7 @@ const PlayersForm: NextPage = () => {
 
     const value = Number(event.target.value);
     dispatch(createMatchActions.updateInputNumber({input: 'players_number', value}));
+    dispatch(createMatchActions.autoCompletePlayers(profileState.profile._id || ''));
   };
 
   const searchPlayer = () => {
@@ -95,7 +97,7 @@ const PlayersForm: NextPage = () => {
   };
 
   const autoCompletePlayers = () => {
-    dispatch(createMatchActions.autoCompletePlayers());
+    dispatch(createMatchActions.autoCompletePlayers(profileState.profile._id || ''));
   };
 
   const playersResults = playersSearch.map((player: IPlayerList) => {

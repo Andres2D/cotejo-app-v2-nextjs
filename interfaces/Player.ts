@@ -25,6 +25,7 @@ export interface IPlayerList {
 }
 
 export interface IProfile {
+  _id?: string;
   overall: number;
   position: string;
   flag: string;
