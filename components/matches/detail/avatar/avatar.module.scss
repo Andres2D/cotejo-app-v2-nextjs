@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoints';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -38,7 +40,7 @@
       font-weight: bold;
       text-shadow: #333 -2px 0 10px;
       text-align: center;
-      width: 110px;
+      width: 105px;
       word-break: break-word;
       line-height: 15px;
       color: #F7FAFC;
@@ -49,6 +51,7 @@
     }
 
     .playerOverall {
+      max-width: 105px;
       color: #FAE505;
       right: 15px;
     }
@@ -61,5 +64,71 @@
   }
   to{
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: $medium-device) {
+  .container {
+    .avatarContainer {
+      .avatar {
+        width: var(--chakra-sizes-12);
+        height: var(--chakra-sizes-12);
+      }
+
+      .changeIcon,
+      .replaceIcon {
+        width: var(--chakra-sizes-6);
+        height: var(--chakra-sizes-6);
+      }
+
+      .changeIcon {
+        left: 48px;
+      }
+      
+      .replaceIcon {
+        left: 48px;
+        top: 35px;
+      }
+
+      .playerName {
+        bottom: 50px;
+      }
+  
+      .playerOverall {
+        right: 5px;
+      }
+    }
+  }
+}
+
+@media (max-width: $small-device) {
+  .container {
+    .avatarContainer {
+      .avatar {
+        width: var(--chakra-sizes-8);
+        height: var(--chakra-sizes-8);
+        div {
+          font-size: 15px;
+        }
+      }
+
+      .changeIcon {
+        left: 30px;
+      }
+      
+      .replaceIcon {
+        left: 32px;
+        top: 32px;
+      }
+
+      .playerName {
+        bottom: 32px;
+        width: 80px;
+      }
+  
+      .playerOverall {
+        right: -10px;
+      }
+    }
   }
 }

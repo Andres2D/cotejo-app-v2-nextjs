@@ -34,6 +34,7 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
     : details.match.home_team.showStats;
 
   const changePlayerHandler = () => {
+    console.log('In');
     dispatch(matchDetailsActions.toggleChangePlayerModal());
   };
 
