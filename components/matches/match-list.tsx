@@ -1,11 +1,10 @@
 import type { NextPage } from 'next';
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, Image } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
-import { Image } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
 import { FullMatch } from '../../interfaces/Match';
-import { useRouter } from 'next/router';
 
 interface Props {
   matches: FullMatch[]
@@ -26,33 +25,34 @@ const MatchList: NextPage<Props> = ({matches}) => {
         key={_id}
         onClick={() => goToMatchDetails(_id)}
       >
-        <Team
-          name={home_team.name}
-          image={home_team.shield}
-          width={120}
-          height={120}
-        />
+        <div className={styles.matchDetails}>
+          <Team
+            name={home_team.name}
+            image={home_team.shield}
+            width={120}
+            height={120}
+          />
 
-        <div className={styles.containerVS}>
-          <Image
-            src={'/images/vs-icon.png'}
-            alt='Icon versus'
-            width={55}
-            height={45}
-          ></Image>
-          <div className={styles.details}>
-            <h2>{date}</h2>
-            <h2>{location}</h2>
+          <div className={styles.containerVS}>
+            <Image
+              src={'/images/vs-icon.png'}
+              alt='Icon versus'
+              width={55}
+              height={45}
+            ></Image>
+            <div className={styles.details}>
+              <h2>{date}</h2>
+              <h2>{location}</h2>
+            </div>
           </div>
+
+          <Team
+            name={away_team.name}
+            image={away_team.shield}
+            width={120}
+            height={120}
+          />
         </div>
-
-        <Team
-          name={away_team.name}
-          image={away_team.shield}
-          width={120}
-          height={120}
-        />
-
         <div className={styles.options}>
           <IconButton
             colorScheme='teal'
