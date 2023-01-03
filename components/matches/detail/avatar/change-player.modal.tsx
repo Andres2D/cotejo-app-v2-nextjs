@@ -134,7 +134,7 @@ const ChangePlayerModal: NextPage = () => {
       variant={'brand'}
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent className={styles.modalContent}>
         <ModalHeader>Change player</ModalHeader>
         <ModalCloseButton 
           onClick={closeChangePlayerHandler}
@@ -149,6 +149,7 @@ const ChangePlayerModal: NextPage = () => {
               { getOutPlayer()?.name }
             </Heading>
             <Image 
+              className={styles.inOutSign}
               src='/images/out.svg'
               alt='in-signal'
               width={20}
@@ -173,6 +174,7 @@ const ChangePlayerModal: NextPage = () => {
               </div>
             </div>
             <Image 
+              className={styles.inOutSign}
               src='/images/in.svg'
               width={20}
               alt='out-signal'

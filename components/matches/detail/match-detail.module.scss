@@ -1,9 +1,15 @@
-.header {
-  display: flex;
-  justify-content: space-evenly;
-}
+@import '../../../styles/breakpoints';
 
 .fields {
   display: flex;
   justify-content: space-evenly;
+}
+
+@media (max-width: $large-device) {
+  .fields {
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 50px;
+  }
 }

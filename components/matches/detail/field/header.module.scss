@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoints';
+
 .header {
   display: flex;
   flex-direction: column;
@@ -13,4 +15,11 @@
 
 .isAway {
   flex-direction: row-reverse;
+}
+
+@media (max-width: $small-device) {
+  .header {
+    justify-content: flex-start;
+    width: 90%;
+  }
 }

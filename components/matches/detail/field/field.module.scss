@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoints';
+
 .fieldGroup {
   width: 550px;
   display: flex;
@@ -386,3 +388,34 @@
     }
   }
 }
+
+@media (max-width: $medium-device) {
+  .fieldGroup {
+    width: 90%;
+  }
+}
+
+@media (max-width: $medium-small-device) {
+  .fieldGroup {
+    .field {
+      height: 315px;
+    }
+  }
+}
+
+@media (max-width: $small-device) {
+  .fieldGroup {
+    .field {
+      background-image: url('/images/field-mobile-md.svg');
+    }
+  }
+}
+
+@media (max-width: $extra-small-device) {
+  .fieldGroup {
+    .field {
+      background-image: url('/images/field-mobile-sm.svg');
+    }
+  }
+}
+
