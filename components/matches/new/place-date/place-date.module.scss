@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoints';
+
 .form {
   display: flex;
   flex-direction: column;
@@ -22,6 +24,14 @@
     
     .input {
       margin-bottom: 8px;
+    }
+  }
+}
+
+@media (max-width: $medium-device-extra) {
+  .form {
+    .formControl {
+      width: 90%;
     }
   }
 }

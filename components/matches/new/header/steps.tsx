@@ -45,7 +45,7 @@ const Steps: NextPage<Props> = ({teams, players, schedule}) => {
       index={form.current_step} 
       onChange={handleTabsChange}
     >
-      <TabList>
+      <TabList className={styles.tabsList}>
         <Tab 
           _selected={selectedTab}
           className={styles.tab}
