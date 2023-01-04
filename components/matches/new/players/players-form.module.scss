@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoints';
+
 .players {
   display: flex;
   flex-wrap: wrap;
@@ -23,6 +25,23 @@
   &:hover {
     color: black;
     background-color: white;
+  }
+}
+
+@media (max-width: $medium-device-extra) {
+  .players,
+  .playerResult {
+    width: 90%;
+  }
+
+  .playerNameInput {
+    width: 90% !important;
+  }
+}
+
+@media (max-width: $extra-small-device) {
+  .completePlayers {
+    width: 90%;
   }
 }
 

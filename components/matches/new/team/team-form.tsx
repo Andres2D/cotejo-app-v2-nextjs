@@ -69,6 +69,7 @@ const TeamForm: NextPage<Props> = ({type = 'home'}: Props) => {
         bgClip="text" 
         fontSize="6xl" 
         fontWeight="extrabold"
+        className={styles.title}
       >
         {`${type.charAt(0).toUpperCase()}${type.slice(1, type.length)}`}
       </Text>
@@ -83,7 +84,7 @@ const TeamForm: NextPage<Props> = ({type = 'home'}: Props) => {
               className={styles.selectedShield}
             ></Image>
           </PopoverTrigger>
-          <PopoverContent>
+          <PopoverContent w='250px'>
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverHeader>Team</PopoverHeader>
@@ -102,12 +103,12 @@ const TeamForm: NextPage<Props> = ({type = 'home'}: Props) => {
       </div>
       <Input 
         placeholder='Name of the team' 
-        width={'50%'} 
         colorScheme='white' 
         variant='filled' 
         mt='5'
         onChange={updateField}
         ref={teamName}
+        className={styles.nameInput}
       />
     </div>
   );

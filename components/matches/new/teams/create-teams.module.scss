@@ -1,5 +1,20 @@
+@import '../../../../styles/breakpoints';
+
 .form {
   width: 80%;
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: $medium-device-extra) {
+  .form {
+    width: 100%;
+  }
+}
+
+@media (max-width: $medium-small-device) {
+  .form {
+    flex-direction: column;
+    align-items: center;
+  }
 }

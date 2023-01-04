@@ -161,18 +161,20 @@ const PlayersForm: NextPage = () => {
         mt='5'
         ref={inputRef}
         onChange={searchPlayer}
+        className={styles.playerNameInput}
       />
       {playersResults}
       <div className={styles.players}>
         {playersAdded}
       </div>
       <Button
+        className={styles.completePlayers}
         size='lg'
         colorScheme='brand'
         mt='5px'
         onClick={autoCompletePlayers}
       >
-        Auto complete players ({missingState - playersAdded.length})
+        Complete players ({missingState - playersAdded.length})
       </Button>
     </section>
   );
