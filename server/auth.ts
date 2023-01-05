@@ -15,7 +15,7 @@ export const googleAuth = async(token: string): Promise<boolean | null> => {
     
     const { email, name, picture } = googlePayload;
     await mongoConnection();
-    const playerDB = await Player.findOne();
+    const playerDB = await Player.findOne({email});
 
     if(playerDB) {
       return true;
@@ -30,7 +30,7 @@ export const googleAuth = async(token: string): Promise<boolean | null> => {
       number: 99,
       status: 'new',
       google: true,
-      nationality: 'World',
+      nationality: 'Colombia',
       position: 'CM'
     });
 

@@ -51,7 +51,7 @@ const registerPlayer = async(req: any, res: any) => {
       status: '',
       image: 'https://bit.ly/broken-link',
       google: false,
-      nationality: 'World',
+      nationality: 'Colombia',
       position: 'CM'
     });
 
