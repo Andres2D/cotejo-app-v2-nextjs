@@ -24,7 +24,7 @@ const Position: NextPage = () => {
   const { position } = useSelector((state: RootState) => state.profile).profile;
   const dispatch = useDispatch();
 
-  const positionRef = useRef<HTMLSelectElement>();
+  const positionRef = useRef<HTMLSelectElement>(null);
   const positions = playerPositions
     .map(pos => <option key={pos} value={pos}>{pos}</option>);
 

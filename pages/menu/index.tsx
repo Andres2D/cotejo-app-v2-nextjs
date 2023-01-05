@@ -23,13 +23,14 @@ const Menu: NextPage<Props> = ({profile}) => {
   // Persisting store profile
   // TODO: Change way to persis state
   let parsedProfile = JSON.parse(profile || '');
+  const flagResponse = getFlagSvg(parsedProfile.nationality, true);
 
   useEffect(() => {
     dispatch(profileActions.setProfile({
       _id: parsedProfile._id,
       overall: 0,
       position: parsedProfile.position,
-      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
+      flag: Array.isArray(flagResponse) ? flagResponse[0].flag : flagResponse.flag,
       name: parsedProfile.name,
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
@@ -76,7 +77,7 @@ const Menu: NextPage<Props> = ({profile}) => {
 export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req});
 
-  if(!session) {
+  if(!session || !session.user) {
     return {
       redirect: {
         destination: '/auth',
@@ -85,8 +86,8 @@ export const getServerSideProps = async(context: any) => {
     }
   }
 
-  const { email } = session?.user;
-  const profile = await getProfile(email);
+  const { email } = session.user;
+  const profile = await getProfile(email!);
 
   return {
     props: { 

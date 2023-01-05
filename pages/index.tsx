@@ -1,19 +1,13 @@
 import type { NextPage } from 'next';
-import { Button } from '@chakra-ui/react';
 import { getSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
-  
-  return (
-    <>
-      <h2>Cotejo App v2</h2>
-      <Button colorScheme='red'>Chakra UI installed</Button>
-    </>
-  );
+  return <p>Index page</p>
 }
 
-export const getStaticProps = async(context: any) => {
+export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req });
+  console.log('Session --> ', session);
 
   return {
     redirect: {

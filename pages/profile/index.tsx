@@ -30,13 +30,14 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
 
   let parsedStats = JSON.parse(stats || '');
   let parsedProfile = JSON.parse(profile || '');
+  const flagResponse = getFlagSvg(parsedProfile.nationality, true);
 
   useEffect(() => {
     dispatch(profileActions.setProfile({
       _id: parsedProfile._id,
       overall: parsedStats.overall,
       position: parsedProfile.position,
-      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
+      flag: Array.isArray(flagResponse) ? flagResponse[0].flag : flagResponse.flag,
       name: parsedProfile.name,
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
@@ -120,9 +121,19 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
 
 export const getServerSideProps = async (context: any) => {
   const session = await getSession({ req: context.req });
-  const { image, name, email } = session?.user;
-  const profile = await getProfile(email);
-  const stats = await getPlayerStats(email);
+
+  if(!session || !session.user) {
+    return {
+      redirect: {
+        destination: '/auth',
+        permanent: false
+      }
+    }
+  }
+
+  const { image, name, email } = session.user;
+  const profile = await getProfile(email!);
+  const stats = await getPlayerStats(email!);
 
   return {
     props: {

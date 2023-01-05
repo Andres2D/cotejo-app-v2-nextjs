@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { profileActions } from '../../store/profile.slice';
 import { RootState } from '../../interfaces/State';
 import styles from './player-rate.module.scss';
+import { Stats } from '../../types/profile';
 
 interface Props {
   className?: string;
@@ -19,14 +20,14 @@ const PlayerRate: NextPage<Props> = ({ className }: Props) => {
   const stats = useSelector((state: RootState) => state.profile).stats;
   const dispatch = useDispatch();
 
-  const updateStats = (label: string, value: number) => {
+  const updateStats = (label: Stats, value: number) => {
     dispatch(profileActions.updateInputNumber({
       prop: label,
       value 
     }));
   }
 
-  const statsRates = Object.entries(stats).map(([label, value]) => {
+  const statsRates = Object.entries(stats).map(([label, value]: any[]) => {
     const title = `${label[0].toUpperCase()}${label.slice(1, label.length)}`;
     return (
       <div className={styles.stat} key={label}>

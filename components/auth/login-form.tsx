@@ -82,7 +82,10 @@ const LoginForm: NextPage = () => {
           aria-label="Call Segun"
           size="lg"
           icon={<GoogleIcon boxSize={8} />}
-          onClick={() => signIn('google_user')}
+          onClick={(e) => {
+            e.preventDefault();
+            signIn('google_user')
+          }}
         />
       </div>
     </form>

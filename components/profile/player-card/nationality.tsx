@@ -26,7 +26,7 @@ const Nationality: NextPage = () => {
   const { flag, nationality } = useSelector((state: RootState) => state.profile).profile;
   const dispatch = useDispatch();
 
-  const flagRef = useRef<HTMLInputElement>();
+  const flagRef = useRef<HTMLInputElement>(null);
 
   const flags = flagsList.map((country: any) => (
     <Image
@@ -46,6 +46,8 @@ const Nationality: NextPage = () => {
       return;
     }
 
+    const flagResponse = getFlagSvg(country, false);
+
     dispatch(profileActions.updateInput({
       prop: 'nationality',
       value: country
@@ -53,7 +55,7 @@ const Nationality: NextPage = () => {
 
     dispatch(profileActions.updateInput({
       prop: 'flag',
-      value: getFlagSvg(country, true)?.flag
+      value: Array.isArray(flagResponse) ? flagResponse[0].flag : flagResponse.flag
     }));
   };
 

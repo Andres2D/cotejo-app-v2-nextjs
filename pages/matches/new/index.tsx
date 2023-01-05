@@ -20,13 +20,14 @@ const CreateMatch: NextPage<Props> = ({profile}) => {
   // Persisting store profile
   // TODO: Change way to persis state
   let parsedProfile = JSON.parse(profile || '');
+  const flagResponse = getFlagSvg(parsedProfile.nationality, true);
 
   useEffect(() => {
     dispatch(profileActions.setProfile({
       _id: parsedProfile._id,
       overall: 0,
       position: parsedProfile.position,
-      flag: getFlagSvg(parsedProfile.nationality, true)?.flag,
+      flag: Array.isArray(flagResponse) ? flagResponse[0].flag : flagResponse.flag,
       name: parsedProfile.name,
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,

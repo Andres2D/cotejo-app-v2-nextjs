@@ -7,7 +7,7 @@ import { calculateAVG } from '../helpers/stats';
 import { IProfile, IStats } from '../interfaces/Player';
 
 import { IProfileState } from '../interfaces/Profile';
-import { Profile } from '../types/profile';
+import { Profile, Stats } from '../types/profile';
 
 interface IPayload {
   prop: Profile;
@@ -15,7 +15,7 @@ interface IPayload {
 }
 
 interface INumberPayload {
-  prop: string;
+  prop: Stats;
   value: number;
 }
 

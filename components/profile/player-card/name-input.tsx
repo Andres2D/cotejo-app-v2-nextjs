@@ -23,7 +23,7 @@ const NameInput: NextPage = () => {
   const { name } = useSelector((state: RootState) => state.profile).profile;
   const dispatch = useDispatch();
 
-  const nameRef = useRef<HTMLInputElement>();
+  const nameRef = useRef<HTMLInputElement>(null);
 
   const updateName = () => {
     if(!nameRef.current?.value) {
