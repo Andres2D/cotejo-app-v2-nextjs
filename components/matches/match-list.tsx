@@ -33,17 +33,10 @@ const MatchList: NextPage<Props> = ({matches}) => {
             height={120}
           />
 
-          <div className={styles.containerVS}>
-            <Image
-              src={'/images/vs-icon.png'}
-              alt='Icon versus'
-              width={55}
-              height={45}
-            ></Image>
-            <div className={styles.details}>
-              <h2>{date}</h2>
-              <h2>{location}</h2>
-            </div>
+          <div className={styles.details}>
+            <h1>VS</h1>
+            <h2>{date}</h2>
+            <h2>{location}</h2>
           </div>
 
           <Team
