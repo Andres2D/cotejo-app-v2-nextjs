@@ -44,11 +44,11 @@ export default NextAuth({
         return true;
       }
 
-      if(!account.id_token) {
+      if(account!.id_token) {
         return false
       }
 
-      const userSigned = await googleAuth(account.id_token);
+      const userSigned = await googleAuth(account!.id_token!);
 
       if(!userSigned) {
         return false;

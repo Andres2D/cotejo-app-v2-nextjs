@@ -7,7 +7,6 @@ const Home: NextPage = () => {
 
 export const getServerSideProps = async(context: any) => {
   const session = await getSession({ req: context.req });
-  console.log('Session --> ', session);
 
   return {
     redirect: {
