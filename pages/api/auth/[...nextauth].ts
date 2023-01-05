@@ -44,7 +44,7 @@ export default NextAuth({
         return true;
       }
 
-      if(account!.id_token) {
+      if(!account!.id_token) {
         return false
       }
 
