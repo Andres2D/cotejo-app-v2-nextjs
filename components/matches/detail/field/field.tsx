@@ -1,6 +1,7 @@
 import { Checkbox, Select, Stack } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { ChangeEvent, MutableRefObject, useRef } from 'react';
+import { useMutation } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { IFullPlayer } from '../../../../interfaces/Player';
 import styles from './field.module.scss';
@@ -9,6 +10,7 @@ import {
   formationKeyMap, 
   formationTypeMap 
 } from '../../../../constants/formation';
+import { updateTeam } from '../../../../services/api-configuration';
 import { RootState } from '../../../../interfaces/State';
 import { matchDetailsActions } from '../../../../store/match-details.slice';
 import AvatarMatchLayout from '../avatar/avatar';
@@ -26,6 +28,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
   const dispatch = useDispatch();
   const teamKey = isAway ? 'away_team' : 'home_team';
   const simpleTeamKey = isAway ? 'away' : 'home';
+  const { mutate } = useMutation(updateTeam);
   
   const matchDetails = useSelector((state: RootState) => state.matchDetails);
   const teamAverage: number =
@@ -36,6 +39,8 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
 
   const updateFormation = () => {
     dispatch(matchDetailsActions.updateInput({input: teamKey, value: formationRef.current.value}));
+    const { name, shield, _id} = matchDetails.match[teamKey];
+    mutate({ name, shield, _id, formation: formationRef.current.value });
   };
 
   const checkHandler = (evt: ChangeEvent<HTMLInputElement>, setting: SettingOption) => {
