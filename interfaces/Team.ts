@@ -14,3 +14,10 @@ export interface TeamShield {
 export interface IFullTeam extends ITeam {
   _id: string;
 }
+
+export interface UpdateTeamRequest {
+  _id: string;
+  name: string;
+  formation: string;
+  shield: string;
+}
