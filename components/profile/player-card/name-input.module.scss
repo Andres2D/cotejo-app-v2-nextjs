@@ -5,12 +5,29 @@
   letter-spacing: -5px;
   cursor: pointer;
   position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 350px;
 
   .edit {
     position: absolute;
     color: black;
     top: 20px;
+    right: -10px;
     font-size: 20px;
+  }
+}
+
+@media (max-width: $medium-small-device) {
+  .title {
+    width: 300px;
+  }
+}
+
+@media (max-width: $small-device) {
+  .title {
+    width: 200px;
   }
 }
 
