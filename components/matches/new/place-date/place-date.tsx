@@ -8,7 +8,8 @@ import {
   InputGroup,
   InputLeftElement,
   Text,
-  FormControl
+  FormControl,
+  useToast
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -21,6 +22,7 @@ import { RootState } from '../../../../interfaces/State';
 import * as formations from '../../../../constants/formations-positions'; 
 import { createMatch } from '../../../../services/api-configuration';
 import Loader from '../../../layout/loader';
+import { fullFormErrors } from '../../../../helpers/create-match-validations';
 
 const playerPositionsMap: { [id: number]: string[] } = {
   8: formations.fourTeam,
@@ -48,6 +50,7 @@ const PlaceDate: NextPage = () => {
   const router = useRouter();
   const form = useSelector((state: RootState) => state.createMatch);
   const [formSent, setFormSent] = useState(false);
+  const toast = useToast();
 
   //TODO: handle error and loading states
   const { mutate, isLoading } = useMutation(createMatch, {
@@ -96,8 +99,29 @@ const PlaceDate: NextPage = () => {
         }
       })
     }
+    
+    const errors = fullFormErrors(request, form.players_number).filter(error => error);
+    
+    if(errors.length > 0) {
+      showErrorToasts(errors);
+      setFormSent(false);
+    }else {
+      mutate(request);
+    }
+  };
 
-    mutate(request);
+  const showErrorToasts = (errors: (string | null)[]) => {
+    errors.forEach((error) => {
+      if(error) {
+        toast({
+          title: 'Error.',
+          description: error,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      }
+    });
   };
 
   return (
