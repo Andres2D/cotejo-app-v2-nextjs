@@ -11,6 +11,7 @@ import {
   FormControl
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { createMatchActions } from '../../../../store/create-match.slice';
@@ -19,6 +20,7 @@ import { ICreateMatchRequest } from '../../../../interfaces/Match';
 import { RootState } from '../../../../interfaces/State';
 import * as formations from '../../../../constants/formations-positions'; 
 import { createMatch } from '../../../../services/api-configuration';
+import Loader from '../../../layout/loader';
 
 const playerPositionsMap: { [id: number]: string[] } = {
   8: formations.fourTeam,
@@ -45,18 +47,24 @@ const PlaceDate: NextPage = () => {
   } = useForm<Inputs>();
   const router = useRouter();
   const form = useSelector((state: RootState) => state.createMatch);
+  const [formSent, setFormSent] = useState(false);
 
   //TODO: handle error and loading states
   const { mutate, isLoading } = useMutation(createMatch, {
-    onSuccess: () => {
+    onSuccess: async () => {
+      await router.push('/matches', undefined, {  })
+      setFormSent(false);
       dispatch(createMatchActions.resetStore());
-      router.push('/matches');
+    },
+    onError: () => {
+      setFormSent(false);
+      // TODO: handle error
     }
   });
   const dispatch = useDispatch();
 
   const onCreateMatch: SubmitHandler<Inputs> = ({place, date}) => {
-
+    setFormSent(true);
     dispatch(createMatchActions.updateInput({input: 'place', value: place}));
     dispatch(createMatchActions.updateInput({input: 'date', value: date}));
 
@@ -94,66 +102,76 @@ const PlaceDate: NextPage = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onCreateMatch)}>
-      <FormControl 
-        className={styles.formControl}
-        isInvalid={!!errors.place}>
-        <Text className={styles.titleInput}>Place</Text>
-        <InputGroup>
-          <InputLeftElement
-            className={styles.iconInput}
-          >
-            <InfoOutlineIcon color='gray.300' />
-          </InputLeftElement>
-          <Input
-            className={styles.input}
-            type='text'
-            placeholder='Anfield'
-            size='lg'
-            variant='filled'
-            {...register('place', {
-              required: 'The place name is required'
-            })}
-          />
-        </InputGroup>
-        <FormErrorMessage>
-          {errors.place && errors.place.message}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl 
-        className={styles.formControl}
-        isInvalid={!!errors.date}>
-        <Text className={styles.titleInput}>Date</Text>
-        <InputGroup>
-          <InputLeftElement
-            className={styles.iconInput}
-          >
-            <CalendarIcon color='gray.300' />
-          </InputLeftElement>
-          <Input
-            className={styles.input}
-            type='date'
-            placeholder='Date'
-            size='lg'
-            variant='filled'
-            {...register('date', {
-              required: 'The date name is required'
-            })}
-          />
-        </InputGroup>
-        <FormErrorMessage>
-          {errors.date && errors.date.message}
-        </FormErrorMessage>
-      </FormControl>
-      <Button 
-        className={styles.nextBtn}
-        size='lg'
-        mt={10}
-        colorScheme='brand'
-        type='submit'
-        disabled={isLoading}
-      >
-        Create Match
-      </Button>
+      {
+        !formSent && 
+        (
+          <>
+            <FormControl 
+              className={styles.formControl}
+              isInvalid={!!errors.place}>
+              <Text className={styles.titleInput}>Place</Text>
+              <InputGroup>
+                <InputLeftElement
+                  className={styles.iconInput}
+                >
+                  <InfoOutlineIcon color='gray.300' />
+                </InputLeftElement>
+                <Input
+                  className={styles.input}
+                  type='text'
+                  placeholder='Anfield'
+                  size='lg'
+                  variant='filled'
+                  {...register('place', {
+                    required: 'The place name is required'
+                  })}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                {errors.place && errors.place.message}
+              </FormErrorMessage>
+            </FormControl>
+            <FormControl 
+              className={styles.formControl}
+              isInvalid={!!errors.date}>
+              <Text className={styles.titleInput}>Date</Text>
+              <InputGroup>
+                <InputLeftElement
+                  className={styles.iconInput}
+                >
+                  <CalendarIcon color='gray.300' />
+                </InputLeftElement>
+                <Input
+                  className={styles.input}
+                  type='date'
+                  placeholder='Date'
+                  size='lg'
+                  variant='filled'
+                  {...register('date', {
+                    required: 'The date name is required'
+                  })}
+                />
+              </InputGroup>
+              <FormErrorMessage>
+                {errors.date && errors.date.message}
+              </FormErrorMessage>
+            </FormControl>
+            <Button 
+              className={styles.nextBtn}
+              size='lg'
+              mt={10}
+              colorScheme='brand'
+              type='submit'
+              disabled={isLoading}
+            >
+              Create Match
+            </Button>
+          </>
+        )
+      }
+      {
+        formSent && <Loader text='Creating...' />
+      }
     </form>
   );
 }
