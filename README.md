@@ -1,7 +1,7 @@
 <h1 align="center">Cotejo App v2</h1>
 <div align="center">
   <a href="https://cotejoapp.vercel.app/auth" title="Cotejo App - Build your game">
-    <img src="--" alt="Cotejo App - Build your game" />
+    <img width="896" alt="cotejoAppUI" src="https://user-images.githubusercontent.com/37199673/211444681-8166dbcf-4aab-4854-a940-6f00d30b2eac.png">
   </a>
 </div>
 <br />
@@ -24,7 +24,7 @@ This app won't be possible without the implementation of the following tools and
 />
 <img
   width = 94
-  src = 'https://decodenatura.com/static/fb8aa1bb70c9925ce1ae22dc2711b343/nextjs-logo.png'
+  src = 'https://user-images.githubusercontent.com/37199673/211445192-4d19d126-e532-4cc5-a281-781faee3900f.png'
 />
 </a>
 <a
@@ -33,7 +33,7 @@ This app won't be possible without the implementation of the following tools and
 />
 <img
   width = 94
-  src = 'https://jquery-plugins.net/image/plugin/chakra-ui-simple-modular-accessible-ui-components-for-react-applications.png'
+  src = 'https://user-images.githubusercontent.com/37199673/211445273-d81cb361-7a07-4304-b8db-3cc79e10d01a.png'
 />
 </a>
 <a
@@ -42,7 +42,7 @@ This app won't be possible without the implementation of the following tools and
 />
 <img
   width = 94
-  src = 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/83277617677033.562bd23b30b2a.jpg'
+  src = 'https://user-images.githubusercontent.com/37199673/211445312-5220e81f-9a12-4f25-870a-38fb0873f874.png'
 />
 </a>
 <a
@@ -51,22 +51,16 @@ This app won't be possible without the implementation of the following tools and
 />
 <img
   width = 94
-  src = 'https://developers.google.com/static/site-assets/images/home/developers-social-media.png'
+  src = 'https://user-images.githubusercontent.com/37199673/211445346-613761e7-eeca-4953-833e-beda291e75a0.png'
 />
 </a>
 
 ### Contributors
 
 Thanks go to these wonderful people!
-
-<a href="https://github.com/Andres2D/cotejo-app-v2-nextjs/graphs/contributors">
-  <img src="https://avatars.githubusercontent.com/u/32522073?v=4width=890&button=false" />
+<br/>
+<a href="https://github.com/andres2d/cotejo-app-v2-nextjs/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=andres2d/cotejo-app-v2-nextjs" />
 </a>
 
-<a href="https://github.com/Andres2D/cotejo-app-v2-nextjs/graphs/contributors">
-  <img src="https://avatars.githubusercontent.com/u/90817796?v=4width=890&button=false" />
-</a>
-
-<a href="https://github.com/Andres2D/cotejo-app-v2-nextjs/graphs/contributors">
-  <img src="https://avatars.githubusercontent.com/u/97857481?v=4width=890&button=false" />
-</a>
+Made with [contrib.rocks](https://contrib.rocks).
