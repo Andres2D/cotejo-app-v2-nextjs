@@ -56,9 +56,9 @@ export default NextAuth({
       
       return true;
     },
-    async redirect() {
-      return  Promise.resolve('/menu');
-    },
+    // async redirect() {
+    //   return Promise.resolve('/menu');
+    // },
   },
   session: {
     strategy: 'jwt'

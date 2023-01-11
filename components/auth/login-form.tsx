@@ -5,7 +5,9 @@ import {
   Input,
   IconButton,
   FormErrorMessage,
+  useToast,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import GoogleIcon from '../../assets/svg/google.svg';
@@ -22,10 +24,30 @@ const LoginForm: NextPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<Inputs>();
+  const router = useRouter();
+  const toast = useToast();
 
   const onLogin: SubmitHandler<Inputs> = ({ userName, password }) => {
-    signIn('credential_user', {email: userName, password});
+    signIn('credential_user', {email: userName, password, redirect: false})
+      .then(({ ok }: any) => {
+        if (ok) {
+          router.push('/menu');
+        } else {
+          toast({
+            title: 'Error.',
+            description: 'Invalid email or password',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+          reset(() => ({
+            userName: '',
+            password: ''
+          }))
+        }
+      })
   };
 
   return (
