@@ -8,6 +8,9 @@ const handler = async(req: any, res: any) => {
       case 'POST':
         createMatch(req, res);
         break;
+      case 'DELETE':
+        deleteMatch(req, res);
+        break;
       default:
         res.status(400).json({message: 'Unknown method'});    
         break;
@@ -108,6 +111,40 @@ const createTeamPlayers = async(team_player: any) => {
   }catch(err) {
     console.log(err);
     return null;
+  }
+};
+
+const deleteMatch = async(req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const match = await Match.findById(id).lean();
+
+    if(!match) {
+      return res.status(400).json({
+        ok: false,
+        msg: "Match doesn't exist"
+      });
+    }
+
+    const { home_team, away_team } = match;
+    
+    await Promise.all([
+      Match.findByIdAndDelete(id),
+      Team.findByIdAndDelete(home_team),
+      Team.findByIdAndDelete(away_team),
+      TeamPlayer.deleteMany({team: home_team}),
+      TeamPlayer.deleteMany({team: away_team}),
+    ]);
+
+    res.json({
+      ok: true,
+      msg: `Match ${id} deleted`
+    });
+  }catch(err) {
+    res.status(500).json({
+      ok: false,
+      msg: 'Unexpected error'
+    });
   }
 };
 
