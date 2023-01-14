@@ -9,7 +9,8 @@ import {
   Button, 
   IconButton, 
   Image, 
-  useDisclosure 
+  useDisclosure, 
+  useToast
 } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
 import { MutableRefObject, useRef, useState, useEffect } from 'react';
@@ -30,18 +31,39 @@ const MatchList: NextPage<Props> = ({matches}) => {
   const cancelRef = useRef() as MutableRefObject<HTMLButtonElement>;
   const [matchesList, setMatchesList] = useState<FullMatch[]>([]);
   const [deleteMatch, setDeleteMatch] = useState<FullMatch>();
+  const toast = useToast();
 
   useEffect(() => {
     setMatchesList(matches);
   }, [matches]);
 
   const { mutate, isLoading } = useMutation(deleteMatchService, {
-    onSuccess: async () => {
-      setMatchesList(matches => matches.filter(match => match._id !== deleteMatch?._id));
-      onClose();
+    onSuccess: async (response) => {
+      if(response.ok) {
+        setMatchesList(matches => matches.filter(match => match._id !== deleteMatch?._id));
+        onClose();
+        setDeleteMatch(undefined);
+        toast({
+          title: 'Delete match',
+          description: "Match deleted.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Delete match',
+          description: "Something went wrong, please try again later.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        onClose();
+        setDeleteMatch(undefined);
+      }
+      
     },
     onError: () => {
-      // setFormSent(false);
       // TODO: handle error
     }
   });
@@ -141,7 +163,7 @@ const MatchList: NextPage<Props> = ({matches}) => {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={handleDeleteMatch} ml={3}>
+              <Button disabled={isLoading} colorScheme='red' onClick={handleDeleteMatch} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
