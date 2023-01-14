@@ -13,9 +13,11 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
 import { MutableRefObject, useRef, useState, useEffect } from 'react';
+import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
+import { deleteMatch as deleteMatchService  } from '../../services/api-configuration';
 import { FullMatch } from '../../interfaces/Match';
 
 interface Props {
@@ -33,6 +35,17 @@ const MatchList: NextPage<Props> = ({matches}) => {
     setMatchesList(matches);
   }, [matches]);
 
+  const { mutate, isLoading } = useMutation(deleteMatchService, {
+    onSuccess: async () => {
+      setMatchesList(matches => matches.filter(match => match._id !== deleteMatch?._id));
+      onClose();
+    },
+    onError: () => {
+      // setFormSent(false);
+      // TODO: handle error
+    }
+  });
+
   const router = useRouter();
 
   const goToMatchDetails = (matchId: string) => {
@@ -45,8 +58,7 @@ const MatchList: NextPage<Props> = ({matches}) => {
   };
 
   const handleDeleteMatch = () => {
-    setMatchesList(matches => matches.filter(match => match._id !== deleteMatch?._id));
-    onClose();
+    mutate(deleteMatch?._id!);
   };
 
   const matchesListMap = matchesList.map(({_id, date, location, away_team, home_team}) => {

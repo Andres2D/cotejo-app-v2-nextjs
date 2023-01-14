@@ -115,8 +115,9 @@ const createTeamPlayers = async(team_player: any) => {
 };
 
 const deleteMatch = async(req: any, res: any) => {
+  console.log(req);
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     const match = await Match.findById(id).lean();
 
     if(!match) {
@@ -136,7 +137,7 @@ const deleteMatch = async(req: any, res: any) => {
       TeamPlayer.deleteMany({team: away_team}),
     ]);
 
-    res.json({
+    return res.json({
       ok: true,
       msg: `Match ${id} deleted`
     });

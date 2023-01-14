@@ -16,5 +16,6 @@ export const getPlayers = (query: string) => api.get<any>('/player', { query });
 export const changePlayer = (request: IUpdateTeamPlayerRequest | IChangePlayerRequest) => api.put('/team-player', request);
 
 export const createMatch = (request: ICreateMatchRequest) => api.post('/match', request);
+export const deleteMatch = (id: string) => api.delete('/match', { id });
 
 export const updateTeam = (request: UpdateTeamRequest) => api.put('/team', request);
