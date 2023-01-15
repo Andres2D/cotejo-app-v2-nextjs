@@ -93,3 +93,13 @@ export const getProfile = async(playerMail: string) => {
     return null;
   }
 }
+
+export const getIdsPlayersBots = async() => {
+  try {
+    await mongoConnection();
+    const bots = await Player.find({'status': 'bot'}).lean();
+    return bots.filter(bot => bot._id).map(player => player.toString());
+  } catch(err) {
+    return [];
+  }
+};

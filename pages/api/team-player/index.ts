@@ -1,5 +1,6 @@
 import mongoConnection from '../../../database/database-configuration';
 import TeamPlayer from '../../../database/models/team-player';
+import { getIdsPlayersBots } from '../../../server/player';
 
 const handler = async (req: any, res: any) => {
   try {
@@ -11,7 +12,8 @@ const handler = async (req: any, res: any) => {
         //TODO: improve condition logic
         req.body.playerOutId ? replacePlayer(req, res) : putTeamPlayers(req, res);
         break;
-
+      case 'DELETE':
+        removePlayerFromTeam(req, res);
       default:
         res.status(400).json({ message: 'Unknown method' });
         break;
@@ -121,6 +123,49 @@ const replacePlayer = async (req: any, res: any) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Error updating the Team Player' });
+  }
+};
+
+const removePlayerFromTeam = async(req: any, res: any) => {
+  try {
+    const { idMatch, teamId, idPlayer } = req.body;
+    await mongoConnection();
+
+    const matchTeamPlayers = await TeamPlayer.find({ match: idMatch }).lean();
+    const matchPlayersIds = matchTeamPlayers.filter(player => player._id).map(player => player.toString());
+    const allBots = await getIdsPlayersBots();
+    const availableBots = allBots.filter(bot => !matchPlayersIds.includes(bot));
+
+    if(!availableBots || availableBots.length === 0) {
+      return res.status(400).json({ message: 'No possible replacement found' });
+    }
+
+    const teamPlayerDB = await TeamPlayer.findOne({
+      team: teamId,
+      player: idPlayer,
+    });
+
+    if (!teamPlayerDB) {
+      return res.status(400).json({ message: 'Bad identifier data' });
+    }
+
+    const replacementPlayer = {
+      _id: teamPlayerDB._id,
+      position: teamPlayerDB.position,
+      isCaptain: teamPlayerDB.isCaptain,
+      player: availableBots[0],
+      team: teamPlayerDB.team,
+    };
+
+    await TeamPlayer.findOneAndUpdate(
+      { team: teamId, player: idPlayer },
+      replacementPlayer
+    );
+
+    return res.status(200).json({ message: 'You left the match successfully' });
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Error on left the match' });
   }
 };
 
