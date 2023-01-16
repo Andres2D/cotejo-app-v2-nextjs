@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/react';
 
-const LeftIcon = (props: any) => (
+const LeaveIcon = (props: any) => (
   <Icon viewBox="0 0 447.674 447.674" {...props}>
     <g>
       <g>
@@ -11,4 +11,4 @@ const LeftIcon = (props: any) => (
   </Icon>
 );
 
-export default LeftIcon;
+export default LeaveIcon;

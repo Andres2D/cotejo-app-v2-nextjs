@@ -14,7 +14,7 @@ export const registerPlayer = (request: RegisterPlayerRequest) => api.post('/pla
 export const getPlayers = (query: string) => api.get<any>('/player', { query });
 
 export const changePlayer = (request: IUpdateTeamPlayerRequest | IChangePlayerRequest) => api.put('/team-player', request);
-export const leftMatch = (id: string) => api.delete('/team-player', { idMatch: id });
+export const leaveMatch = (id: string) => api.delete('/team-player', { idMatch: id });
 
 export const createMatch = (request: ICreateMatchRequest) => api.post('/match', request);
 export const deleteMatch = (id: string) => api.delete('/match', { id });

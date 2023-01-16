@@ -1,9 +1,11 @@
-import mongoConnection from '../../../database/database-configuration';
-import TeamPlayer from '../../../database/models/team-player';
-import { getIdsPlayersBots } from '../../../server/player';
-import Match from '../../../database/models/match';
 import { getSession } from 'next-auth/react';
-import { Player } from '../../../database/models';
+import mongoConnection from '../../../database/database-configuration';
+import { getIdsPlayersBots } from '../../../server/player';
+import { 
+  Player,
+  Match,
+  TeamPlayer
+} from '../../../database/models';
 
 const handler = async (req: any, res: any) => {
   try {
@@ -132,35 +134,26 @@ const replacePlayer = async (req: any, res: any) => {
 
 const removePlayerFromTeam = async(req: any, res: any) => {
   try {
-    const session = await getSession({ req });
     const { idMatch } = req.query;
-    // console.log('idMatch: ', idMatch);
-    let teamId = undefined;
+    const session = await getSession({ req });
+    let teamToLeaveId = undefined;
     await mongoConnection();
 
-    // Get Player
-    const player = await Player.findOne({ email: session?.user?.email }).lean();
+    const currentPlayer = await Player.findOne({ email: session?.user?.email }).lean();
+    const matchToLeave = await Match.findById(idMatch).lean();
+    const playerTeams = await TeamPlayer.find({ player: currentPlayer?._id}).lean();
 
-    // Get match
-    const match = await Match.findById(idMatch).lean();
-    // console.log(idMatch)
-    // console.log('match: ', match);
-
-    // Get Team player by player
-    const playerTeams = await TeamPlayer.find({ player: player?._id}).lean();
-    // console.log('TeamPlayers: ', playerTeams);
-
-    if(playerTeams.map(p => p.team.toString()).includes(String(match?.home_team!))) {
-      teamId = match?.home_team;
-    }else if(playerTeams.map(p => p.team.toString()).includes(String(match?.away_team!))) {
-      teamId = match?.away_team;
+    if(playerTeams.map(player => player.team.toString()).includes(String(matchToLeave?.home_team!))) {
+      teamToLeaveId = matchToLeave?.home_team;
+    }else if(playerTeams.map(p => p.team.toString()).includes(String(matchToLeave?.away_team!))) {
+      teamToLeaveId = matchToLeave?.away_team;
     }else {
-      return res.status(400).json({ message: 'Team not found' });
+      return res.status(400).json({ message: 'Team to leave not found' });
     }
 
-    const matchTeamPlayersHome = await TeamPlayer.find({ team: match?.home_team }).lean();
-    const matchTeamPlayersAway = await TeamPlayer.find({ team: match?.away_team }).lean();
-    const matchPlayersIds = [...matchTeamPlayersHome, ...matchTeamPlayersAway].map(player => String(player.player));
+    const matchPlayersHome = await TeamPlayer.find({ team: matchToLeave?.home_team }).lean();
+    const matchPlayersAway = await TeamPlayer.find({ team: matchToLeave?.away_team }).lean();
+    const matchPlayersIds = [...matchPlayersHome, ...matchPlayersAway].map(player => String(player.player));
     const allBots = await getIdsPlayersBots();
     const availableBots = allBots.filter(bot => !matchPlayersIds.includes(bot));
 
@@ -168,25 +161,25 @@ const removePlayerFromTeam = async(req: any, res: any) => {
       return res.status(400).json({ message: 'No possible replacement found' });
     }
 
-    const teamPlayerDB = await TeamPlayer.findOne({
-      team: teamId,
-      player: player?._id,
+    const playerLeaving = await TeamPlayer.findOne({
+      team: teamToLeaveId,
+      player: currentPlayer?._id,
     });
 
-    if (!teamPlayerDB) {
+    if (!playerLeaving) {
       return res.status(400).json({ message: 'Bad identifier data' });
     }
 
     const replacementPlayer = {
-      _id: teamPlayerDB._id,
-      position: teamPlayerDB.position,
-      isCaptain: teamPlayerDB.isCaptain,
+      _id: playerLeaving._id,
+      position: playerLeaving.position,
+      isCaptain: playerLeaving.isCaptain,
       player: availableBots[0],
-      team: teamPlayerDB.team,
+      team: playerLeaving.team,
     };
 
     await TeamPlayer.findOneAndUpdate(
-      { team: teamId, player: player?._id },
+      { team: teamToLeaveId, player: currentPlayer?._id },
       replacementPlayer
     );
 

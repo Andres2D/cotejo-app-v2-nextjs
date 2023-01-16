@@ -11,12 +11,13 @@ import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
-import { deleteMatch as deleteMatchService, leftMatch  } from '../../services/api-configuration';
+import { 
+  deleteMatch as deleteMatchService, 
+  leaveMatch 
+} from '../../services/api-configuration';
 import { FullMatch } from '../../interfaces/Match';
 import ModalAlert from '../layout/modal-alert';
-import LeftIcon from '../../assets/svg/left.svg';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../interfaces/State';
+import LeaveIcon from '../../assets/svg/leave.svg';
 
 interface Props {
   matches: FullMatch[]
@@ -32,9 +33,9 @@ const MatchList: NextPage<Props> = ({matches}) => {
     onClose: deleteModalOnClose 
   } = useDisclosure();
   const { 
-    isOpen: leftMatchModalIsOpen, 
-    onOpen: leftMatchModalOnOpen,
-    onClose: leftMatchModalOnClose 
+    isOpen: leaveMatchModalIsOpen, 
+    onOpen: leaveMatchModalOnOpen,
+    onClose: leaveMatchModalOnClose 
   } = useDisclosure();
   const toast = useToast();
 
@@ -72,14 +73,14 @@ const MatchList: NextPage<Props> = ({matches}) => {
     }
   });
 
-  const { mutate: mutateLeftMatch } = useMutation(leftMatch, {
+  const { mutate: mutateLeaveMatch } = useMutation(leaveMatch, {
     onSuccess: async (response) => {
       if(response.ok) {
         setMatchesList(matches => matches.filter(match => match._id !== selectedMatch?._id));
-        leftMatchModalOnClose();
+        leaveMatchModalOnClose();
         setSelectedMatch(undefined);
         toast({
-          title: 'Left match',
+          title: 'Leave match',
           description: "You left the match.",
           status: 'success',
           duration: 9000,
@@ -87,13 +88,13 @@ const MatchList: NextPage<Props> = ({matches}) => {
         });
       } else {
         toast({
-          title: 'Left match',
+          title: 'Leave match',
           description: "Something went wrong, please try again later.",
           status: 'error',
           duration: 9000,
           isClosable: true,
         });
-        leftMatchModalOnClose();
+        leaveMatchModalOnClose();
         setSelectedMatch(undefined);
       }
     },
@@ -113,18 +114,18 @@ const MatchList: NextPage<Props> = ({matches}) => {
     deleteModalOnOpen();
   };
 
-  const showLeftMatchModal = (match: FullMatch) => {
+  const showLeaveMatchModal = (match: FullMatch) => {
     setSelectedMatch(match);
-    leftMatchModalOnOpen();
+    leaveMatchModalOnOpen();
   };
 
   const handleDeleteMatch = () => {
     mutateDeleteMatch(selectedMatch?._id!);
   };
   
-  const handleLeftMatch = () => {
+  const handleLeaveMatch = () => {
     console.log(selectedMatch?._id);
-    mutateLeftMatch(selectedMatch?._id!);
+    mutateLeaveMatch(selectedMatch?._id!);
   };
 
   const matchesListMap = matchesList.map(({_id, date, location, away_team, home_team}) => {
@@ -186,9 +187,9 @@ const MatchList: NextPage<Props> = ({matches}) => {
             size='md'
             aria-label='Deleted match'
             onClick={
-              () => showLeftMatchModal({_id, date, location, away_team, home_team})
+              () => showLeaveMatchModal({_id, date, location, away_team, home_team})
             }
-            icon={<LeftIcon />}
+            icon={<LeaveIcon />}
           />
         </div>
       </section>
@@ -206,12 +207,12 @@ const MatchList: NextPage<Props> = ({matches}) => {
         description={`Are you sure? You can't undo this action afterwards`}
       />
       <ModalAlert 
-        isOpen={leftMatchModalIsOpen} 
-        onClose={leftMatchModalOnClose}
-        onContinue={handleLeftMatch}
-        title='Left match'
+        isOpen={leaveMatchModalIsOpen} 
+        onClose={leaveMatchModalOnClose}
+        onContinue={handleLeaveMatch}
+        title='Leave match'
         description={`Are you sure? You would request to a team mate to add you again afterwards`}
-        continueLabel='Left match'
+        continueLabel='Leave match'
       />
     </>
   );
