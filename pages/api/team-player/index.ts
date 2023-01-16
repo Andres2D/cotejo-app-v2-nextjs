@@ -1,6 +1,9 @@
 import mongoConnection from '../../../database/database-configuration';
 import TeamPlayer from '../../../database/models/team-player';
 import { getIdsPlayersBots } from '../../../server/player';
+import Match from '../../../database/models/match';
+import { getSession } from 'next-auth/react';
+import { Player } from '../../../database/models';
 
 const handler = async (req: any, res: any) => {
   try {
@@ -14,6 +17,7 @@ const handler = async (req: any, res: any) => {
         break;
       case 'DELETE':
         removePlayerFromTeam(req, res);
+        break;
       default:
         res.status(400).json({ message: 'Unknown method' });
         break;
@@ -128,11 +132,35 @@ const replacePlayer = async (req: any, res: any) => {
 
 const removePlayerFromTeam = async(req: any, res: any) => {
   try {
-    const { idMatch, teamId, idPlayer } = req.body;
+    const session = await getSession({ req });
+    const { idMatch } = req.query;
+    // console.log('idMatch: ', idMatch);
+    let teamId = undefined;
     await mongoConnection();
 
-    const matchTeamPlayers = await TeamPlayer.find({ match: idMatch }).lean();
-    const matchPlayersIds = matchTeamPlayers.filter(player => player._id).map(player => player.toString());
+    // Get Player
+    const player = await Player.findOne({ email: session?.user?.email }).lean();
+
+    // Get match
+    const match = await Match.findById(idMatch).lean();
+    // console.log(idMatch)
+    // console.log('match: ', match);
+
+    // Get Team player by player
+    const playerTeams = await TeamPlayer.find({ player: player?._id}).lean();
+    // console.log('TeamPlayers: ', playerTeams);
+
+    if(playerTeams.map(p => p.team.toString()).includes(String(match?.home_team!))) {
+      teamId = match?.home_team;
+    }else if(playerTeams.map(p => p.team.toString()).includes(String(match?.away_team!))) {
+      teamId = match?.away_team;
+    }else {
+      return res.status(400).json({ message: 'Team not found' });
+    }
+
+    const matchTeamPlayersHome = await TeamPlayer.find({ team: match?.home_team }).lean();
+    const matchTeamPlayersAway = await TeamPlayer.find({ team: match?.away_team }).lean();
+    const matchPlayersIds = [...matchTeamPlayersHome, ...matchTeamPlayersAway].map(player => String(player.player));
     const allBots = await getIdsPlayersBots();
     const availableBots = allBots.filter(bot => !matchPlayersIds.includes(bot));
 
@@ -142,7 +170,7 @@ const removePlayerFromTeam = async(req: any, res: any) => {
 
     const teamPlayerDB = await TeamPlayer.findOne({
       team: teamId,
-      player: idPlayer,
+      player: player?._id,
     });
 
     if (!teamPlayerDB) {
@@ -158,7 +186,7 @@ const removePlayerFromTeam = async(req: any, res: any) => {
     };
 
     await TeamPlayer.findOneAndUpdate(
-      { team: teamId, player: idPlayer },
+      { team: teamId, player: player?._id },
       replacementPlayer
     );
 

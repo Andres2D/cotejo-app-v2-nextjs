@@ -98,7 +98,7 @@ export const getIdsPlayersBots = async() => {
   try {
     await mongoConnection();
     const bots = await Player.find({'status': 'bot'}).lean();
-    return bots.filter(bot => bot._id).map(player => player.toString());
+    return bots.map(player => String(player._id));
   } catch(err) {
     return [];
   }
