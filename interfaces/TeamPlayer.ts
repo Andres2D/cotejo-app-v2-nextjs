@@ -17,3 +17,8 @@ export interface IChangePlayerRequest {
   playerInId: string;
   teamId: string;
 }
+
+export interface LeftMatchRequest {
+  idMatch: string;
+  idPlayer: string;
+}
