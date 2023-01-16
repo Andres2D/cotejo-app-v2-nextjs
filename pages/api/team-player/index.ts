@@ -1,5 +1,11 @@
+import { getSession } from 'next-auth/react';
 import mongoConnection from '../../../database/database-configuration';
-import TeamPlayer from '../../../database/models/team-player';
+import { getIdsPlayersBots } from '../../../server/player';
+import { 
+  Player,
+  Match,
+  TeamPlayer
+} from '../../../database/models';
 
 const handler = async (req: any, res: any) => {
   try {
@@ -11,7 +17,9 @@ const handler = async (req: any, res: any) => {
         //TODO: improve condition logic
         req.body.playerOutId ? replacePlayer(req, res) : putTeamPlayers(req, res);
         break;
-
+      case 'DELETE':
+        removePlayerFromTeam(req, res);
+        break;
       default:
         res.status(400).json({ message: 'Unknown method' });
         break;
@@ -121,6 +129,64 @@ const replacePlayer = async (req: any, res: any) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Error updating the Team Player' });
+  }
+};
+
+const removePlayerFromTeam = async(req: any, res: any) => {
+  try {
+    const { idMatch } = req.query;
+    const session = await getSession({ req });
+    let teamToLeaveId = undefined;
+    await mongoConnection();
+
+    const currentPlayer = await Player.findOne({ email: session?.user?.email }).lean();
+    const matchToLeave = await Match.findById(idMatch).lean();
+    const playerTeams = await TeamPlayer.find({ player: currentPlayer?._id}).lean();
+
+    if(playerTeams.map(player => player.team.toString()).includes(String(matchToLeave?.home_team!))) {
+      teamToLeaveId = matchToLeave?.home_team;
+    }else if(playerTeams.map(p => p.team.toString()).includes(String(matchToLeave?.away_team!))) {
+      teamToLeaveId = matchToLeave?.away_team;
+    }else {
+      return res.status(400).json({ message: 'Team to leave not found' });
+    }
+
+    const matchPlayersHome = await TeamPlayer.find({ team: matchToLeave?.home_team }).lean();
+    const matchPlayersAway = await TeamPlayer.find({ team: matchToLeave?.away_team }).lean();
+    const matchPlayersIds = [...matchPlayersHome, ...matchPlayersAway].map(player => String(player.player));
+    const allBots = await getIdsPlayersBots();
+    const availableBots = allBots.filter(bot => !matchPlayersIds.includes(bot));
+
+    if(!availableBots || availableBots.length === 0) {
+      return res.status(400).json({ message: 'No possible replacement found' });
+    }
+
+    const playerLeaving = await TeamPlayer.findOne({
+      team: teamToLeaveId,
+      player: currentPlayer?._id,
+    });
+
+    if (!playerLeaving) {
+      return res.status(400).json({ message: 'Bad identifier data' });
+    }
+
+    const replacementPlayer = {
+      _id: playerLeaving._id,
+      position: playerLeaving.position,
+      isCaptain: playerLeaving.isCaptain,
+      player: availableBots[0],
+      team: playerLeaving.team,
+    };
+
+    await TeamPlayer.findOneAndUpdate(
+      { team: teamToLeaveId, player: currentPlayer?._id },
+      replacementPlayer
+    );
+
+    return res.status(200).json({ message: 'You left the match successfully' });
+  } catch(err) {
+    console.log(err);
+    return res.status(500).json({ message: 'Error on left the match' });
   }
 };
 

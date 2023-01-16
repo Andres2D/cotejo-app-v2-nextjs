@@ -1,9 +1,21 @@
 @import '../../../styles/breakpoints';
 
-.fields {
+.details {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .fields {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .leaveButton {
+    margin-top: 30px;
+  }
 }
+
 
 @media (max-width: $large-device) {
   .fields {
