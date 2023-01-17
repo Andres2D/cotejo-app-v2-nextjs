@@ -27,7 +27,7 @@ const Navbar: NextPage = () => {
   const { image, name } = useSelector((state: RootState) => state.profile).profile;
 
   if (!session) {
-    return <></>;
+    return <div className={styles.navbarSpacing}></div>;
   }
 
   return (
