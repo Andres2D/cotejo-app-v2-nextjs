@@ -10,6 +10,8 @@ import styles from './match-detail.module.scss';
 import LeaveIcon from '../../../assets/svg/leave.svg';
 import ModalAlert from '../../layout/modal-alert';
 import { leaveMatch } from '../../../services/api-configuration';
+import MatchDetailsSkeleton from '../../skeletons/match-details-skeleton';
+import { initialState } from '../../../store/match-details.slice';
 
 const MatchDetailsLayout: NextPage = () => {
   const matchDetails = useSelector((state: RootState) => state.matchDetails);
@@ -40,6 +42,10 @@ const MatchDetailsLayout: NextPage = () => {
       // TODO: handle error
     }
   });
+
+  if(matchDetails === initialState) {
+    return <MatchDetailsSkeleton />
+  }
 
   const handleLeaveMatch = () => {
     mutateLeaveMatch(matchDetails.match._id);

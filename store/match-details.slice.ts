@@ -20,7 +20,7 @@ interface IPayloadSetting {
   value: boolean
 }
 
-const initialState: IMatchDetails = {
+export const initialState: IMatchDetails = {
   match: {
     _id: '',
     home_team: {
