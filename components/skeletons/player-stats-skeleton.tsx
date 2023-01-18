@@ -6,9 +6,9 @@ const PlayerStatsSkeleton: NextPage = () => {
   return (
     <div className={styles.statsSkeleton}>
       {Array.from({length: 6}).map((i,j) => (
-        <div key={j}>
-          <div className={styles.label}></div>
-          <div className={styles.value}></div>
+        <div key={`${i}${j}`}>
+          <div className={styles.label} />
+          <div className={styles.value} />
         </div>
       ))}
     </div>

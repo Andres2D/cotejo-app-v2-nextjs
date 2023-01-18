@@ -10,7 +10,7 @@ import { initialState, profileActions } from '../../store/profile.slice';
 import { RootState } from '../../interfaces/State';
 import styles from './player-rate.module.scss';
 import { Stats } from '../../types/profile';
-import PlayerStatsSkeleton from './player-stats-skeleton';
+import PlayerStatsSkeleton from '../skeletons/player-stats-skeleton';
 
 interface Props {
   className?: string;

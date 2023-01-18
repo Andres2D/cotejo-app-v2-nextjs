@@ -9,7 +9,7 @@ import AvatarSelector from './player-card/avatar-selector';
 import NameInput from './player-card/name-input';
 import RatingList from './player-card/rating-list';
 import { initialState as profileInitialState } from '../../store/profile.slice';
-import PlayerCardSkeleton from './player-card-skeleton';
+import PlayerCardSkeleton from '../skeletons/player-card-skeleton';
 
 interface Props {
   className: string;
