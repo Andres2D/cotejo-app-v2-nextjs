@@ -6,10 +6,11 @@ import {
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useDispatch, useSelector } from 'react-redux';
-import { profileActions } from '../../store/profile.slice';
+import { initialState, profileActions } from '../../store/profile.slice';
 import { RootState } from '../../interfaces/State';
 import styles from './player-rate.module.scss';
 import { Stats } from '../../types/profile';
+import PlayerStatsSkeleton from '../skeletons/player-stats-skeleton';
 
 interface Props {
   className?: string;
@@ -19,6 +20,10 @@ const PlayerRate: NextPage<Props> = ({ className }: Props) => {
 
   const stats = useSelector((state: RootState) => state.profile).stats;
   const dispatch = useDispatch();
+
+  if(stats === initialState.stats) {
+    return <PlayerStatsSkeleton />
+  }
 
   const updateStats = (label: Stats, value: number) => {
     dispatch(profileActions.updateInputNumber({

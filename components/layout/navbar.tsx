@@ -27,7 +27,7 @@ const Navbar: NextPage = () => {
   const { image, name } = useSelector((state: RootState) => state.profile).profile;
 
   if (!session) {
-    return <></>;
+    return <div className={styles.navbarSpacing}></div>;
   }
 
   return (
@@ -99,7 +99,7 @@ const Navbar: NextPage = () => {
             >
               Log out
             </Button>
-            <p>Version 2.2.1</p>
+            <p>Version 2.2.2</p>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

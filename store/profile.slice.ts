@@ -19,7 +19,7 @@ interface INumberPayload {
   value: number;
 }
 
-const initialState: IProfileState = {
+export const initialState: IProfileState = {
   profile: {
     _id: '',
     image: '',
