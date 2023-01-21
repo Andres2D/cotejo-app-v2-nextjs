@@ -78,6 +78,10 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
       <section className={`${styles.field} 
         ${styles[`${formationTypeMap[matchDetails.match[teamKey].formation]}${formationKeyMap[team.length]}`]}`}>
         {playersMap}
+        <div className={styles.smallArea} />
+        <div className={styles.bigArea} />
+        <div className={styles.outArea} />
+        <div className={styles.middle} />
       </section>
       <Stack className={styles.check} spacing={5} direction='row'>
         <Checkbox 
