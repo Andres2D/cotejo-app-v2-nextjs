@@ -99,7 +99,7 @@ const Navbar: NextPage = () => {
             >
               Log out
             </Button>
-            <p>Version 2.2.2</p>
+            <p>Version 2.3.0</p>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
