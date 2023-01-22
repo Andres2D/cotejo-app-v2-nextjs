@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import HeaderSettings from '../../../accessibility/header-setting';
 import NewMatch from '../../../components/matches/new/new-match';
 import { IPlayerList, Player } from '../../../interfaces/Player';
 import { getProfile } from '../../../server/player';
@@ -53,7 +54,10 @@ const CreateMatch: NextPage<Props> = ({profile}) => {
   dispatch(createMatchActions.addPlayer(defaultPlayer));
 
   return (
-    <NewMatch />
+    <>
+      <HeaderSettings title='New match' description='Create a new match' />
+      <NewMatch />
+    </>
   );
 }
 

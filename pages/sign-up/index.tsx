@@ -7,6 +7,7 @@ import SignUpForm from '../../components/sign-up/sign-up-form';
 import styles from './index.module.scss';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 import { registerPlayer } from '../../services/api-configuration';
+import HeaderSettings from '../../accessibility/header-setting';
 
 const SignUp: NextPage = () => {
 
@@ -40,23 +41,26 @@ const SignUp: NextPage = () => {
   }
 
   return (
-    <div className={styles.signUp}>
-      <Image
-        src={'/images/app-logo-regular.png'}
-        alt='Cotejo app logo'
-        className={styles.logo}
-        width={325}
-        height={219}
-      ></Image>
-      <SignUpForm
-        onSignUp={registerPlayerHandler}
-      />
-      <NextLink href='/auth'>
-        <Link className={styles.loginLink}>
-          {`Already have an account?, Login`}
-        </Link>
-      </NextLink>
-    </div>
+    <>
+      <HeaderSettings title='SignUp' description='Create a new account' />
+      <div className={styles.signUp}>
+        <Image
+          src={'/images/app-logo-regular.png'}
+          alt='Cotejo app logo'
+          className={styles.logo}
+          width={325}
+          height={219}
+        ></Image>
+        <SignUpForm
+          onSignUp={registerPlayerHandler}
+        />
+        <NextLink href='/auth'>
+          <Link className={styles.loginLink}>
+            {`Already have an account?, Login`}
+          </Link>
+        </NextLink>
+      </div>
+    </>
   );
 }
 
