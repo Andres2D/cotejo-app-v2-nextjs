@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import HeaderSettings from '../../../accessibility/header-setting';
 import MatchDetailsLayout from '../../../components/matches/detail/match-detail';
 import { IMatchDetailsResponse } from '../../../interfaces/Match';
 import { getMatch } from '../../../server/matches';
@@ -44,7 +45,13 @@ const MatchDetails: NextPage<Props> = ({match, profile}) => {
   }, [dispatch, matchDetail])
   
   return (
-    <MatchDetailsLayout />
+    <>
+      <HeaderSettings 
+        title={`${matchDetail.match.home_team.name} vs ${matchDetail.match.away_team.name}`} 
+        description='Set the line uo' 
+      />
+      <MatchDetailsLayout />
+    </>
   );
 }
 

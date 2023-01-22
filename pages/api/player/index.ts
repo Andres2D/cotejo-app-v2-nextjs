@@ -49,7 +49,7 @@ const registerPlayer = async(req: any, res: any) => {
       nickname: name,
       number: 0,
       status: '',
-      image: 'https://bit.ly/broken-link',
+      image: '',
       google: false,
       nationality: 'Colombia',
       position: 'CM'

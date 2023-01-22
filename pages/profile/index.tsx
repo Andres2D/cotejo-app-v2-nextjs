@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UpdateProfileRequest } from '../../interfaces/Player';
 import { RootState } from '../../interfaces/State';
 import { useEffect } from 'react';
+import HeaderSettings from '../../accessibility/header-setting';
 
 interface Props {
   image?: string;
@@ -102,20 +103,23 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
   }
 
   return (
-    <section className={styles.section}>
-      <div className={styles.container}>
-        <PlayerCard className={styles.playerCard} />
-        <PlayerRate className={styles.playerStats} />
-      </div>
-      <Button
-        className={styles.save}
-        size="lg"
-        colorScheme="brand"
-        onClick={updatePlayerProfile}
-      >
-        Save
-      </Button>
-    </section>
+    <>
+      <HeaderSettings title={profileState.name} description='Customize your profile avatar' />
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <PlayerCard className={styles.playerCard} />
+          <PlayerRate className={styles.playerStats} />
+        </div>
+        <Button
+          className={styles.save}
+          size="lg"
+          colorScheme="brand"
+          onClick={updatePlayerProfile}
+        >
+          Save
+        </Button>
+      </section>
+    </>
   );
 }
 

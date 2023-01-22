@@ -11,6 +11,7 @@ import styles from './matches.module.scss';
 import { FullMatch, IMatch } from '../../interfaces/Match';
 import { profileActions } from '../../store/profile.slice';
 import { getProfile } from '../../server/player';
+import HeaderSettings from '../../accessibility/header-setting';
 
 interface Props {
   matches: string;
@@ -41,18 +42,21 @@ const Matches: NextPage<Props> = ({matches, profile}) => {
   }, []);
 
   return (
-    <section className={styles.matches}>
-      <Button 
-        size='lg'
-        colorScheme='brand'
-        onClick={() => router.push('/matches/new')}
-      >
-        New Match
-      </Button>
-      <MatchList
-        matches={matchesList}
-      />
-    </section>
+    <>
+      <HeaderSettings title='Matches' description='Select your match' />
+      <section className={styles.matches}>
+        <Button 
+          size='lg'
+          colorScheme='brand'
+          onClick={() => router.push('/matches/new')}
+        >
+          New Match
+        </Button>
+        <MatchList
+          matches={matchesList}
+        />
+      </section>
+    </>
   );
 }
 
