@@ -47,7 +47,7 @@ const AvatarSelector: NextPage = () => {
       <div className={styles.container} key={key}>
         <Avatar
           className={styles.avatarList}
-          src={src || 'https://bit.ly/broken-link'}
+          src={src || ''}
           size="xl"
           onClick={() => changeAvatarHandler(src)}
         />
@@ -71,7 +71,7 @@ const AvatarSelector: NextPage = () => {
       <div className={styles.avatarContainer} onClick={onOpen}>
         <Avatar
           className={styles.avatar}
-          src={image || 'https://bit.ly/broken-link'}
+          src={image || ''}
           size="2xl"
         />
         <IconButton

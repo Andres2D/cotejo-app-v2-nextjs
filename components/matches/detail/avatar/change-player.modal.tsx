@@ -158,7 +158,7 @@ const ChangePlayerModal: NextPage = () => {
           <div className={styles.playerAction}>
             <Avatar
               size='lg'
-              src={inPlayer?.image || 'https://bit.ly/broken-link'}
+              src={inPlayer?.image || ''}
             />
             <div className={styles.inputChange}>
               <Input
