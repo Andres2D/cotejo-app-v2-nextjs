@@ -1,8 +1,6 @@
 <h1 align="center">Cotejo App v2</h1>
 <div align="center">
-  <a href="https://cotejoapp.vercel.app/auth" title="Cotejo App - Build your game">
-    <img width="896" alt="cotejoAppUI" src="https://user-images.githubusercontent.com/37199673/211444681-8166dbcf-4aab-4854-a940-6f00d30b2eac.png">
-  </a>
+  <img width="853" alt="app-logo-regular" src="https://user-images.githubusercontent.com/37199673/215224319-012d814f-7161-495e-bbb1-6af1979f1d46.png">
 </div>
 <br />
 <h3>
