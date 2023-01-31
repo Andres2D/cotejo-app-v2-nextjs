@@ -70,6 +70,7 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
   return (
     <div 
       className={`${styles.container} ${className}`}
+      onClick={selectPlayerHandler}
     >
       <div className={styles.avatarContainer}>
         <Avatar
@@ -77,7 +78,6 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
           name={name}
           className={styles.avatar}
           src={image ? image : 'https://bit.ly/tioluwani-kolawole'}
-          onClick={selectPlayerHandler}
         />
         { details.playersSelected.some(p => p.playerId === id) && 
           <div>
