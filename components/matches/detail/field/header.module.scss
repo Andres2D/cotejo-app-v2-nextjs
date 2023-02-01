@@ -17,6 +17,12 @@
   flex-direction: row-reverse;
 }
 
+@media (max-width: $extra-large-device) {
+  .isAway {
+    flex-direction: row;
+  }
+}
+
 @media (max-width: $small-device) {
   .header {
     justify-content: flex-start;
