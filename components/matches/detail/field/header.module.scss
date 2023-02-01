@@ -10,6 +10,10 @@
   .shield {
     display: flex;
     align-items: center;
+
+    .teamDetails {
+      display: flex;
+    }
   }
 }
 
@@ -17,9 +21,26 @@
   flex-direction: row-reverse;
 }
 
+@media (max-width: $extra-large-device) {
+  .isAway {
+    flex-direction: row;
+  }
+}
+
 @media (max-width: $small-device) {
   .header {
     justify-content: flex-start;
     width: 90%;
+  }
+}
+
+@media (max-width: $extra-small-device) {
+  .header {
+    .shield {
+      flex-direction: column;
+      // .teamDetails {
+        
+      // }
+    }
   }
 }

@@ -5,6 +5,7 @@ import {
 import type { NextPage } from 'next';
 import styles from './header.module.scss';
 import RatioStars from '../ratio-stars/ratio-stars';
+import SetTeam from './set-team';
 
 interface Props {
   teamName: string;
@@ -26,7 +27,10 @@ const FieldHeader: NextPage<Props> = ({teamName, teamShield, teamOverall, isAway
           title={teamName}
           m='8px'
         />
-        <Heading color={'gray.50'} size='2xl'>{teamName}</Heading>
+        <div className={styles.teamDetails}>
+          <Heading color={'gray.50'} size='2xl'>{teamName}</Heading>
+          <SetTeam isAway={isAway} />
+        </div>
       </section>
       <RatioStars average={teamOverall} />
     </header>
