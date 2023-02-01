@@ -10,6 +10,10 @@
   .shield {
     display: flex;
     align-items: center;
+
+    .teamDetails {
+      display: flex;
+    }
   }
 }
 
@@ -27,5 +31,16 @@
   .header {
     justify-content: flex-start;
     width: 90%;
+  }
+}
+
+@media (max-width: $extra-small-device) {
+  .header {
+    .shield {
+      flex-direction: column;
+      // .teamDetails {
+        
+      // }
+    }
   }
 }
