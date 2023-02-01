@@ -1,0 +1,22 @@
+.shieldSelector {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .shields {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: space-between;
+    gap: 15px;
+    height: 200px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+
+    .shield {
+      cursor: pointer;
+    }
+  }
+}
