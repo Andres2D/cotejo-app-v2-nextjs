@@ -18,11 +18,12 @@ import {
 import { getAllTeams, getTeamPng } from 'empty-skull';
 import type { NextPage } from 'next';
 import { useRef, useState } from 'react';
+import { useMutation } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../interfaces/State';
+import { updateTeam } from '../../../../services/api-configuration';
 import { matchDetailsActions } from '../../../../store/match-details.slice';
 import styles from './set-team.module.scss';
-import { updateTeam } from '../../../../services/api-configuration';
 
 interface Props {
   isAway: boolean;
@@ -38,6 +39,7 @@ const SetTeam: NextPage<Props> = ({isAway}) => {
   const [shieldList, setShieldList] = useState(getAllTeams());
   const [shield, setShield] = useState(teamDetail.shield);
   const dispatch = useDispatch();
+  const { mutate } = useMutation(updateTeam);
 
   const searchShield = () => {
     if(!teamShieldRef?.current?.value) {
@@ -70,6 +72,12 @@ const SetTeam: NextPage<Props> = ({isAway}) => {
         shield
       }
     }));
+    mutate({ 
+        name:nameRef?.current?.value || teamDetail.name, 
+        shield, 
+        _id: teamDetail._id, 
+        formation: teamDetail.formation
+      });
     onClose();
   };
 
