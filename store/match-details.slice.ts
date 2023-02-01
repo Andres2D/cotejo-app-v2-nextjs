@@ -20,6 +20,16 @@ interface IPayloadSetting {
   value: boolean
 }
 
+interface BaseTeamSettings {
+  name: string;
+  shield: string;
+}
+
+interface IPayloadSetTeam {
+  team: TeamCondition,
+  setting: BaseTeamSettings
+}
+
 export const initialState: IMatchDetails = {
   match: {
     _id: '',
@@ -116,6 +126,13 @@ const updateInterfaceSettings: CaseReducer<IMatchDetails, PayloadAction<IPayload
   state.match[team][setting] = value;
 }
 
+const updateTeam: CaseReducer<IMatchDetails, PayloadAction<IPayloadSetTeam>> = 
+  (state: IMatchDetails, action: PayloadAction<IPayloadSetTeam>) => {
+  const { team, setting } = action.payload;
+  state.match[team].name = setting.name;
+  state.match[team].shield = setting.shield;
+}
+
 const toggleChangePlayerModal: CaseReducer<IMatchDetails> = 
 (state: IMatchDetails) => {
   state.changePlayerModalActive = !state.changePlayerModalActive;
@@ -145,7 +162,8 @@ const matchDetailSlice = createSlice({
     selectPlayer,
     updateInterfaceSettings,
     toggleChangePlayerModal,
-    replacePlayer
+    replacePlayer,
+    updateTeam
   }
 });
 

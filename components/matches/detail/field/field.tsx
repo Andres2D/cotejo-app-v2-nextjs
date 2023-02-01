@@ -74,6 +74,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         teamName={matchDetails.match[teamKey].name}
         teamShield={matchDetails.match[teamKey].shield}
         teamOverall={teamAverage}
+        isAway={isAway}
       />
       <section className={`${styles.field} 
         ${styles[`${formationTypeMap[matchDetails.match[teamKey].formation]}${formationKeyMap[team.length]}`]}`}>
