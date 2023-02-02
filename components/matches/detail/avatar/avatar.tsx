@@ -70,31 +70,14 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
   return (
     <div 
       className={`${styles.container} ${className}`}
-      onClick={selectPlayerHandler}
     >
-      <div className={styles.avatarContainer}>
+      <div className={styles.avatarContainer} onClick={selectPlayerHandler}>
         <Avatar
           size='lg'
           name={name}
           className={styles.avatar}
           src={image ? image : 'https://bit.ly/tioluwani-kolawole'}
         />
-        { details.playersSelected.some(p => p.playerId === id) && 
-          <div>
-            <RepeatIcon 
-              w={8} 
-              h={8}
-              color={'gray.50'}
-              className={styles.changeIcon} />
-            <EditIcon 
-              w={7} 
-              h={7}
-              color={'gray.50'}
-              focusable
-              onClick={changePlayerHandler}
-              className={styles.replaceIcon} />
-          </div>
-        }
         {
           showNamesOption &&  
           <h5 className={styles.playerName}>{name}</h5>
@@ -104,6 +87,22 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
           <h5 className={styles.playerOverall}>{overall}</h5>
         }
       </div>
+      { details.playersSelected.some(p => p.playerId === id) && 
+        <div>
+          <RepeatIcon 
+            w={8} 
+            h={8}
+            color={'gray.50'}
+            className={styles.changeIcon} />
+          <EditIcon 
+            w={7} 
+            h={7}
+            color={'gray.50'}
+            focusable
+            onClick={changePlayerHandler}
+            className={styles.replaceIcon} />
+        </div>
+      }
     </div>
   )
 }
