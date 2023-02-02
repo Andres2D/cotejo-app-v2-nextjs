@@ -38,8 +38,10 @@ const NameInput: NextPage = () => {
   return (
     <Popover>
       <PopoverTrigger>
-        <h2 className={styles.title}>
-          {name}
+        <div className={styles.nameContainer}>
+          <h2 className={styles.title}>
+            {name}
+          </h2>
           <IconButton
             className={styles.edit}
             colorScheme='transparent'
@@ -47,7 +49,7 @@ const NameInput: NextPage = () => {
             aria-label='Edit name'
             icon={<EditIcon />}
           />
-        </h2>
+        </div>
       </PopoverTrigger>
       <PopoverContent w='100%'>
         <PopoverArrow />

@@ -1,41 +1,48 @@
 @import '../../../styles/breakpoints';
 
-.title {
-  font-size: 50px;
-  letter-spacing: -5px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-align: center;
-  width: 350px;
+.nameContainer {
+  display: flex;
+
+  .title {
+    font-size: 50px;
+    letter-spacing: -5px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    width: 300px;
+  }
 
   .edit {
-    position: absolute;
     color: black;
     top: 20px;
-    right: -10px;
     font-size: 20px;
   }
 }
 
 @media (max-width: $medium-small-device) {
-  .title {
-    width: 300px;
+  .nameContainer { 
+    .title {
+      width: 300px;
+    }
   }
 }
 
 @media (max-width: $small-device) {
-  .title {
-    width: 200px;
+  .nameContainer { 
+    .title {
+      width: 200px;
+    }
   }
 }
 
 @media (max-width: $extra-small-device) {
-  .title {
-    font-size: 40px;
-
+  .nameContainer {
+    .title {
+      font-size: 40px;
+      width: 160px;
+    }
     .edit {
       font-size: 20px;
       top: 10px;
