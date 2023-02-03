@@ -88,7 +88,7 @@ const AvatarMatchLayout: NextPage<Props> = ({id, name, overall, image, className
         }
       </div>
       { details.playersSelected.some(p => p.playerId === id) && 
-        <div>
+        <div className={styles.avatarActions}>
           <RepeatIcon 
             w={8} 
             h={8}

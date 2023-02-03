@@ -10,6 +10,7 @@
     position: relative;
     display: flex;
     justify-content: center;
+    z-index: -1;
 
     .avatar {
       border: 2px solid white;
@@ -22,20 +23,20 @@
       font-weight: bold;
       text-shadow: #333 -2px 0 10px;
       text-align: center;
-      width: 105px;
       word-break: break-word;
       line-height: 15px;
       color: #F7FAFC;
     }
-
+    
     .playerName {
+      width: 105px;
       bottom: 65px;
     }
 
     .playerOverall {
-      max-width: 105px;
       color: #FAE505;
-      right: 15px;
+      right: 55px;
+      width: 30px;
     }
   }
 
@@ -57,6 +58,11 @@
     filter: drop-shadow(
       #333 -2px 0 10px
     );
+  }
+
+  .avatarActions {
+    display: flex;
+    z-index: 1;
   }
 }
 
@@ -82,7 +88,7 @@
       }
   
       .playerOverall {
-        right: 5px;
+        right: 45px;
       }
     }
 
@@ -119,7 +125,7 @@
       }
   
       .playerOverall {
-        right: -10px;
+        right: 30px;
       }
     }
 
