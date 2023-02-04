@@ -83,6 +83,11 @@ const updateInput: CaseReducer<IMatchDetails, PayloadAction<IPayload>> =
 
 const selectPlayer: CaseReducer<IMatchDetails, PayloadAction<ISelectPayload>> = 
   (state: IMatchDetails, action: PayloadAction<ISelectPayload>) => {
+
+  if(state.changePlayerModalActive) {
+    return;
+  }
+
   if(state.playersSelected.find(p => p.playerId === action.payload.playerId)){
     state.playersSelected = [];
     return;
