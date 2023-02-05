@@ -79,7 +79,7 @@ const Profile: NextPage = ({ image, name, stats, profile, email }: Props) => {
     }
   });
 
-  if (!image || !name || !stats || !profile || !email) {
+  if (!name || !stats || !profile || !email) {
     return <p>Loading...</p>;
   }
 
@@ -136,6 +136,7 @@ export const getServerSideProps = async (context: any) => {
   }
 
   const { image, name, email } = session.user;
+  console.log(session);
   const profile = await getProfile(email!);
   const stats = await getPlayerStats(email!);
 
