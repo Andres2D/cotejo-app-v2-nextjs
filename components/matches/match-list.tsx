@@ -205,6 +205,8 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               <Team
                 name={home_team.name}
                 image={home_team.shield}
+                fullTime={fullTime}
+                score={homeScore}
                 width={120}
                 height={120}
               />
@@ -225,6 +227,8 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               <Team
                 name={away_team.name}
                 image={away_team.shield}
+                fullTime={fullTime}
+                score={awayScore}
                 width={120}
                 height={120}
               />
@@ -235,6 +239,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               colorScheme="teal"
               size="md"
               mb={2}
+              disabled={fullTime}
               aria-label="Edit match"
               icon={<SettingsIcon />}
             />
@@ -262,6 +267,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               size="md"
               aria-label="Deleted match"
               mb={2}
+              disabled={fullTime}
               onClick={() =>
                 showLeaveMatchModal({
                   _id,
@@ -278,6 +284,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
             />
             <IconButton
               colorScheme="green"
+              disabled={fullTime}
               size="md"
               aria-label="Full time"
               onClick={() =>
