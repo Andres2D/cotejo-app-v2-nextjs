@@ -79,7 +79,10 @@ const createMatch = async(req: any, res: any) => {
       date, 
       location, 
       home_team: homeTeam._id,
-      away_team: awayTeam._id
+      away_team: awayTeam._id,
+      fullTime: false,
+      homeScore: 0,
+      awayScore: 0,
     });
     await match.save();
     res.status(201).json({message: 'Match created', match: match._id});
