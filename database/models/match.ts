@@ -21,6 +21,21 @@ const MatchSchema = new Schema({
     ref: 'Team',
     required: true,
     unique: true
+  },
+  fullTime: {
+    type: Boolean,
+    required: [true, 'Full time is required'],
+    default: false
+  },
+  homeScore: {
+    type: Number,
+    required: [true, 'Home score is required'],
+    default: 0
+  },
+  awayScore: {
+    type: Number,
+    required: [true, 'Away score is required'],
+    default: 0
   }
 });
 

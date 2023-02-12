@@ -6,11 +6,13 @@ import styles from './team.module.scss';
 interface Props {
   name: string;
   image: string;
+  fullTime: boolean,
+  score: number;
   width: number;
   height: number;
 }
 
-const Team: NextPage<Props> = ({name, image, width, height}: Props) => {
+const Team: NextPage<Props> = ({name, image, fullTime, score, width, height}: Props) => {
   return (
     <div className={styles.team}>
       <Image
@@ -28,6 +30,17 @@ const Team: NextPage<Props> = ({name, image, width, height}: Props) => {
       >
         {name}
       </Tag>
+      {
+        fullTime && 
+        <Tag 
+          size='lg' 
+          variant='solid' 
+          colorScheme='clean'
+          className={styles.score}
+        >
+          {score}
+        </Tag>
+      }
     </div>
   );
 }

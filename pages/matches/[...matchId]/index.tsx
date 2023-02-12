@@ -48,7 +48,7 @@ const MatchDetails: NextPage<Props> = ({match, profile}) => {
     <>
       <HeaderSettings 
         title={`${matchDetail.match.home_team.name} vs ${matchDetail.match.away_team.name}`} 
-        description='Set the line uo' 
+        description='Set the line up' 
       />
       <MatchDetailsLayout />
     </>

@@ -6,12 +6,18 @@ interface base {
   location: string;
 }
 
-export interface IMatch extends base {
+interface FullTimeDetails {
+  fullTime: boolean,
+  homeScore: number,
+  awayScore: number
+}
+
+export interface IMatch extends base, FullTimeDetails {
   home_team: string;
   away_team: string;
 };
 
-export interface FullMatch extends base {
+export interface FullMatch extends base, FullTimeDetails {
   _id: string;
   home_team: ITeam;
   away_team: ITeam;

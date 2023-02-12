@@ -3,6 +3,7 @@ import mongoConnection from '../database/database-configuration';
 import { Match, Player } from '../database/models';
 import { TeamPlayer } from '../database/models';
 import { Rating } from '../database/models';
+import { FullMatch } from '../interfaces/Match';
 import { Rating as IRating } from '../interfaces/Rating';
 
 export const getMatches = async (userEmail: string) => {

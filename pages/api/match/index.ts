@@ -8,6 +8,12 @@ const handler = async(req: any, res: any) => {
       case 'POST':
         createMatch(req, res);
         break;
+      case 'PUT':
+        updateMatch(req, res);
+        break;
+      case 'POST':
+        createMatch(req, res);
+        break;
       case 'DELETE':
         deleteMatch(req, res);
         break;
@@ -79,7 +85,10 @@ const createMatch = async(req: any, res: any) => {
       date, 
       location, 
       home_team: homeTeam._id,
-      away_team: awayTeam._id
+      away_team: awayTeam._id,
+      fullTime: false,
+      homeScore: 0,
+      awayScore: 0,
     });
     await match.save();
     res.status(201).json({message: 'Match created', match: match._id});
@@ -88,6 +97,23 @@ const createMatch = async(req: any, res: any) => {
     res.status(500).json({message: 'Error creating the match'});
   }
 }
+
+const updateMatch = async (req: any, res: any) => {
+  try {
+    const match = req.body;
+    if(!match) {
+      return null;
+    }
+    await mongoConnection();
+
+    const matchDB = await Match.findOneAndUpdate({_id: match._id}, match, {new: true});
+    return res.status(200).json({message: 'Match updated', match: matchDB});
+
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 const createTeam = async(team: any) => {
   try {
