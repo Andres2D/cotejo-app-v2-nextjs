@@ -9,11 +9,11 @@ import Team from './team';
 import {
   deleteMatch as deleteMatchService,
   leaveMatch,
+  updateMatch
 } from '../../services/api-configuration';
 import { FullMatch } from '../../interfaces/Match';
 import ModalAlert from '../layout/modal-alert';
 import LeaveIcon from '../../assets/svg/leave.svg';
-import { match } from 'assert';
 
 interface Props {
   matches: FullMatch[];
@@ -111,6 +111,35 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     },
   });
 
+  const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
+    onSuccess: async (response) => {
+      if (response.ok) {
+        fulltimeModalOnClose();
+        setSelectedMatch(undefined);
+        toast({
+          title: 'Match updated',
+          description: 'You update the match.',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Match updated',
+          description: 'Something went wrong, please try again later.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        fulltimeModalOnClose();
+        setSelectedMatch(undefined);
+      }
+    },
+    onError: () => {
+      // TODO: handle error
+    },
+  });
+
   const router = useRouter();
 
   const goToMatchDetails = (matchId: string) => {
@@ -137,7 +166,6 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   };
 
   const handleLeaveMatch = () => {
-    console.log(selectedMatch?._id);
     mutateLeaveMatch(selectedMatch?._id!);
   };
   
@@ -145,10 +173,15 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     if(homeScoreRef.current.value.trim() === '' || awayScoreRef.current.value.trim() === '' ) {
       return;
     }
-    
-    console.log(selectedMatch?._id);
-    console.log(homeScoreRef.current.value);
-    console.log(awayScoreRef.current.value);
+
+    const request: FullMatch = {
+      ...selectedMatch!,
+      fullTime: true,
+      homeScore: +homeScoreRef.current.value,
+      awayScore: +awayScoreRef.current.value
+    };
+
+    mutateUpdateMatch(request);
   };
 
   const matchesListMap = matchesList.map(
