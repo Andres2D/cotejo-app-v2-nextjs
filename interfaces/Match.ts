@@ -17,7 +17,7 @@ export interface IMatch extends base, FullTimeDetails {
   away_team: string;
 };
 
-export interface FullMatch extends base {
+export interface FullMatch extends base, FullTimeDetails {
   _id: string;
   home_team: ITeam;
   away_team: ITeam;

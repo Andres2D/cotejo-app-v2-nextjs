@@ -8,7 +8,7 @@ import {
   Button
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { MutableRefObject, useRef } from 'react';
+import { Children, MutableRefObject, useRef } from 'react';
 
 interface Props {
   isOpen: boolean;
@@ -18,6 +18,8 @@ interface Props {
   description?: string;
   cancelLabel?: string;
   continueLabel?: string;
+  actionColor?: string;
+  children?: JSX.Element;
 }
 
 const ModalAlert: NextPage<Props> = (
@@ -26,9 +28,11 @@ const ModalAlert: NextPage<Props> = (
     onClose, 
     onContinue,
     title = 'Delete',
-    description = 'Are you sure?',
+    description,
     cancelLabel = 'Cancel',
-    continueLabel = 'Delete'
+    continueLabel = 'Delete',
+    actionColor = 'red',
+    children
   }) => {
 
   const cancelRef = useRef() as MutableRefObject<HTMLButtonElement>;
@@ -47,13 +51,14 @@ const ModalAlert: NextPage<Props> = (
 
           <AlertDialogBody>
             { description }
+            { children }
           </AlertDialogBody>
 
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
               { cancelLabel }
             </Button>
-            <Button colorScheme='red' onClick={onContinue} ml={3}>
+            <Button colorScheme={actionColor} onClick={onContinue} ml={3}>
               { continueLabel }
             </Button>
           </AlertDialogFooter>
