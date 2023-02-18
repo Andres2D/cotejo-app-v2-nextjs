@@ -17,6 +17,9 @@ export const matchDetailsMock: IMatchDetailsResponse = {
       formation: 'f',
       shield: 'https://media.api-sports.io/football/teams/34.png',
     },
+    awayScore: 0,
+    fullTime: false,
+    homeScore: 0
   },
   home: [
     {
