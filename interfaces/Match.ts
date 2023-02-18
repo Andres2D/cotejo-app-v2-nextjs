@@ -47,6 +47,9 @@ export interface IFullMatch extends base {
   _id: string;
   home_team: IFullTeam;
   away_team: IFullTeam;
+  homeScore: number;
+  awayScore: number;
+  fullTime: boolean;  
 }
 
 export interface IMatchDetailsResponse {

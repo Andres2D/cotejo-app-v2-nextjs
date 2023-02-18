@@ -51,6 +51,9 @@ export const initialState: IMatchDetails = {
     },
     date: '',
     location: '',
+    awayScore: 0,
+    fullTime: false,
+    homeScore: 0
   },
   home: [],
   away: [],
