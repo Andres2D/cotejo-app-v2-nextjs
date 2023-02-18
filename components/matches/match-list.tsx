@@ -206,6 +206,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
                 name={home_team.name}
                 image={home_team.shield}
                 fullTime={fullTime}
+                isWinner={homeScore > awayScore}
                 score={homeScore}
                 width={120}
                 height={120}
@@ -213,6 +214,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
 
               <div className={styles.containerVS}>
                 <Image
+                  className={styles.versusIcon}
                   src={'/images/vs-icon.png'}
                   alt="Icon versus"
                   width={55}
@@ -221,6 +223,10 @@ const MatchList: NextPage<Props> = ({ matches }) => {
                 <div className={styles.details}>
                   <h2>{date}</h2>
                   <h2>{location}</h2>
+                  { 
+                    fullTime &&
+                    <h2 className={styles.fullTime}>Full-time</h2>
+                  }
                 </div>
               </div>
 
@@ -228,6 +234,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
                 name={away_team.name}
                 image={away_team.shield}
                 fullTime={fullTime}
+                isWinner={awayScore > homeScore}
                 score={awayScore}
                 width={120}
                 height={120}

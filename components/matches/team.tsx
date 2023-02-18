@@ -10,9 +10,19 @@ interface Props {
   score: number;
   width: number;
   height: number;
+  isWinner: boolean;
 }
 
-const Team: NextPage<Props> = ({name, image, fullTime, score, width, height}: Props) => {
+const Team: NextPage<Props> = (
+  {
+    name, 
+    image, 
+    fullTime, 
+    score, 
+    width, 
+    height, 
+    isWinner
+  }: Props) => {
   return (
     <div className={styles.team}>
       <Image
@@ -36,7 +46,7 @@ const Team: NextPage<Props> = ({name, image, fullTime, score, width, height}: Pr
           size='lg' 
           variant='solid' 
           colorScheme='clean'
-          className={styles.score}
+          className={`${styles.score} ${ isWinner ? styles.winner : styles.loser}`}
         >
           {score}
         </Tag>
