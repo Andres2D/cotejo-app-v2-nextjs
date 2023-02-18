@@ -114,6 +114,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         onChange={updateFormation}
         value={matchDetails.match[teamKey].formation}
         color={'gray.50'}
+        disabled={matchDetails.match.fullTime}
       >
         { team.length > 0 &&
           ['t','s','f'].map(op => (

@@ -59,14 +59,17 @@ const MatchDetailsLayout: NextPage = () => {
           <FieldLayout team={matchDetails.home} />
           <FieldLayout team={matchDetails.away} isAway />
         </div>
-        <Button 
-          colorScheme='telegram'
-          className={styles.leaveButton}
-          rightIcon={<LeaveIcon />}
-          onClick={leaveMatchModalOnOpen}
-        >
+        {
+          !matchDetails.match.fullTime &&
+          <Button 
+            colorScheme='telegram'
+            className={styles.leaveButton}
+            rightIcon={<LeaveIcon />}
+            onClick={leaveMatchModalOnOpen}
+          >
             Leave match
-        </Button>
+          </Button>
+        }
       </section>
       <ModalAlert 
         isOpen={leaveMatchModalIsOpen} 
