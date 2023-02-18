@@ -11,10 +11,18 @@ interface Props {
   teamName: string;
   teamShield: string;
   teamOverall: number;
+  fullTime: boolean;
   isAway?: boolean;
 }
 
-const FieldHeader: NextPage<Props> = ({teamName, teamShield, teamOverall, isAway = false}) => {
+const FieldHeader: NextPage<Props> = (
+  {
+    teamName, 
+    teamShield, 
+    teamOverall, 
+    fullTime,
+    isAway = false,
+  }) => {
 
   return (
     <header className={`${styles.header} `}>
@@ -29,7 +37,10 @@ const FieldHeader: NextPage<Props> = ({teamName, teamShield, teamOverall, isAway
         />
         <div className={styles.teamDetails}>
           <Heading color={'gray.50'} size='2xl'>{teamName}</Heading>
-          <SetTeam isAway={isAway} />
+          {
+            !fullTime &&
+            <SetTeam isAway={isAway} />
+          }
         </div>
       </section>
       <RatioStars average={teamOverall} />

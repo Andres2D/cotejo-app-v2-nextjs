@@ -52,6 +52,11 @@
         .details {
           color: #f7fafc;
         }
+
+        .fullTime {
+          font-weight: bold;
+          font-size: 20px;
+        }
       }
     }
   }
@@ -95,6 +100,10 @@
         .containerVS {
           flex-direction: row;
           margin: 20px;
+
+          .versusIcon {
+            display: none;
+          }
         }
       }
     }

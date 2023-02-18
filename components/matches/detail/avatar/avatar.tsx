@@ -45,10 +45,16 @@ const AvatarMatchLayout: NextPage<Props> = ({
     : details.match.home_team.showStats;
 
   const changePlayerHandler = () => {
+    if(details.match.fullTime) {
+      return;
+    }
     dispatch(matchDetailsActions.toggleChangePlayerModal());
   };
 
   const selectPlayerHandler = () => {
+    if(details.match.fullTime) {
+      return;
+    }
     dispatch(matchDetailsActions.selectPlayer({ playerId: id, isAway }));
 
     if (
