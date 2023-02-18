@@ -22,6 +22,8 @@ interface Props {
 const MatchList: NextPage<Props> = ({ matches }) => {
   const [matchesList, setMatchesList] = useState<FullMatch[]>([]);
   const [selectedMatch, setSelectedMatch] = useState<FullMatch>();
+  const [place, setPlace] = useState<string>();
+  const [date, setDate] = useState<string>();
   const {
     isOpen: deleteModalIsOpen,
     onOpen: deleteModalOnOpen,
@@ -37,11 +39,18 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     onOpen: fulltimeModalOnOpen,
     onClose: fulltimeModalOnClose,
   } = useDisclosure();
+  const {
+    isOpen: updateMatchModalIsOpen,
+    onOpen: updateMatchModalOnOpen,
+    onClose: updateMatchModalOnClose
+  } = useDisclosure();
   const toast = useToast();
 
   const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
   const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-  
+
+  // const placeRef = useRef() as MutableRefObject<HTMLInputElement>;
+  // const dateRef = useRef() as MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
     setMatchesList(matches);
@@ -114,7 +123,25 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
     onSuccess: async (response) => {
       if (response.ok) {
+        setMatchesList((matches) =>
+          matches.map((match) => {
+            if(match._id === selectedMatch?._id) {
+              return {
+                ...match, 
+                location: response.data.match.location, 
+                date: response.data.match.date,
+                fullTime: response.data.match.fullTime,
+                homeScore: response.data.match.homeScore,
+                awayScore: response.data.match.awayScore
+              };
+            }else {
+              return match;
+            }
+          })
+        );
+
         fulltimeModalOnClose();
+        updateMatchModalOnClose();
         setSelectedMatch(undefined);
         toast({
           title: 'Match updated',
@@ -132,6 +159,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
           isClosable: true,
         });
         fulltimeModalOnClose();
+        updateMatchModalOnClose();
         setSelectedMatch(undefined);
       }
     },
@@ -161,6 +189,13 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     fulltimeModalOnOpen();
   };
 
+  const showUpdateMatchModal = (match: FullMatch) => {
+    updateMatchModalOnOpen();
+    setPlace(match.location);
+    setDate(match.date);
+    setSelectedMatch(match);
+  };
+
   const handleDeleteMatch = () => {
     mutateDeleteMatch(selectedMatch?._id!);
   };
@@ -168,7 +203,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const handleLeaveMatch = () => {
     mutateLeaveMatch(selectedMatch?._id!);
   };
-  
+
   const handleFulltime = () => {
     if(homeScoreRef.current.value.trim() === '' || awayScoreRef.current.value.trim() === '' ) {
       return;
@@ -179,6 +214,20 @@ const MatchList: NextPage<Props> = ({ matches }) => {
       fullTime: true,
       homeScore: +homeScoreRef.current.value,
       awayScore: +awayScoreRef.current.value
+    };
+
+    mutateUpdateMatch(request);
+  };
+
+  const handleUpdateMatch = () => {
+    if(!date || !location || date?.trim() === '' || place?.trim() === '' ) {
+      return;
+    }
+
+    const request: FullMatch = {
+      ...selectedMatch!,
+      date: date || selectedMatch?.date || '',
+      location: place || selectedMatch?.location || ''
     };
 
     mutateUpdateMatch(request);
@@ -223,7 +272,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
                 <div className={styles.details}>
                   <h2>{date}</h2>
                   <h2>{location}</h2>
-                  { 
+                  {
                     fullTime &&
                     <h2 className={styles.fullTime}>Full-time</h2>
                   }
@@ -248,6 +297,18 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               mb={2}
               disabled={fullTime}
               aria-label="Edit match"
+              onClick={() =>
+                showUpdateMatchModal({
+                  _id,
+                  date,
+                  location,
+                  away_team,
+                  home_team,
+                  fullTime,
+                  homeScore,
+                  awayScore,
+                })
+              }
               icon={<SettingsIcon />}
             />
             <IconButton
@@ -314,6 +375,10 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     }
   );
 
+  const inputHandler = (input: string, event: any) => {
+    input === 'place' ? setPlace(event.target.value) : setDate(event.target.value);
+  };
+
   return (
     <>
       {matchesListMap}
@@ -349,8 +414,8 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               width='50px'
               height='50px'
             />
-            <FormLabel 
-              textAlign={'center'} 
+            <FormLabel
+              textAlign={'center'}
               marginInlineEnd={0}
             >
               {selectedMatch?.home_team.name}
@@ -365,12 +430,42 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               height='50px'
             />
             <FormLabel
-              textAlign={'center'} 
+              textAlign={'center'}
               marginInlineEnd={0}
             >
               {selectedMatch?.away_team.name}
             </FormLabel>
             <Input width={'16'} type='number' ref={awayScoreRef} />
+          </FormControl>
+        </form>
+      </ModalAlert>
+      <ModalAlert
+        isOpen={updateMatchModalIsOpen}
+        onClose={updateMatchModalOnClose}
+        onContinue={handleUpdateMatch}
+        actionColor='green'
+        title={`Update ${selectedMatch?.home_team.name} vs ${selectedMatch?.away_team.name}`}
+        continueLabel="Update"
+      >
+
+        <form className={styles.updateMatch}>
+          <FormControl className={styles.formControl}>
+            <FormLabel
+              textAlign={'center'}
+              marginInlineEnd={0}
+            >
+              Place
+            </FormLabel>
+            <Input type='text' onChange={(event) => inputHandler('place', event)} value={place} />
+          </FormControl>
+          <FormControl className={styles.formControl}>
+            <FormLabel
+              textAlign={'center'}
+              marginInlineEnd={0}
+            >
+              Date
+            </FormLabel>
+            <Input type='date' onChange={(event) => inputHandler('date', event)} value={date} />
           </FormControl>
         </form>
       </ModalAlert>

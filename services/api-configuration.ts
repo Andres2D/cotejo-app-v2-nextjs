@@ -1,8 +1,8 @@
-import { create } from 'apisauce'
+import { ApiResponse, create } from 'apisauce'
 import { ICreateMatchRequest, FullMatch } from '../interfaces/Match';
 import { UpdateProfileRequest, RegisterPlayerRequest } from '../interfaces/Player';
 import { UpdateTeamRequest } from '../interfaces/Team';
-import { IUpdateTeamPlayerRequest, IChangePlayerRequest, LeftMatchRequest } from '../interfaces/TeamPlayer';
+import { IUpdateTeamPlayerRequest, IChangePlayerRequest } from '../interfaces/TeamPlayer';
 
 const api = create({
   baseURL: '/api',
@@ -17,7 +17,7 @@ export const changePlayer = (request: IUpdateTeamPlayerRequest | IChangePlayerRe
 export const leaveMatch = (id: string) => api.delete('/team-player', { idMatch: id });
 
 export const createMatch = (request: ICreateMatchRequest) => api.post('/match', request);
-export const updateMatch = (match: FullMatch) => api.put('/match', match);
+export const updateMatch = (match: FullMatch): Promise<ApiResponse<any, any>> => api.put('/match', match);
 export const deleteMatch = (id: string) => api.delete('/match', { id });
 
 export const updateTeam = (request: UpdateTeamRequest) => api.put('/team', request);

@@ -80,6 +80,18 @@
   }
 }
 
+.updateMatch {
+  display: flex;
+  flex-direction: column;
+
+  .formControl {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+}
+
 
 @media (max-width: $medium-small-device) {
   .section {
