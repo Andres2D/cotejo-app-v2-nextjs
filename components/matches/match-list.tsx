@@ -123,6 +123,23 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
     onSuccess: async (response) => {
       if (response.ok) {
+        setMatchesList((matches) =>
+          matches.map((match) => {
+            if(match._id === selectedMatch?._id) {
+              return {
+                ...match, 
+                location: response.data.match.location, 
+                date: response.data.match.date,
+                fullTime: response.data.match.fullTime,
+                homeScore: response.data.match.homeScore,
+                awayScore: response.data.match.awayScore
+              };
+            }else {
+              return match;
+            }
+          })
+        );
+
         fulltimeModalOnClose();
         updateMatchModalOnClose();
         setSelectedMatch(undefined);
@@ -212,8 +229,6 @@ const MatchList: NextPage<Props> = ({ matches }) => {
       date: date || selectedMatch?.date || '',
       location: place || selectedMatch?.location || ''
     };
-
-    console.log(request);
 
     mutateUpdateMatch(request);
   };
