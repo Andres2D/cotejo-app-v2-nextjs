@@ -1,14 +1,10 @@
 import type { NextPage } from 'next';
 import { FormControl, FormLabel, IconButton, Image, Input, useDisclosure, useToast } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon, CheckCircleIcon } from '@chakra-ui/icons';
-import { useState, useRef, MutableRefObject } from 'react';
-import { useMutation } from 'react-query';
+import { useRef, MutableRefObject } from 'react';
 import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
-import {
-  updateMatch
-} from '../../services/api-configuration';
 import { FullMatch } from '../../interfaces/Match';
 import ModalAlert from '../layout/modal-alert';
 import LeaveIcon from '../../assets/svg/leave.svg';
@@ -17,77 +13,22 @@ import { RootState } from '../../interfaces/State';
 import { matchesListActions } from '../../store/matches-list.slice';
 import DeleteMatchModal from './modals/delete-match.modal';
 import LeaveMatchModal from './modals/leave-match.modal';
+import UpdateMatchModal from './modals/update-match.modal';
 
 const MatchList: NextPage = () => {
 
   const matchesState = useSelector((state: RootState) => state.matchesList );
   const dispatch = useDispatch();
   
-  const [place, setPlace] = useState<string>();
-  const [date, setDate] = useState<string>();
 
   const {
     isOpen: fulltimeModalIsOpen,
     onOpen: fulltimeModalOnOpen,
     onClose: fulltimeModalOnClose,
   } = useDisclosure();
-  const {
-    isOpen: updateMatchModalIsOpen,
-    onOpen: updateMatchModalOnOpen,
-    onClose: updateMatchModalOnClose
-  } = useDisclosure();
-  const toast = useToast();
 
   const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
   const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-
-  const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
-    onSuccess: async (response) => {
-      if (response.ok) {
-        // setMatchesList((matches) =>
-        //   matches.map((match) => {
-        //     if(match._id === selectedMatch?._id) {
-        //       return {
-        //         ...match, 
-        //         location: response.data.match.location, 
-        //         date: response.data.match.date,
-        //         fullTime: response.data.match.fullTime,
-        //         homeScore: response.data.match.homeScore,
-        //         awayScore: response.data.match.awayScore
-        //       };
-        //     }else {
-        //       return match;
-        //     }
-        //   })
-        // );
-
-        fulltimeModalOnClose();
-        updateMatchModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-        toast({
-          title: 'Match updated',
-          description: 'You update the match.',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Match updated',
-          description: 'Something went wrong, please try again later.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-        fulltimeModalOnClose();
-        updateMatchModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-      }
-    },
-    onError: () => {
-      // TODO: handle error
-    },
-  });
 
   const router = useRouter();
 
@@ -111,12 +52,9 @@ const MatchList: NextPage = () => {
   };
 
   const showUpdateMatchModal = (match: FullMatch) => {
-    updateMatchModalOnOpen();
-    setPlace(match.location);
-    setDate(match.date);
+    dispatch(matchesListActions.setMatchModalAction({action: 'isUpdateMatch', value: true }));
     dispatch(matchesListActions.setSelectedMatch(match));
   };
-
 
   const handleFulltime = () => {
     if(homeScoreRef.current.value.trim() === '' || awayScoreRef.current.value.trim() === '' ) {
@@ -130,21 +68,7 @@ const MatchList: NextPage = () => {
       awayScore: +awayScoreRef.current.value
     };
 
-    mutateUpdateMatch(request);
-  };
-
-  const handleUpdateMatch = () => {
-    if(!date || !location || date?.trim() === '' || place?.trim() === '' ) {
-      return;
-    }
-
-    const request: FullMatch = {
-      ...matchesState.selectedMatch!,
-      date: date || matchesState.selectedMatch?.date || '',
-      location: place || matchesState.selectedMatch?.location || ''
-    };
-
-    mutateUpdateMatch(request);
+    // mutateUpdateMatch(request);
   };
 
   const matchesListMap = matchesState.matches.map(
@@ -289,15 +213,12 @@ const MatchList: NextPage = () => {
     }
   );
 
-  const inputHandler = (input: string, event: any) => {
-    input === 'place' ? setPlace(event.target.value) : setDate(event.target.value);
-  };
-
   return (
     <>
       {matchesListMap}
       <DeleteMatchModal />
       <LeaveMatchModal />
+      <UpdateMatchModal />
       <ModalAlert
         isOpen={fulltimeModalIsOpen}
         onClose={fulltimeModalOnClose}
@@ -337,36 +258,6 @@ const MatchList: NextPage = () => {
               {matchesState.selectedMatch?.away_team.name}
             </FormLabel>
             <Input width={'16'} type='number' ref={awayScoreRef} />
-          </FormControl>
-        </form>
-      </ModalAlert>
-      <ModalAlert
-        isOpen={updateMatchModalIsOpen}
-        onClose={updateMatchModalOnClose}
-        onContinue={handleUpdateMatch}
-        actionColor='green'
-        title={`Update ${matchesState.selectedMatch?.home_team.name} vs ${matchesState.selectedMatch?.away_team.name}`}
-        continueLabel="Update"
-      >
-
-        <form className={styles.updateMatch}>
-          <FormControl className={styles.formControl}>
-            <FormLabel
-              textAlign={'center'}
-              marginInlineEnd={0}
-            >
-              Place
-            </FormLabel>
-            <Input type='text' onChange={(event) => inputHandler('place', event)} value={place} />
-          </FormControl>
-          <FormControl className={styles.formControl}>
-            <FormLabel
-              textAlign={'center'}
-              marginInlineEnd={0}
-            >
-              Date
-            </FormLabel>
-            <Input type='date' onChange={(event) => inputHandler('date', event)} value={date} />
           </FormControl>
         </form>
       </ModalAlert>
