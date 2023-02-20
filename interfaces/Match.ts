@@ -61,3 +61,8 @@ export interface IMatchDetails extends IMatchDetailsResponse {
   playersSelected: ISelectPayload[],
   changePlayerModalActive: boolean
 };
+
+export interface MatchState {
+  matches: FullMatch[],
+  selectedMatch?: FullMatch;
+}
