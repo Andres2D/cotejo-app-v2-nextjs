@@ -1,12 +1,10 @@
 import type { NextPage } from 'next';
-import { FormControl, FormLabel, IconButton, Image, Input, useDisclosure, useToast } from '@chakra-ui/react';
+import { IconButton, Image } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon, CheckCircleIcon } from '@chakra-ui/icons';
-import { useRef, MutableRefObject } from 'react';
 import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
 import { FullMatch } from '../../interfaces/Match';
-import ModalAlert from '../layout/modal-alert';
 import LeaveIcon from '../../assets/svg/leave.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
@@ -14,22 +12,12 @@ import { matchesListActions } from '../../store/matches-list.slice';
 import DeleteMatchModal from './modals/delete-match.modal';
 import LeaveMatchModal from './modals/leave-match.modal';
 import UpdateMatchModal from './modals/update-match.modal';
+import FullTimeModal from './modals/full-time.modal';
 
 const MatchList: NextPage = () => {
 
   const matchesState = useSelector((state: RootState) => state.matchesList );
   const dispatch = useDispatch();
-  
-
-  const {
-    isOpen: fulltimeModalIsOpen,
-    onOpen: fulltimeModalOnOpen,
-    onClose: fulltimeModalOnClose,
-  } = useDisclosure();
-
-  const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-  const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-
   const router = useRouter();
 
   const goToMatchDetails = (matchId: string) => {
@@ -48,27 +36,12 @@ const MatchList: NextPage = () => {
 
   const showFullTimeModal = (match: FullMatch) => {
     dispatch(matchesListActions.setSelectedMatch(match));
-    fulltimeModalOnOpen();
+    dispatch(matchesListActions.setMatchModalAction({action: 'isFullTime', value: true }));
   };
 
   const showUpdateMatchModal = (match: FullMatch) => {
     dispatch(matchesListActions.setMatchModalAction({action: 'isUpdateMatch', value: true }));
     dispatch(matchesListActions.setSelectedMatch(match));
-  };
-
-  const handleFulltime = () => {
-    if(homeScoreRef.current.value.trim() === '' || awayScoreRef.current.value.trim() === '' ) {
-      return;
-    }
-
-    const request: FullMatch = {
-      ...matchesState.selectedMatch!,
-      fullTime: true,
-      homeScore: +homeScoreRef.current.value,
-      awayScore: +awayScoreRef.current.value
-    };
-
-    // mutateUpdateMatch(request);
   };
 
   const matchesListMap = matchesState.matches.map(
@@ -219,48 +192,7 @@ const MatchList: NextPage = () => {
       <DeleteMatchModal />
       <LeaveMatchModal />
       <UpdateMatchModal />
-      <ModalAlert
-        isOpen={fulltimeModalIsOpen}
-        onClose={fulltimeModalOnClose}
-        onContinue={handleFulltime}
-        actionColor='green'
-        title="Full time - Scores"
-        continueLabel="Update"
-      >
-
-        <form className={styles.fullTime}>
-          <FormControl className={styles.formControl}>
-            <Image
-              src={matchesState.selectedMatch?.home_team.shield}
-              alt={matchesState.selectedMatch?.home_team.name}
-              width='50px'
-              height='50px'
-            />
-            <FormLabel
-              textAlign={'center'}
-              marginInlineEnd={0}
-            >
-              {matchesState.selectedMatch?.home_team.name}
-            </FormLabel>
-            <Input width={'16'} type='number' ref={homeScoreRef} />
-          </FormControl>
-          <FormControl className={styles.formControl}>
-            <Image
-              src={matchesState.selectedMatch?.away_team.shield}
-              alt={matchesState.selectedMatch?.away_team.name}
-              width='50px'
-              height='50px'
-            />
-            <FormLabel
-              textAlign={'center'}
-              marginInlineEnd={0}
-            >
-              {matchesState.selectedMatch?.away_team.name}
-            </FormLabel>
-            <Input width={'16'} type='number' ref={awayScoreRef} />
-          </FormControl>
-        </form>
-      </ModalAlert>
+      <FullTimeModal />
     </>
   );
 };

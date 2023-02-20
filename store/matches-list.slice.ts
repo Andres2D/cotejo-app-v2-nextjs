@@ -10,7 +10,7 @@ type DeleteMatchPayload = {
 };
 
 type ModalActionPayload = {
-  action: 'isDeleteMatch' | 'isLeaveMatch' | 'isUpdateMatch',
+  action: 'isDeleteMatch' | 'isLeaveMatch' | 'isUpdateMatch' | 'isFullTime',
   value: boolean
 };
 
@@ -19,7 +19,8 @@ const initialState: MatchesListState = {
   selectedMatch: undefined,
   isDeleteMatch: false,
   isLeaveMatch: false,
-  isUpdateMatch: false
+  isUpdateMatch: false,
+  isFullTime: false
 };
 
 const setMatchesList: CaseReducer<MatchesListState, PayloadAction<FullMatch[]>> = 

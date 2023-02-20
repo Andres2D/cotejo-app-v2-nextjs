@@ -68,4 +68,5 @@ export interface MatchesListState {
   isDeleteMatch: boolean;
   isLeaveMatch: boolean;
   isUpdateMatch: boolean;
+  isFullTime: boolean;
 }

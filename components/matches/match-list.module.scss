@@ -68,18 +68,6 @@
   }
 }
 
-.fullTime {
-  display: flex;
-  justify-content: space-around;
-  
-  .formControl {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-  }
-}
-
 @media (max-width: $medium-small-device) {
   .section {
     flex-direction: column;
