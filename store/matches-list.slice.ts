@@ -9,9 +9,17 @@ type DeleteMatchPayload = {
   id: string;
 };
 
+type ModalActionPayload = {
+  action: 'isDeleteMatch' | 'isLeaveMatch' | 'isUpdateMatch',
+  value: boolean
+};
+
 const initialState: MatchesListState = {
   matches: [],
-  selectedMatch: undefined
+  selectedMatch: undefined,
+  isDeleteMatch: false,
+  isLeaveMatch: false,
+  isUpdateMatch: false
 };
 
 const setMatchesList: CaseReducer<MatchesListState, PayloadAction<FullMatch[]>> = 
@@ -28,6 +36,11 @@ const deleteLeaveMatch: CaseReducer<MatchesListState, PayloadAction<DeleteMatchP
 const setSelectedMatch: CaseReducer<MatchesListState, PayloadAction<FullMatch | undefined>> = 
 (state: MatchesListState, action: PayloadAction<FullMatch | undefined>) => {
   state.selectedMatch = action.payload;
+};
+
+const setMatchModalAction: CaseReducer<MatchesListState, PayloadAction<ModalActionPayload>> = 
+(state: MatchesListState, action: PayloadAction<ModalActionPayload>) => {
+  state[action.payload.action] = action.payload.value;
 };
 
 const updateMatch: CaseReducer<MatchesListState, PayloadAction<FullMatch>> = 
@@ -55,7 +68,8 @@ const matchesListSlice = createSlice({
     setMatchesList,
     deleteLeaveMatch,
     setSelectedMatch,
-    updateMatch
+    updateMatch,
+    setMatchModalAction
   }
 });
 

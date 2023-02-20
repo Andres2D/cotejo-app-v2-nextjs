@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
 import {
-  deleteMatch as deleteMatchService,
   leaveMatch,
   updateMatch
 } from '../../services/api-configuration';
@@ -17,19 +16,16 @@ import LeaveIcon from '../../assets/svg/leave.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
 import { matchesListActions } from '../../store/matches-list.slice';
+import DeleteMatchModal from './modals/delete-match.modal';
 
 const MatchList: NextPage = () => {
 
   const matchesState = useSelector((state: RootState) => state.matchesList );
   const dispatch = useDispatch();
-  // const [selectedMatch, setSelectedMatch] = useState<FullMatch>();
+  
   const [place, setPlace] = useState<string>();
   const [date, setDate] = useState<string>();
-  const {
-    isOpen: deleteModalIsOpen,
-    onOpen: deleteModalOnOpen,
-    onClose: deleteModalOnClose,
-  } = useDisclosure();
+
   const {
     isOpen: leaveMatchModalIsOpen,
     onOpen: leaveMatchModalOnOpen,
@@ -49,38 +45,6 @@ const MatchList: NextPage = () => {
 
   const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
   const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-
-  const { mutate: mutateDeleteMatch } = useMutation(deleteMatchService, {
-    onSuccess: async (response) => {
-      if (response.ok) {
-        // setMatchesList((matches) =>
-        //   matches.filter((match) => match._id !== selectedMatch?._id)
-        // );
-        deleteModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-        toast({
-          title: 'Delete match',
-          description: 'Match deleted.',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Delete match',
-          description: 'Something went wrong, please try again later.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-        deleteModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-      }
-    },
-    onError: () => {
-      // TODO: handle error
-    },
-  });
 
   const { mutate: mutateLeaveMatch } = useMutation(leaveMatch, {
     onSuccess: async (response) => {
@@ -170,7 +134,7 @@ const MatchList: NextPage = () => {
 
   const showDeleteMatchModal = (match: FullMatch) => {
     dispatch(matchesListActions.setSelectedMatch(match));
-    deleteModalOnOpen();
+    dispatch(matchesListActions.setMatchModalAction({action: 'isDeleteMatch', value: true }));
   };
 
   const showLeaveMatchModal = (match: FullMatch) => {
@@ -188,10 +152,6 @@ const MatchList: NextPage = () => {
     setPlace(match.location);
     setDate(match.date);
     dispatch(matchesListActions.setSelectedMatch(match));
-  };
-
-  const handleDeleteMatch = () => {
-    mutateDeleteMatch(matchesState.selectedMatch?._id!);
   };
 
   const handleLeaveMatch = () => {
@@ -376,13 +336,7 @@ const MatchList: NextPage = () => {
   return (
     <>
       {matchesListMap}
-      <ModalAlert
-        isOpen={deleteModalIsOpen}
-        onClose={deleteModalOnClose}
-        onContinue={handleDeleteMatch}
-        title="Delete Match"
-        description={`Are you sure? You can't undo this action afterwards`}
-      />
+      <DeleteMatchModal />
       <ModalAlert
         isOpen={leaveMatchModalIsOpen}
         onClose={leaveMatchModalOnClose}

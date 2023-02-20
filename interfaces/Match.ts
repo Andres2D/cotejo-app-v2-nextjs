@@ -65,4 +65,7 @@ export interface IMatchDetails extends IMatchDetailsResponse {
 export interface MatchesListState {
   matches: FullMatch[],
   selectedMatch?: FullMatch;
+  isDeleteMatch: boolean;
+  isLeaveMatch: boolean;
+  isUpdateMatch: boolean;
 }

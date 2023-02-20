@@ -8,7 +8,7 @@ import {
   Button
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { Children, MutableRefObject, useRef } from 'react';
+import { MutableRefObject, useRef } from 'react';
 
 interface Props {
   isOpen: boolean;
