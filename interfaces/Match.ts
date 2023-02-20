@@ -62,7 +62,7 @@ export interface IMatchDetails extends IMatchDetailsResponse {
   changePlayerModalActive: boolean
 };
 
-export interface MatchState {
+export interface MatchesListState {
   matches: FullMatch[],
   selectedMatch?: FullMatch;
 }

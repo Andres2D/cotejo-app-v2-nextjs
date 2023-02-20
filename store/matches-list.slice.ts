@@ -3,34 +3,35 @@ import {
   PayloadAction, 
   CaseReducer
 } from '@reduxjs/toolkit';
-import { FullMatch, MatchState } from '../interfaces/Match';
+import { FullMatch, MatchesListState } from '../interfaces/Match';
 
 type DeleteMatchPayload = { 
   id: string;
 };
 
-const initialState: MatchState = {
+const initialState: MatchesListState = {
   matches: [],
   selectedMatch: undefined
 };
 
-const setMatchesList: CaseReducer<MatchState, PayloadAction<FullMatch[]>> = 
-(state: MatchState, action: PayloadAction<FullMatch[]>) => {
+const setMatchesList: CaseReducer<MatchesListState, PayloadAction<FullMatch[]>> = 
+(state: MatchesListState, action: PayloadAction<FullMatch[]>) => {
+  console.log('action', action);
   state.matches = action.payload;
 };
 
-const deleteLeaveMatch: CaseReducer<MatchState, PayloadAction<DeleteMatchPayload>> = 
-(state: MatchState, action: PayloadAction<DeleteMatchPayload>) => {
+const deleteLeaveMatch: CaseReducer<MatchesListState, PayloadAction<DeleteMatchPayload>> = 
+(state: MatchesListState, action: PayloadAction<DeleteMatchPayload>) => {
   state.matches = state.matches.filter(match => match._id !== action.payload.id)
 };
 
-const setSelectedMatch: CaseReducer<MatchState, PayloadAction<FullMatch>> = 
-(state: MatchState, action: PayloadAction<FullMatch>) => {
+const setSelectedMatch: CaseReducer<MatchesListState, PayloadAction<FullMatch | undefined>> = 
+(state: MatchesListState, action: PayloadAction<FullMatch | undefined>) => {
   state.selectedMatch = action.payload;
 };
 
-const updateMatch: CaseReducer<MatchState, PayloadAction<FullMatch>> = 
-(state: MatchState, action: PayloadAction<FullMatch>) => {
+const updateMatch: CaseReducer<MatchesListState, PayloadAction<FullMatch>> = 
+(state: MatchesListState, action: PayloadAction<FullMatch>) => {
   state.matches = state.matches.map(match => {
     if(match._id === action.payload._id) {
       return {

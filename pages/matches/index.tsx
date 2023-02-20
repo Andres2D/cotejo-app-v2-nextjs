@@ -10,9 +10,9 @@ import { getMatches } from '../../server/matches';
 import styles from './matches.module.scss';
 import { FullMatch, IMatch } from '../../interfaces/Match';
 import { profileActions } from '../../store/profile.slice';
+import { matchesListActions } from '../../store/matches-list.slice';
 import { getProfile } from '../../server/player';
 import HeaderSettings from '../../accessibility/header-setting';
-
 interface Props {
   matches: string;
   profile: string;
@@ -23,13 +23,14 @@ const Matches: NextPage<Props> = ({matches, profile}) => {
   const matchesList: FullMatch[] = JSON.parse(matches);
   const router = useRouter();
   const dispatch = useDispatch();
-
+  
   // Persisting store profile
   // TODO: Change way to persis state
   let parsedProfile = JSON.parse(profile || '');
   const flagResponse = getFlagSvg(parsedProfile.nationality, true);
-
+  
   useEffect(() => {
+    
     dispatch(profileActions.setProfile({
       _id: parsedProfile._id,
       overall: 0,
@@ -39,6 +40,10 @@ const Matches: NextPage<Props> = ({matches, profile}) => {
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
     }));
+    console.log(matchesList);
+
+    dispatch(matchesListActions.setMatchesList(matchesList));
+
   }, []);
 
   return (
@@ -52,9 +57,7 @@ const Matches: NextPage<Props> = ({matches, profile}) => {
         >
           New Match
         </Button>
-        <MatchList
-          matches={matchesList}
-        />
+        <MatchList />
       </section>
     </>
   );

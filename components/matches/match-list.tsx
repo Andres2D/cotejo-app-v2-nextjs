@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { FormControl, FormLabel, IconButton, Image, Input, useDisclosure, useToast } from '@chakra-ui/react';
 import { DeleteIcon, SettingsIcon, CheckCircleIcon } from '@chakra-ui/icons';
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useState, useRef, MutableRefObject } from 'react';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
@@ -14,14 +14,15 @@ import {
 import { FullMatch } from '../../interfaces/Match';
 import ModalAlert from '../layout/modal-alert';
 import LeaveIcon from '../../assets/svg/leave.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../interfaces/State';
+import { matchesListActions } from '../../store/matches-list.slice';
 
-interface Props {
-  matches: FullMatch[];
-}
+const MatchList: NextPage = () => {
 
-const MatchList: NextPage<Props> = ({ matches }) => {
-  const [matchesList, setMatchesList] = useState<FullMatch[]>([]);
-  const [selectedMatch, setSelectedMatch] = useState<FullMatch>();
+  const matchesState = useSelector((state: RootState) => state.matchesList );
+  const dispatch = useDispatch();
+  // const [selectedMatch, setSelectedMatch] = useState<FullMatch>();
   const [place, setPlace] = useState<string>();
   const [date, setDate] = useState<string>();
   const {
@@ -49,21 +50,14 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
   const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
 
-  // const placeRef = useRef() as MutableRefObject<HTMLInputElement>;
-  // const dateRef = useRef() as MutableRefObject<HTMLInputElement>;
-
-  useEffect(() => {
-    setMatchesList(matches);
-  }, [matches]);
-
   const { mutate: mutateDeleteMatch } = useMutation(deleteMatchService, {
     onSuccess: async (response) => {
       if (response.ok) {
-        setMatchesList((matches) =>
-          matches.filter((match) => match._id !== selectedMatch?._id)
-        );
+        // setMatchesList((matches) =>
+        //   matches.filter((match) => match._id !== selectedMatch?._id)
+        // );
         deleteModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
         toast({
           title: 'Delete match',
           description: 'Match deleted.',
@@ -80,7 +74,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
           isClosable: true,
         });
         deleteModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
       }
     },
     onError: () => {
@@ -91,11 +85,11 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const { mutate: mutateLeaveMatch } = useMutation(leaveMatch, {
     onSuccess: async (response) => {
       if (response.ok) {
-        setMatchesList((matches) =>
-          matches.filter((match) => match._id !== selectedMatch?._id)
-        );
+        // setMatchesList((matches) =>
+        //   matches.filter((match) => match._id !== selectedMatch?._id)
+        // );
         leaveMatchModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
         toast({
           title: 'Leave match',
           description: 'You left the match.',
@@ -112,7 +106,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
           isClosable: true,
         });
         leaveMatchModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
       }
     },
     onError: () => {
@@ -123,26 +117,26 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
     onSuccess: async (response) => {
       if (response.ok) {
-        setMatchesList((matches) =>
-          matches.map((match) => {
-            if(match._id === selectedMatch?._id) {
-              return {
-                ...match, 
-                location: response.data.match.location, 
-                date: response.data.match.date,
-                fullTime: response.data.match.fullTime,
-                homeScore: response.data.match.homeScore,
-                awayScore: response.data.match.awayScore
-              };
-            }else {
-              return match;
-            }
-          })
-        );
+        // setMatchesList((matches) =>
+        //   matches.map((match) => {
+        //     if(match._id === selectedMatch?._id) {
+        //       return {
+        //         ...match, 
+        //         location: response.data.match.location, 
+        //         date: response.data.match.date,
+        //         fullTime: response.data.match.fullTime,
+        //         homeScore: response.data.match.homeScore,
+        //         awayScore: response.data.match.awayScore
+        //       };
+        //     }else {
+        //       return match;
+        //     }
+        //   })
+        // );
 
         fulltimeModalOnClose();
         updateMatchModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
         toast({
           title: 'Match updated',
           description: 'You update the match.',
@@ -160,7 +154,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
         });
         fulltimeModalOnClose();
         updateMatchModalOnClose();
-        setSelectedMatch(undefined);
+        dispatch(matchesListActions.setSelectedMatch(undefined));
       }
     },
     onError: () => {
@@ -175,17 +169,17 @@ const MatchList: NextPage<Props> = ({ matches }) => {
   };
 
   const showDeleteMatchModal = (match: FullMatch) => {
-    setSelectedMatch(match);
+    dispatch(matchesListActions.setSelectedMatch(match));
     deleteModalOnOpen();
   };
 
   const showLeaveMatchModal = (match: FullMatch) => {
-    setSelectedMatch(match);
+    dispatch(matchesListActions.setSelectedMatch(match));
     leaveMatchModalOnOpen();
   };
 
   const showFullTimeModal = (match: FullMatch) => {
-    setSelectedMatch(match);
+    dispatch(matchesListActions.setSelectedMatch(match));
     fulltimeModalOnOpen();
   };
 
@@ -193,15 +187,15 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     updateMatchModalOnOpen();
     setPlace(match.location);
     setDate(match.date);
-    setSelectedMatch(match);
+    dispatch(matchesListActions.setSelectedMatch(match));
   };
 
   const handleDeleteMatch = () => {
-    mutateDeleteMatch(selectedMatch?._id!);
+    mutateDeleteMatch(matchesState.selectedMatch?._id!);
   };
 
   const handleLeaveMatch = () => {
-    mutateLeaveMatch(selectedMatch?._id!);
+    mutateLeaveMatch(matchesState.selectedMatch?._id!);
   };
 
   const handleFulltime = () => {
@@ -210,7 +204,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     }
 
     const request: FullMatch = {
-      ...selectedMatch!,
+      ...matchesState.selectedMatch!,
       fullTime: true,
       homeScore: +homeScoreRef.current.value,
       awayScore: +awayScoreRef.current.value
@@ -225,15 +219,15 @@ const MatchList: NextPage<Props> = ({ matches }) => {
     }
 
     const request: FullMatch = {
-      ...selectedMatch!,
-      date: date || selectedMatch?.date || '',
-      location: place || selectedMatch?.location || ''
+      ...matchesState.selectedMatch!,
+      date: date || matchesState.selectedMatch?.date || '',
+      location: place || matchesState.selectedMatch?.location || ''
     };
 
     mutateUpdateMatch(request);
   };
 
-  const matchesListMap = matchesList.map(
+  const matchesListMap = matchesState.matches.map(
     ({
       _id,
       date,
@@ -409,8 +403,8 @@ const MatchList: NextPage<Props> = ({ matches }) => {
         <form className={styles.fullTime}>
           <FormControl className={styles.formControl}>
             <Image
-              src={selectedMatch?.home_team.shield}
-              alt={selectedMatch?.home_team.name}
+              src={matchesState.selectedMatch?.home_team.shield}
+              alt={matchesState.selectedMatch?.home_team.name}
               width='50px'
               height='50px'
             />
@@ -418,14 +412,14 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               textAlign={'center'}
               marginInlineEnd={0}
             >
-              {selectedMatch?.home_team.name}
+              {matchesState.selectedMatch?.home_team.name}
             </FormLabel>
             <Input width={'16'} type='number' ref={homeScoreRef} />
           </FormControl>
           <FormControl className={styles.formControl}>
             <Image
-              src={selectedMatch?.away_team.shield}
-              alt={selectedMatch?.away_team.name}
+              src={matchesState.selectedMatch?.away_team.shield}
+              alt={matchesState.selectedMatch?.away_team.name}
               width='50px'
               height='50px'
             />
@@ -433,7 +427,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
               textAlign={'center'}
               marginInlineEnd={0}
             >
-              {selectedMatch?.away_team.name}
+              {matchesState.selectedMatch?.away_team.name}
             </FormLabel>
             <Input width={'16'} type='number' ref={awayScoreRef} />
           </FormControl>
@@ -444,7 +438,7 @@ const MatchList: NextPage<Props> = ({ matches }) => {
         onClose={updateMatchModalOnClose}
         onContinue={handleUpdateMatch}
         actionColor='green'
-        title={`Update ${selectedMatch?.home_team.name} vs ${selectedMatch?.away_team.name}`}
+        title={`Update ${matchesState.selectedMatch?.home_team.name} vs ${matchesState.selectedMatch?.away_team.name}`}
         continueLabel="Update"
       >
 
