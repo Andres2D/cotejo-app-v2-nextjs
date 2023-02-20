@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import styles from './match-list.module.scss';
 import Team from './team';
 import {
-  leaveMatch,
   updateMatch
 } from '../../services/api-configuration';
 import { FullMatch } from '../../interfaces/Match';
@@ -17,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../interfaces/State';
 import { matchesListActions } from '../../store/matches-list.slice';
 import DeleteMatchModal from './modals/delete-match.modal';
+import LeaveMatchModal from './modals/leave-match.modal';
 
 const MatchList: NextPage = () => {
 
@@ -26,11 +26,6 @@ const MatchList: NextPage = () => {
   const [place, setPlace] = useState<string>();
   const [date, setDate] = useState<string>();
 
-  const {
-    isOpen: leaveMatchModalIsOpen,
-    onOpen: leaveMatchModalOnOpen,
-    onClose: leaveMatchModalOnClose,
-  } = useDisclosure();
   const {
     isOpen: fulltimeModalIsOpen,
     onOpen: fulltimeModalOnOpen,
@@ -45,38 +40,6 @@ const MatchList: NextPage = () => {
 
   const homeScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
   const awayScoreRef = useRef() as MutableRefObject<HTMLInputElement>;
-
-  const { mutate: mutateLeaveMatch } = useMutation(leaveMatch, {
-    onSuccess: async (response) => {
-      if (response.ok) {
-        // setMatchesList((matches) =>
-        //   matches.filter((match) => match._id !== selectedMatch?._id)
-        // );
-        leaveMatchModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-        toast({
-          title: 'Leave match',
-          description: 'You left the match.',
-          status: 'success',
-          duration: 9000,
-          isClosable: true,
-        });
-      } else {
-        toast({
-          title: 'Leave match',
-          description: 'Something went wrong, please try again later.',
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-        leaveMatchModalOnClose();
-        dispatch(matchesListActions.setSelectedMatch(undefined));
-      }
-    },
-    onError: () => {
-      // TODO: handle error
-    },
-  });
 
   const { mutate: mutateUpdateMatch } = useMutation(updateMatch, {
     onSuccess: async (response) => {
@@ -139,7 +102,7 @@ const MatchList: NextPage = () => {
 
   const showLeaveMatchModal = (match: FullMatch) => {
     dispatch(matchesListActions.setSelectedMatch(match));
-    leaveMatchModalOnOpen();
+    dispatch(matchesListActions.setMatchModalAction({action: 'isLeaveMatch', value: true }));
   };
 
   const showFullTimeModal = (match: FullMatch) => {
@@ -154,9 +117,6 @@ const MatchList: NextPage = () => {
     dispatch(matchesListActions.setSelectedMatch(match));
   };
 
-  const handleLeaveMatch = () => {
-    mutateLeaveMatch(matchesState.selectedMatch?._id!);
-  };
 
   const handleFulltime = () => {
     if(homeScoreRef.current.value.trim() === '' || awayScoreRef.current.value.trim() === '' ) {
@@ -337,14 +297,7 @@ const MatchList: NextPage = () => {
     <>
       {matchesListMap}
       <DeleteMatchModal />
-      <ModalAlert
-        isOpen={leaveMatchModalIsOpen}
-        onClose={leaveMatchModalOnClose}
-        onContinue={handleLeaveMatch}
-        title="Leave match"
-        description={`Are you sure? You would request to a team mate to add you again afterwards`}
-        continueLabel="Leave match"
-      />
+      <LeaveMatchModal />
       <ModalAlert
         isOpen={fulltimeModalIsOpen}
         onClose={fulltimeModalOnClose}

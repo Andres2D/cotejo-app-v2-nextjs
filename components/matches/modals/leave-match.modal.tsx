@@ -6,36 +6,36 @@ import { useEffect } from 'react';
 import ModalAlert from '../../layout/modal-alert';
 import { RootState } from '../../../interfaces/State';
 import { matchesListActions } from '../../../store/matches-list.slice';
-import { deleteMatch } from '../../../services/api-configuration';
+import { leaveMatch } from '../../../services/api-configuration';
 
-const DeleteMatchModal: NextPage = () => {
+const LeaveMatchModal: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const matchesState = useSelector((state: RootState) => state.matchesList);
   const dispatch = useDispatch();
   const toast = useToast();
 
   useEffect(() => {
-    if(matchesState.isDeleteMatch) {
+    if(matchesState.isLeaveMatch) {
       onOpen();
     }
   }, [matchesState, onOpen]);
 
-  const { mutate } = useMutation(deleteMatch, {
+  const { mutate } = useMutation(leaveMatch, {
     onSuccess: async (response) => {
       if (response.ok) {
         dispatch(matchesListActions.deleteLeaveMatch({id: matchesState.selectedMatch?._id!}));
         dispatch(matchesListActions.setSelectedMatch(undefined));
         handleCloseModal();
         toast({
-          title: 'Delete match',
-          description: 'Match deleted.',
+          title: 'Leave match',
+          description: 'You left the match.',
           status: 'success',
           duration: 9000,
           isClosable: true,
         });
       } else {
         toast({
-          title: 'Delete match',
+          title: 'Leave match',
           description: 'Something went wrong, please try again later.',
           status: 'error',
           duration: 9000,
@@ -49,12 +49,12 @@ const DeleteMatchModal: NextPage = () => {
     },
   });
 
-  const handleDeleteMatch = () => {
+  const handleLeaveMatch = () => {
     mutate(matchesState.selectedMatch?._id!);
   };
   
   const handleCloseModal = () => {
-    dispatch(matchesListActions.setMatchModalAction({action: 'isDeleteMatch', value: false}));
+    dispatch(matchesListActions.setMatchModalAction({action: 'isLeaveMatch', value: false}));
     onClose();
   };
 
@@ -62,11 +62,12 @@ const DeleteMatchModal: NextPage = () => {
     <ModalAlert
       isOpen={isOpen}
       onClose={() => handleCloseModal()}
-      onContinue={handleDeleteMatch}
-      title="Delete Match"
-      description={`Are you sure? You can't undo this action afterwards`}
+      onContinue={handleLeaveMatch}
+      title="Leave match"
+      description={`Are you sure? You would request to a team mate to add you again afterwards`}
+      continueLabel="Leave match"
     />
   );
 }
 
-export default DeleteMatchModal;
+export default LeaveMatchModal;
