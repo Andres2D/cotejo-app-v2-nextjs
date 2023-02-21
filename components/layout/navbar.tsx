@@ -57,7 +57,7 @@ const Navbar: NextPage = () => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton className={styles.dark} />
+          <DrawerCloseButton />
           <DrawerHeader className={styles.headerMenu}>
             <Avatar
               className={styles.avatarMenu}

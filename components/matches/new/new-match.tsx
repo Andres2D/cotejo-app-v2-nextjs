@@ -36,7 +36,7 @@ const NewMatch: NextPage = () => {
       <div className={styles.actions}>
         {form.current_step !== 0 &&
           <Button 
-            className={`${styles.nextBtn} ${styles.bntBack}`}
+            className={styles.nextBtn}
             size='lg'
             onClick={() => nextStepHandler('back')}
           >
