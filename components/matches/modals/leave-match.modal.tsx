@@ -2,17 +2,23 @@ import { useDisclosure, useToast } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useMutation } from 'react-query';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ModalAlert from '../../layout/modal-alert';
 import { RootState } from '../../../interfaces/State';
 import { matchesListActions } from '../../../store/matches-list.slice';
 import { leaveMatch } from '../../../services/api-configuration';
 
-const LeaveMatchModal: NextPage = () => {
+interface Props {
+  navigateToMatches?: boolean;
+}
+
+const LeaveMatchModal: NextPage<Props> = ({navigateToMatches}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const matchesState = useSelector((state: RootState) => state.matchesList);
   const dispatch = useDispatch();
   const toast = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     if(matchesState.isLeaveMatch) {
@@ -26,6 +32,11 @@ const LeaveMatchModal: NextPage = () => {
         dispatch(matchesListActions.deleteLeaveMatch({id: matchesState.selectedMatch?._id!}));
         dispatch(matchesListActions.setSelectedMatch(undefined));
         handleCloseModal();
+        
+        if(navigateToMatches) {
+          router.push('/matches', undefined, {  })
+        }
+        
         toast({
           title: 'Leave match',
           description: 'You left the match.',
