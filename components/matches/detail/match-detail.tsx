@@ -1,54 +1,26 @@
-import { Button, useDisclosure, useToast } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { useSelector } from 'react-redux';
-import { useMutation } from 'react-query';
-import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../interfaces/State';
 import ChangePlayerModal from './avatar/change-player.modal';
 import FieldLayout from './field/field';
 import styles from './match-detail.module.scss';
 import LeaveIcon from '../../../assets/svg/leave.svg';
-import ModalAlert from '../../layout/modal-alert';
-import { leaveMatch } from '../../../services/api-configuration';
 import MatchDetailsSkeleton from '../../skeletons/match-details-skeleton';
 import { initialState } from '../../../store/match-details.slice';
+import LeaveMatchModal from '../modals/leave-match.modal';
+import { matchesListActions } from '../../../store/matches-list.slice';
 
 const MatchDetailsLayout: NextPage = () => {
   const matchDetails = useSelector((state: RootState) => state.matchDetails);
-  const { 
-    isOpen: leaveMatchModalIsOpen, 
-    onOpen: leaveMatchModalOnOpen,
-    onClose: leaveMatchModalOnClose 
-  } = useDisclosure();
-  const router = useRouter();
-  const toast = useToast();
-
-  const { mutate: mutateLeaveMatch } = useMutation(leaveMatch, {
-    onSuccess: async (response) => {
-      if(response.ok) {
-        router.push('/matches', undefined, {  })
-      } else {
-        toast({
-          title: 'Leave match',
-          description: "Something went wrong, please try again later.",
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-        leaveMatchModalOnClose();
-      }
-    },
-    onError: () => {
-      // TODO: handle error
-    }
-  });
+  const dispatch = useDispatch();
 
   if(matchDetails === initialState) {
     return <MatchDetailsSkeleton />
   }
 
-  const handleLeaveMatch = () => {
-    mutateLeaveMatch(matchDetails.match._id);
+  const handleLeaveMatchModalOpen = () => {
+    dispatch(matchesListActions.setMatchModalAction({action: 'isLeaveMatch', value: true }));
   };
 
   return (
@@ -65,20 +37,13 @@ const MatchDetailsLayout: NextPage = () => {
             colorScheme='telegram'
             className={styles.leaveButton}
             rightIcon={<LeaveIcon />}
-            onClick={leaveMatchModalOnOpen}
+            onClick={handleLeaveMatchModalOpen}
           >
             Leave match
           </Button>
         }
       </section>
-      <ModalAlert 
-        isOpen={leaveMatchModalIsOpen} 
-        onClose={leaveMatchModalOnClose}
-        onContinue={handleLeaveMatch}
-        title='Leave match'
-        description={`Are you sure? You would request to a team mate to add you again afterwards`}
-        continueLabel='Leave match'
-      />
+      <LeaveMatchModal navigateToMatches/>
     </>
   );
 };
