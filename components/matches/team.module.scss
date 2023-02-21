@@ -5,10 +5,6 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  
-  .tag {
-    color: #333 !important;
-  }
 
   .tag {
     margin-top: 10px;
@@ -19,18 +15,22 @@
     font-weight: bold;
   }
 
+  .winner,
+  .loser {
+    color: $white;
+    border: 2px solid $white;
+  }
+  
   .winner {
-    background-color: $brand;
-    color: white;
+    background-color: $success;
   }
   
   .loser {
-    background-color: $loser;
-    color: white;
+    background-color: $failure;
   }
 
   .logoShadow {
     padding: 5px;
-    filter: drop-shadow( 2px 2px 3px rgba(245,245,245, 1));
+    filter: drop-shadow( 2px 2px 3px $white);
   }
 }

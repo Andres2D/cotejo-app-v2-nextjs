@@ -1,4 +1,6 @@
 @import '../../styles/breakpoints';
+@import '../../styles/sizes';
+@import '../../styles/colors';
 
 .section {
   align-items: center;
@@ -10,7 +12,7 @@
     align-items: center;
     justify-content: space-evenly;
     margin: 20px auto;
-    width: 90%;
+    width: $content;
     flex-wrap: nowrap;
     height: 230px;
     padding: 5px;
@@ -22,18 +24,18 @@
   
     &::before {
       content: '';
-      background-color: rgba(78, 203, 113, 0.75);
+      background-color: $field;
       position: absolute;
       left: 0;
       bottom: 3px;
-      width: 100%;
+      width: $full;
       height: 8px;
       transition: all 0.3s ease-in-out;
     }
   
     &:hover::before {
       bottom: 0;
-      height: 100%;
+      height: $full;
       border-radius: 20px;
     }
   
@@ -50,7 +52,7 @@
         z-index: 1;
     
         .details {
-          color: #f7fafc;
+          color: $white;
         }
 
         .fullTime {

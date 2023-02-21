@@ -1,11 +1,13 @@
 @import '../../../../styles/breakpoints';
+@import '../../../../styles/colors';
+@import '../../../../styles/sizes';
 
 .players {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   margin-top: 20px;
-  width: 50%;
+  width: $half;
   
   .player {
     margin: 5px;
@@ -14,34 +16,34 @@
 
 .playerResult {
   margin: 5px;
-  border: 2px solid white;
+  border: 2px solid $white;
   border-radius: 10px;
   display: flex;
   justify-content: space-evenly;
-  width: 50%;
+  width: $half;
   cursor: pointer;
   padding: 5px;
   
   &:hover {
-    color: black;
-    background-color: white;
+    color: $dark;
+    background-color: $white;
   }
 }
 
 @media (max-width: $medium-device-extra) {
   .players,
   .playerResult {
-    width: 90%;
+    width: $content;
   }
 
   .playerNameInput {
-    width: 90% !important;
+    width: $content !important;
   }
 }
 
 @media (max-width: $extra-small-device) {
   .completePlayers {
-    width: 90%;
+    width: $content;
   }
 }
 

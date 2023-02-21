@@ -1,4 +1,6 @@
 @import '../../styles/breakpoints';
+@import '../../styles/colors';
+@import '../../styles/sizes';
 
 .login {
   align-items: center;
@@ -6,7 +8,7 @@
   display: flex;
   flex-direction: column;
   margin: 100px auto;
-  width: 50%;
+  width: $half;
 
   .logo {
     min-width: 325px;
@@ -17,13 +19,13 @@
   .signUpLink {
     margin-top: 10px;
     font-size: 20px;
-    color: white;
+    color: $white;
   }
 }
 
 @media (max-width: $medium-device) {
   .login {
-    width: 90%;
+    width: $content;
 
     .logo {
       min-width: 277px;

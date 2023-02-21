@@ -1,8 +1,9 @@
 @import '../../../../styles/breakpoints';
+@import '../../../../styles/colors';
 
 .tabs {
   margin-top: 50px;
-  color: #F7FAFC;
+  color: $white;
   
   .tab {
     display: flex;

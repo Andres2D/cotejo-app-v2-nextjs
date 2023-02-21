@@ -1,4 +1,6 @@
 @import '../../../../styles/breakpoints';
+@import '../../../../styles/colors';
+@import '../../../../styles/sizes';
 
 .modalContent {
   .container {
@@ -15,7 +17,7 @@
   
       .playerResult {
         margin: 5px;
-        border: 2px solid gray;
+        border: 2px solid $skeleton;
         border-radius: 10px;
         display: flex;
         justify-content: space-between;
@@ -24,7 +26,7 @@
         
         &:hover {
           color: white;
-          background-color: gray;
+          background-color: $skeleton;
         }
       }
   
@@ -39,7 +41,7 @@
       flex-direction: column;
   
       .inputPlayer {
-        border: 2px solid gray;
+        border: 2px solid $skeleton;
       }
     }
   }
@@ -47,7 +49,7 @@
 
 @media (max-width: $medium-small-device) {
   .modalContent {
-    width: 90% !important;
+    width: $content !important;
   }
 }
 
