@@ -40,8 +40,7 @@ const Matches: NextPage<Props> = ({matches, profile}) => {
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
     }));
-    console.log(matchesList);
-
+    
     dispatch(matchesListActions.setMatchesList(matchesList));
 
   }, []);

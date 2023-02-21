@@ -25,7 +25,6 @@ const initialState: MatchesListState = {
 
 const setMatchesList: CaseReducer<MatchesListState, PayloadAction<FullMatch[]>> = 
 (state: MatchesListState, action: PayloadAction<FullMatch[]>) => {
-  console.log('action', action);
   state.matches = action.payload;
 };
 

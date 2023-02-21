@@ -9,6 +9,7 @@ import { IMatchDetailsResponse } from '../../../interfaces/Match';
 import { getMatch } from '../../../server/matches';
 import { getProfile } from '../../../server/player';
 import { matchDetailsActions } from '../../../store/match-details.slice';
+import { matchesListActions } from '../../../store/matches-list.slice';
 import { profileActions } from '../../../store/profile.slice';
 
 interface Props {
@@ -27,6 +28,7 @@ const MatchDetails: NextPage<Props> = ({match, profile}) => {
   const flagResponse = getFlagSvg(parsedProfile.nationality, true);
 
   useEffect(() => {
+
     dispatch(profileActions.setProfile({
       _id: parsedProfile._id,
       overall: 0,
@@ -36,12 +38,25 @@ const MatchDetails: NextPage<Props> = ({match, profile}) => {
       image: parsedProfile.image,
       nationality: parsedProfile.nationality,
     }));
+
   }, []);
 
   const matchDetail: IMatchDetailsResponse = JSON.parse(match);
 
   useEffect(() => {
     dispatch(matchDetailsActions.setMatchState({...matchDetail, playersSelected: [], changePlayerModalActive: false}));
+
+    dispatch(matchesListActions.setSelectedMatch({
+      _id: matchDetail.match._id,
+      away_team: matchDetail.match.away_team,
+      awayScore: matchDetail.match.awayScore,
+      date: matchDetail.match.date,
+      fullTime: matchDetail.match.fullTime,
+      home_team: matchDetail.match.home_team,
+      homeScore: matchDetail.match.homeScore,
+      location: matchDetail.match.location
+    }));
+    
   }, [dispatch, matchDetail])
   
   return (
