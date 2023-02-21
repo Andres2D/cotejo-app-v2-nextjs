@@ -136,7 +136,6 @@ export const getServerSideProps = async (context: any) => {
   }
 
   const { image, name, email } = session.user;
-  console.log(session);
   const profile = await getProfile(email!);
   const stats = await getPlayerStats(email!);
 

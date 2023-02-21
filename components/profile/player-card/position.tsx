@@ -51,7 +51,7 @@ const Position: NextPage = () => {
           />
         </p>
       </PopoverTrigger>
-      <PopoverContent w='100%' className={styles.content}>
+      <PopoverContent w='100%'>
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Position</PopoverHeader>

@@ -36,6 +36,7 @@ const Team: NextPage<Props> = (
         size='lg' 
         variant='solid' 
         colorScheme='clean'
+        color='black'
         className={styles.tag}
       >
         {name}

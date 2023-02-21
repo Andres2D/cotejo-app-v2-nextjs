@@ -1,9 +1,9 @@
 @import '../../styles/breakpoints';
+@import '../../styles/colors';
 
 .card {
-  background-color: #D9D9D9;
+  background-color: $pale;
   min-height: 400px;
-  color: #333;
   border-radius: 20px;
   
   .cardHeader {

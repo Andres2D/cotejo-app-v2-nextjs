@@ -1,3 +1,4 @@
+@import '../../../../styles/colors';
 @import '../../../../styles/breakpoints';
 
 .container {
@@ -14,7 +15,7 @@
     z-index: 2;
 
     .avatar {
-      border: 2px solid white;
+      border: 2px solid $white;
       cursor: pointer;
     }
 
@@ -22,21 +23,21 @@
     .playerOverall {
       position: absolute;
       font-weight: bold;
-      text-shadow: #333 -2px 0 10px;
+      text-shadow: $dark -2px 0 10px;
       text-align: center;
       word-break: break-word;
       line-height: 15px;
-      color: #F7FAFC;
       z-index: 3;
     }
     
     .playerName {
+      color: $white;
       width: 105px;
       bottom: 65px;
     }
 
     .playerOverall {
-      color: #FAE505;
+      color: $gold;
       right: 55px;
       width: 30px;
     }
@@ -53,7 +54,7 @@
     .replaceIcon {
       cursor: pointer;
       filter: drop-shadow(
-        #333 -2px 0 10px
+        $dark -2px 0 10px
       );
       margin: 2px auto;
       z-index: 2;
@@ -62,7 +63,7 @@
     .changeIcon {
       animation: spin 2s infinite linear;
       filter: drop-shadow(
-        #333 -2px 0 10px
+        $dark -2px 0 10px
         );
       margin: 2px auto;
       z-index: 2;

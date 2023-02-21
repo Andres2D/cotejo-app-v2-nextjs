@@ -85,7 +85,7 @@ const FieldLayout: NextPage<Props> = ({team, isAway}) => {
         <div className={styles.outArea} />
         <div className={styles.middle} />
       </section>
-      <Stack className={styles.check} spacing={5} direction='row'>
+      <Stack color='white' spacing={5} direction='row'>
         <Checkbox 
           colorScheme='yellow'
           isChecked={

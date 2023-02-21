@@ -1,11 +1,12 @@
 @import '../../styles/breakpoints';
+@import '../../styles/sizes';
 
 .signUp {
   align-items: center;
   display: flex;
   flex-direction: column;
   margin: 100px auto;
-  width: 50%;
+  width: $half;
 
   .logo {
     min-width: 325px;
@@ -22,7 +23,7 @@
 
 @media (max-width: $medium-device) {
   .signUp {
-    width: 90%;
+    width: $content;
 
     .logo {
       min-width: 277px;

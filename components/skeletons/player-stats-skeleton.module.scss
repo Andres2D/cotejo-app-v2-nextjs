@@ -1,5 +1,6 @@
 @import '../../styles/breakpoints';
 @import '../../styles/colors';
+@import '../../styles/sizes';
 
 .statsSkeleton {
   display: flex;
@@ -21,7 +22,7 @@
   
   .value {
     height: 20px;
-    width: 90%;
+    width: $content;
     margin-bottom: 20px;
   }
 }

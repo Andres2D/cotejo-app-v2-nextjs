@@ -1,4 +1,5 @@
 @import '../../../styles/breakpoints';
+@import '../../../styles/sizes';
 
 .rating {
   display: flex;
@@ -8,13 +9,13 @@
   .score {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: $half;
     
     .rate {
       display: flex;
       justify-content: space-around;
       font-size: 35px;
-      width: 100%;
+      width: $full;
     }
   }
 }

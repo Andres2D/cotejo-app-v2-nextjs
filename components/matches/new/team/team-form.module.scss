@@ -1,11 +1,13 @@
 @import '../../../../styles/breakpoints';
+@import '../../../../styles/sizes';
+@import '../../../../styles/colors';
 
 .team {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #333;
+  color: $dark;
   text-align: center;
   font-weight: bold;
   justify-content: space-between;
@@ -34,13 +36,13 @@
   }
 
   .nameInput {
-    width: 50%;
+    width: $half;
   }
 }
 
 @media (max-width: $medium-device-extra) {
   .team {
-    width: 50%;
+    width: $half;
 
     .title {
       font-size: xx-large;
@@ -54,13 +56,13 @@
     }
 
     .nameInput {
-      width: 90%;
+      width: $content;
     }
   }
 }
 
 @media (max-width: $medium-small-device) {
   .team {
-    width: 90%;
+    width: $content;
   }
 }

@@ -1,3 +1,5 @@
+@import '../../styles/colors';
+
 .navbarSpacing {
   height: 80px;
 }
@@ -8,30 +10,24 @@
   justify-content: space-between;
 }
 
-.avatar {
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+.avatar,
+.avatarMenu {
+  box-shadow: $dark-shadow 0px 10px 20px, $dark-shadow 0px 6px 6px;
   cursor: pointer;
+}
+
+.avatarMenu {
+  margin-top: 20px;
 }
 
 .headerMenu {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #333;
-}
-
-.avatarMenu {
-  margin-top: 2rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  cursor: pointer;
 }
 
 .username {
-  padding-top: 16px ;
-}
-
-.dark {
-  color: #333;
+  padding-top: 16px;
 }
 
 .columnMenu {
