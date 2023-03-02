@@ -1,0 +1,27 @@
+@import '../../styles/sizes';
+@import '../../styles/breakpoints';
+
+.login {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+  width: $half;
+
+  .logo {
+    margin-top: -40px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: $medium-device) {
+  .login {
+    width: $content;
+
+    .logo {
+      width: 200px;
+      height: 130px;
+    }
+  }
+}
