@@ -1,6 +1,6 @@
 <h1 align="center">Cotejo App v2</h1>
 <div align="center">
-  <img width="853" alt="app-logo-regular" src="https://user-images.githubusercontent.com/37199673/215224319-012d814f-7161-495e-bbb1-6af1979f1d46.png">
+  <img width="500" alt="app-logo-regular" src="https://user-images.githubusercontent.com/37199673/222295503-f592fda5-2a7d-4ad6-8301-fa74f85110b7.png">
 </div>
 <br />
 <h3>
