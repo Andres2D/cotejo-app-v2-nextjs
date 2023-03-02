@@ -132,3 +132,46 @@ export const avatarsCollection: IAvatarsSelection[] = [
     label: 'Vidal'
   }
 ];
+
+export const landingAvatars: IAvatarsSelection[] = [
+  {
+    key: '01',
+    src: 'https://lh3.googleusercontent.com/a/AEdFTp5LrFCBzbY20Ar2Lxewi6FyMe8-OOcYr-5VtEk0tY8=s96-c',
+    label: 'Sebastián Alcaraz '
+  },
+  {
+    key: '02',
+    src: 'https://lh3.googleusercontent.com/a/AEdFTp7xX2paA6FzLdlmROOCZ-nlhRdhWS0J-jQL9zgWtg=s96-c',
+    label: 'BeJuanitox'
+  },
+  {
+    key: '03',
+    src: 'https://lh3.googleusercontent.com/a/AEdFTp7mGPm7X0N6JtCrynyI9RW5uI5Tyz5AmjEh_9oVfg=s96-c',
+    label: 'David Rojas'
+  },
+  {
+    key: '04',
+    src: 'https://lh3.googleusercontent.com/a/AGNmyxY-e9GBTtPJVuAPXftfsEigEBvv5Slrtqsf-ajpqA=s96-c',
+    label: 'Andres Alcaraz'
+  },
+  {
+    key: 'av23',
+    src: '/avatars/son.jpg',
+    label: 'Son'
+  },
+  {
+    key: 'av24',
+    src: '/avatars/valencia.jpg',
+    label: 'Valencia'
+  },
+  {
+    key: 'av25',
+    src: '/avatars/van-persie.png',
+    label: 'Van Persie'
+  },
+  {
+    key: 'av26',
+    src: '/avatars/vidal.png',
+    label: 'Vidal'
+  }
+];
