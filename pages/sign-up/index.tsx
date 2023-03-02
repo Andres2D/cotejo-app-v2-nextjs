@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 import { RegisterPlayerRequest } from '../../interfaces/Player';
 import { registerPlayer } from '../../services/api-configuration';
 import HeaderSettings from '../../accessibility/header-setting';
-import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
+import AuthWrapper from '../../components/logo-wrapper/logo-wrapper';
 
 const SignUp: NextPage = () => {
 

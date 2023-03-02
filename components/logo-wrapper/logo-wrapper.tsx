@@ -1,12 +1,12 @@
 import { Image } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import styles from './auth-wrapper.module.scss';
+import styles from './logo-wrapper.module.scss';
 
 interface Props {
   children: JSX.Element;
 }
 
-const AuthWrapper: NextPage<Props> = ({children}) => {
+const LogoWrapper: NextPage<Props> = ({children}) => {
   return (
     <div className={styles.login}>
       <Image
@@ -21,4 +21,4 @@ const AuthWrapper: NextPage<Props> = ({children}) => {
   );
 };
 
-export default AuthWrapper;
+export default LogoWrapper;

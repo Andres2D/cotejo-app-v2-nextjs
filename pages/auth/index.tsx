@@ -5,7 +5,7 @@ import { getSession } from 'next-auth/react';
 import styles from './index.module.scss';
 import LoginForm from '../../components/auth/login-form';
 import HeaderSettings from '../../accessibility/header-setting';
-import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
+import AuthWrapper from '../../components/logo-wrapper/logo-wrapper';
 
 const Login: NextPage = () => {
   return (

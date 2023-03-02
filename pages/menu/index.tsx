@@ -10,6 +10,7 @@ import styles from './menu.module.scss';
 import { getProfile } from '../../server/player';
 import { profileActions } from '../../store/profile.slice';
 import HeaderSettings from '../../accessibility/header-setting';
+import AuthWrapper from '../../components/logo-wrapper/logo-wrapper';
 
 interface Props {
   profile: string;
@@ -45,35 +46,30 @@ const Menu: NextPage<Props> = ({profile}) => {
   return (
     <>
       <HeaderSettings title='Menu' description='Go to your profile or open the matches list' />
-      <div className={styles.container}>
-        <Image
-          className={styles.logo}
-          src={'/images/app-logo-regular.png'}
-          alt='Cotejo app logo'
-          width={325}
-          height={219}
-        ></Image>
-        <div className={styles.actions}>
-          <Button 
-            className={styles.btnOptionMenu}
-            size='lg'
-            colorScheme='brand'
-            onClick={() => router.push('/profile')}
-          >
-            Profile
-          </Button>
-        </div>
-        <div className={styles.actions}>
-          <Button 
-            className={styles.btnOptionMenu}
-            size='lg'
-            colorScheme='brand'
-            onClick={() => router.push('/matches')}
-          >
-            Matches
-          </Button>
-        </div>
-      </div>
+        <AuthWrapper>
+          <>
+            <div className={styles.actions}>
+              <Button 
+                className={styles.btnOptionMenu}
+                size='lg'
+                colorScheme='brand'
+                onClick={() => router.push('/profile')}
+              >
+                Profile
+              </Button>
+            </div>
+            <div className={styles.actions}>
+              <Button 
+                className={styles.btnOptionMenu}
+                size='lg'
+                colorScheme='brand'
+                onClick={() => router.push('/matches')}
+              >
+                Matches
+              </Button>
+            </div>
+          </>
+        </AuthWrapper>
     </>
   );
 }
