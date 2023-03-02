@@ -5,26 +5,22 @@ import { getSession } from 'next-auth/react';
 import styles from './index.module.scss';
 import LoginForm from '../../components/auth/login-form';
 import HeaderSettings from '../../accessibility/header-setting';
+import AuthWrapper from '../../components/auth-wrapper/auth-wrapper';
 
 const Login: NextPage = () => {
   return (
     <>
       <HeaderSettings title='Login' description='Login to CotejoApp' />
-      <div className={styles.login}>
-        <Image
-          src={'/images/app-logo-regular.png'}
-          alt='Cotejo app logo'
-          width={325}
-          height={219}
-          className={styles.logo}
-        />
-        <LoginForm />
-        <NextLink href='/sign-up'>
-          <Link className={styles.signUpLink}>
-            {`Don't have an account?, Sign up`}
-          </Link>
-        </NextLink>
-      </div>
+        <AuthWrapper>
+          <>
+            <LoginForm />
+            <NextLink href='/sign-up'>
+              <Link className={styles.signUpLink} colorScheme='whiteAlpha'>
+                {`Don't have an account?, Sign up`}
+              </Link>
+            </NextLink>
+          </>
+        </AuthWrapper>
     </>
   );
 }
