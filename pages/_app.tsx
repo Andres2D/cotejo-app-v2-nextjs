@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import type { AppProps } from 'next/app';
 import { SessionProvider } from "next-auth/react"
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from 'react-redux';
 import '../styles/globals.scss';
@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }: AppProps<{ session: Session }>) {
         <Provider store={store}>
           <Navbar />
           <QueryClientProvider client={queryClient}>
+          <ColorModeScript initialColorMode={'light'} />
             <Component {...pageProps} />
           </QueryClientProvider>
         </Provider>

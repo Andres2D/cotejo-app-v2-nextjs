@@ -39,6 +39,17 @@ const createMatch = async(req: any, res: any) => {
     } = req.body;
     await mongoConnection();
 
+    const matchLength = home_players.length + away_players.length;
+
+    if(matchLength % 2 !== 0) {
+      return res.status(400).json({message: 'Invalid players length'});
+    }
+
+    const fullPlayers = [...home_players, ...away_players];
+
+    const new_home_players = fullPlayers.slice(0, (matchLength / 2));
+    const new_away_players = fullPlayers.slice(matchLength / 2, matchLength);
+
     // Create home team
     const homeTeam = await createTeam(home_team);
 
@@ -54,10 +65,14 @@ const createMatch = async(req: any, res: any) => {
     }
 
     // Create home team players
-    const homeTeamPlayers = home_players.map((player: any) => {
+    const homeTeamPlayers = new_home_players.map((player: any) => {
+      const playerProfile = {
+        ...player,
+        position: player.position ?? 'CM'
+      }
       return {
         team: homeTeam._id,
-        ...player
+        ...playerProfile
       }
     });
 
@@ -68,10 +83,14 @@ const createMatch = async(req: any, res: any) => {
     }
 
     // Create away team players
-    const awayTeamPlayers = away_players.map((player: any) => {
+    const awayTeamPlayers = new_away_players.map((player: any) => {
+      const playerProfile = {
+        ...player,
+        position: player.position ?? 'CM'
+      }
       return {
         team: awayTeam._id,
-        ...player 
+        ...playerProfile 
       }
     });
 
